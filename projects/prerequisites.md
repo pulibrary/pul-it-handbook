@@ -18,8 +18,7 @@ another distro/version.
 
 ## Users
 
-We use a sudo enabled user that uses keybased authentication. To be added to
-the `authorized_keys` of this user place your keys on github to be added.
+We use a sudo enabled user that uses keybased authentication. Place your keys on github to be added to the `authorized_keys` of this user.
 
 ## Software
 
