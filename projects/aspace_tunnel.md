@@ -59,7 +59,7 @@ By default, SSH happens on port 22, and the "SSH" connection type should be sele
 Next, we'll need to select the "Data" configuration inside the "Connection" heading in the left-hand navigation menu:
 
 ![Data Example][logo]
-[logo]:(images/aspace_tunnel/data_category.png)
+[logo](images/aspace_tunnel/data_category.png)
 
 Here, we will enter our server's username. For the initial setup, this should be the "aspaceuser" user, which is the administrative user of your server. This is the account that has been configured with your SSH public key. Enter "aspaceuser" into the "Auto-login username" prompt:
 
