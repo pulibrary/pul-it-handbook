@@ -61,7 +61,8 @@ Next, we'll need to select the "Data" configuration inside the "Connection" head
 ![Data Example][logo]
 [logo](images/aspace_tunnel/data_category.png)
 
-Here, we will enter our server's username. For the initial setup, this should be the "aspaceuser" user, which is the administrative user of your server. This is the account that has been configured with your SSH public key. Enter "aspaceuser" into the "Auto-login username" prompt:
+Here, we will enter our server's username. For the initial setup, this should be the "aspaceuser" user, which is the mariadb user on our server. This is the account that has been configured with your SSH public key. Enter "aspaceuser" into the "Auto-login username" prompt:
+
 
 Next, we'll need to click on the "SSH" category in the navigation menu:
 
