@@ -14,4 +14,4 @@ is specific to PU Library it will be possible to use it in your environment.
 
 ## Projects
 
-* [Prerequisites](projects/prerequisites.md)
+* [Prerequisites](services/prerequisites.md)
