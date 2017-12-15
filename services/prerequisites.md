@@ -13,7 +13,7 @@ the project embarks.
 ## Operating System
 
 All our *new* Operating Systems will run [Ubuntu Xenial
-LTE](https://releases.ubuntu.com/16.04/) unless an upstream project insists on
+LTE](http://releases.ubuntu.com/16.04/) unless an upstream project insists on
 another distro/version.
 
 ## Users
