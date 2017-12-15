@@ -12,7 +12,7 @@ The target audience for this tutorial is any person planning to support
 production application and needs to understand how things fit together. While it
 is specific to PU Library it will be possible to use it in your environment.
 
-## Projects
+## Services
 
-* [Prerequisites](projects/prerequisites.md)
-* [MariaDB Windows Tunnel](projects/aspace_tunnel.md)
+* [Prerequisites](services/prerequisites.md)
+* [MariaDB Windows Tunnel](services/aspace_tunnel.md)
