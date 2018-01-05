@@ -25,7 +25,6 @@ $ pulbot deploy my_app/my_branch to staging
 
 You can also deploy to other environments (like `production`) or deploy branches with CI failures by using `deploy!`.
 
-
 ### Updating pulbot
 
 When you update pulbot's configuration, it needs to be redeployed, which you can do using pulbot:
@@ -33,3 +32,11 @@ When you update pulbot's configuration, it needs to be redeployed, which you can
 ```
 $ pulbot deploy pulbot
 ```
+
+### Deploy troubleshooting: public key problems
+
+If deploying to a pre-ansible box, you must add heaven's public key to the deploy user's authorized_keys on the box that will be deployed to.
+
+`curl https://raw.githubusercontent.com/pulibrary/princeton_ansible/master/keys/heaven.pub >> authorized_keys`
+
+Ensure that your app's capfile deploys via https, not the git protocol. If switching from the git protocol, you'll need to delete the `./repo` directory or you'll get an error that looks like a problem with a public key.
