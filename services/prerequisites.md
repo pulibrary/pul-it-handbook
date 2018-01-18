@@ -28,3 +28,7 @@ The Operating System for virtual machines will be created using
 * [Filebeat](https://www.elastic.co/products/beats/filebeat)
 * [Netdata](http://netdata.firehol.org)
 * [Logrotate](https://packages.ubuntu.com/xenial/logrotate)
+
+## Configuration Management
+
+Configuration and management of software is done using [Ansible](ansible.md)

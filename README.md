@@ -15,3 +15,7 @@ is specific to PU Library it will be possible to use it in your environment.
 ## Services
 
 * [Prerequisites](services/prerequisites.md)
+* [PostgreSQL](services/postgresql.md)
+* [Deployment](services/deployment.md)
+* [Redis](services/redis.md)
+* [Solr](services/solr.md)
