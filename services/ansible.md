@@ -23,7 +23,7 @@ Playbook bind it all together. In a playbooks you assign a number of roles to an
 We organize vars roughly by
 
 - Common vars
-- Application (globa)
+- Application (global)
 - Environment
 - Application (Per-Env)
 - Role
