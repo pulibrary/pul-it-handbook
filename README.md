@@ -19,3 +19,4 @@ is specific to PU Library it will be possible to use it in your environment.
 * [Deployment](services/deployment.md)
 * [Redis](services/redis.md)
 * [Solr](services/solr.md)
+* [Galera Cluster](services/galera-cluster.md)
