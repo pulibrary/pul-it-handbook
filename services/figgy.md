@@ -77,3 +77,6 @@ the item to. Optional.
 `local_id` is a string representing some local identifier. Optional.
 
 `replaces` is a string representing an old identifier of the item. Optional.
+
+There is currently no way to pre-assign an ARK to an item being bulk ingested
+(this is the `identifier` field in Figgy)
