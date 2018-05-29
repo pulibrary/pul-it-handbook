@@ -37,7 +37,7 @@ set up appropriately. To ingest a METS file do the following:
 2. `cd /opt/figgy/current`
 3. `RAILS_ENV=production FILE=/mnt/hydra_sources/ingest_scratch/x/my_file.mets bundle exec rake import:mets`
 
-### Ingesting Bags
+### Ingesting Figgy Preservation Bags
 
 Bagged materials currently do not have a rake task to import, will be coming
 soon. Currently it's assumed that bag materials sit in a consistent location,
