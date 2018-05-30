@@ -31,7 +31,8 @@ forms:
 
 Items coming from the PUDL consists of a METS file as well as a series of
 images. The METS files have links to the source TIFFs and the mounts should be
-set up appropriately. To ingest a METS file do the following:
+set up appropriately. You can see an example METS file here:
+[https://github.com/pulibrary/figgy/blob/186e13415d94223909800e651cf62d090ec1dcfd/spec/fixtures/mets/pudl0001-4609321-s42.mets](https://github.com/pulibrary/figgy/blob/186e13415d94223909800e651cf62d090ec1dcfd/spec/fixtures/mets/pudl0001-4609321-s42.mets). To ingest a METS file do the following:
 
 1. `ssh deploy@lib-proc6`
 2. `cd /opt/figgy/current`
