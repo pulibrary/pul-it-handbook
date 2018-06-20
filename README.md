@@ -18,5 +18,5 @@ is specific to PU Library it will be possible to use it in your environment.
 * [PostgreSQL](services/postgresql.md)
 * [Deployment](services/deployment.md)
 * [Redis](services/redis.md)
-* [Solr](services/solr.md)
 * [Orangelight Indexing](services/orangelight-indexing.md)
+* [MariaDB Cluster Restart](services/mariadb.md)
