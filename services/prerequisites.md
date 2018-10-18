@@ -13,8 +13,7 @@ the project embarks.
 ## Operating System
 
 All our *new* Operating Systems will run [Ubuntu Xenial
-LTE](http://releases.ubuntu.com/16.04/) unless an upstream project insists on
-another distro/version.
+LTE](http://releases.ubuntu.com/16.04/) unless an upstream project insists on another distro/version.
 
 ## Users
 
@@ -28,7 +27,6 @@ The Operating System for virtual machines will be created using
 * [Filebeat](https://www.elastic.co/products/beats/filebeat)
 * [Netdata](http://netdata.firehol.org)
 * [Logrotate](https://packages.ubuntu.com/xenial/logrotate)
-
 ## Configuration Management
 
 Configuration and management of software is done using [Ansible](ansible.md)
