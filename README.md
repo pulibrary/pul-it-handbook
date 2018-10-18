@@ -15,4 +15,9 @@ is specific to PU Library it will be possible to use it in your environment.
 ## Services
 
 * [Prerequisites](services/prerequisites.md)
+* [PostgreSQL](services/postgresql.md)
+* [Deployment](services/deployment.md)
+* [Redis](services/redis.md)
+* [Orangelight Indexing](services/orangelight-indexing.md)
+* [MariaDB Cluster Restart](services/mariadb.md)
 * [MariaDB Windows Tunnel](services/aspace_tunnel.md)
