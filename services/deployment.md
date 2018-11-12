@@ -1,9 +1,25 @@
 # Deployment
 
+## Sequence of deployment events
+* ask pulbot to deploy
+* it sends a deployment event to github
+* github POSTs that event to heaven via a hook set up in the pulibrary organization
+* heaven catches the event and runs the deployment
+
+## Things that could go wrong:
+* If pulbot is down it won't receive the event. It used to ack messages but at some point we updated and it doesn't do that anymore
+  * troubleshoot: `pulbot ping` it should pong.
+  * pulbot is on lib-ruby-dev
+* go to [gh pulibrary org > webhooks](https://github.com/organizations/pulibrary/settings/hooks/6570702); you can see all the events that have been fired recently.
+  * you can redeliver these events through that UI in github
+* heaven service could be down
+  * you can try to hit the heaven box via the browser; it redirects to the github page
+  * heaven is on appdeploy
+
 ## Heaven and automatic deployment
 
 [heaven](https://github.com/pulibrary/heaven) is a Rails app that we run locally to receive webhooks from
-Github (with an organization-wide webhook).  Each app is configured with a Github auto-deployment integration
+Github (with an organization-wide webhook). Each app is configured with a Github auto-deployment integration
 that sends a webhook call to heaven when there is a CI success on new commits to master.
 
 ## pulbot and on-demand deployment
