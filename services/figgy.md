@@ -81,3 +81,23 @@ the item to. Optional.
 
 There is currently no way to pre-assign an ARK to an item being bulk ingested
 (this is the `identifier` field in Figgy)
+
+### Fixing Issues With Simple Tiles
+
+Sometimes the `simple-tiles` library and the related `simpler-tiles` gem need to be reinstalled on Figgy machines. Here are the steps:
+
+1. SSH into the machine as pulsys: `ssh pulsys@lib-proc2`
+1. Run the following commands:
+
+  ```
+  $ sudo su deploy
+  $ cd /opt/figgy/current
+  $ bundle exec gem uninstall simpler-tiles
+  $ exit
+  $ sudo rm /usr/local/lib/libsimple-tiles.so
+  $ curl -L https://github.com/propublica/simple-tiles/archive/v0.6.0.tar.gz | tar -xz && cd simple-tiles-0.6.0 
+  $ ./configure && make
+  $ sudo make install
+  $ cd .. && sudo rm -r simple-tiles-0.6.0/
+  ```
+1. Redeploy Figgy to the server using Capistrano or Pulbot.
