@@ -9,7 +9,9 @@
 ## Things that could go wrong:
 * If pulbot is down it won't receive the event. It used to ack messages but at some point we updated and it doesn't do that anymore
   * troubleshoot: `pulbot ping` it should pong.
-  * pulbot is on lib-ruby-dev
+  * pulbot is on libruby-dev
+  * to restart pulbot do `killall -HUP node`
+  * to deploy pulbot you can't do bundle exec cap deploy; you just need cap installed locally
 * go to [gh pulibrary org > webhooks](https://github.com/organizations/pulibrary/settings/hooks/6570702); you can see all the events that have been fired recently.
   * you can redeliver these events through that UI in github
 * heaven service could be down
@@ -25,7 +27,7 @@ that sends a webhook call to heaven when there is a CI success on new commits to
 ## pulbot and on-demand deployment
 
 [pulbot](https://github.com/pulibrary/pulbot) is our instance of [hubot](https://hubot.github.com/), a robot
-that listens in slack for deployment commands.  Our deployable apps are configured in pulbot's
+that listens in slack for deployment commands.  Our deployable apps are configured in pulbot's. Note the [open ticket for fixing the README](https://github.com/pulibrary/pulbot/issues/15)
 [apps.json](https://github.com/pulibrary/pulbot/blob/master/apps.json).  Once an app is configured, you can
 deploy it in slack with the command:
 
