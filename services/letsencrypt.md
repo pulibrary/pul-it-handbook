@@ -9,7 +9,9 @@ appliance first the following manual steps are required.
 * On the virtual machine run 
 ```bash
 systemctl stop nginx.service
-certbot certonly --standalone
+systemctl start apache2.service
+certbot certonly --webroot -w /var/www/html -d cicognara.org
+systemctl stop apache2.service
 systemctl start nginx.service
 ```
 * copy the latest downloaded `cert.pem` and `privkey.pem` to a place you can
