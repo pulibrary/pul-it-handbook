@@ -6,7 +6,7 @@ members so if there is a mariadb update that isn't well coordinated they will
 fall out of sync. In our case all the applications expect to find mariadb1 first
 so it will always be the primary node.
 
-## Start mariadb1 first
+## Start mariadb1 first (Make sure other servers have their services stopped)
 
 You will need to edit the garstate.dat file from 
 
