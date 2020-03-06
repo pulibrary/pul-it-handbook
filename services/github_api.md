@@ -18,7 +18,6 @@ The token must be scoped appropriately; documentation can be found [here](https:
 
 ```
 require 'octokit'
-require 'faraday'
 require 'csv'
 require_relative 'secrets.rb'
 
