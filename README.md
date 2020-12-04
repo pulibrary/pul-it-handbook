@@ -23,3 +23,4 @@ is specific to PU Library it will be possible to use it in your environment.
 * [MariaDB Windows Tunnel](services/aspace_tunnel.md)
 * [Cicognara Let's Encrypt](services/letsencrypt.md)
 * [CSR for SAN](services/create_san_cert.md)
+* [AWS](services/aws.md)
