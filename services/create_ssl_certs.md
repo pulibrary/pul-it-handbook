@@ -1,14 +1,14 @@
 ### Creating a TLS Certificate
 
-1. Certicate Signing Request 
+1. Certificate Signing Request 
 
-   1. One with no Subject Alternative Name (SAN)
+   1. One with no Subject Alternative Name (SAN)[1]
 
       * Export an environment variable with the host name for later commands
         ```
         export NEW_HOST_NAME=<new host name>
         ```
-      * create a file named `$NEW_HOST_NAME.cnf` with the following
+      * create a file named `$NEW_HOST_NAME.cnf` with the following command
 
         ```ini
         echo "[req]
@@ -25,7 +25,7 @@
         CN=\"$NEW_HOST_NAME.princeton.edu\"" > $NEW_HOST_NAME.cnf
         ```
 
-      * generate the certificate you will provide to
+      * generate the certificate which you will provide to
         [OIT](https://princeton.service-now.com/snap?sys_id=c85dafbd4f752e0018ddd48e5210c7e4&id=sc_cat_item&table=sc_cat_item)
         with the following command
 
@@ -44,7 +44,7 @@
         export NEW_HOST_NAME=<new host name>
         ```   
 
-      * create a file named `${NEW_HOSTNAME}_san.cnf` with the following
+      * create a file named `${NEW_HOSTNAME}_san.cnf` with the following command:
 
         ```ini
         echo "[ req ]
@@ -79,7 +79,7 @@
       `${NEW_HOST_NAME}_princeton_edu_priv.key` in your current directory.
 
 
-1. Submit the Certicate request to OIT
+1. Submit the Certificate request to OIT
   
    * (SKIP if not SAN) Before submitting it you can check to see if your CSR contains the SAN you
      specified in the `${NEW_HOST_NAME}_san.cnf` file by doing.
@@ -88,7 +88,7 @@
       openssl req -noout -text -in ${NEW_HOST_NAME}_princeton_edu.csr | grep DNS
       ```
 
-    * to get a certificate you will provide a cat'ed copy to
+    * to get a certificate you will provide a `cat`'ed copy to
       [OIT](https://princeton.service-now.com/snap?sys_id=c85dafbd4f752e0018ddd48e5210c7e4&id=sc_cat_item&table=sc_cat_item)
       with the following command
 
@@ -96,9 +96,9 @@
       cat ${NEW_HOST_NAME}_princeton_edu.csr
       ```
 
-   * you will recieve a response via email within 24 hours
+   * you will receive a response via email within 24 hours
 
-   * The response should be in sparate files, but it also can be returned as comments in the ticket.  If this is the case copy the comments in the ticket into the files before proceding to the next step
+   * The response should be in separate files, but it also can be returned as comments in the ticket.  If this is the case copy the comments in the ticket into the files before proceeding to the next step
 
       * `vi ${NEW_HOST_NAME}_princeton_edu_cert.cer` and copy and paste including `-----BEGIN CERTIFICATE-----` to `-----END CERTIFICATE-----`
       * `vi ${NEW_HOST_NAME}_princeton_edu_interm.cer` and copy and paste the rest of the certificates marked as `X.509 Root/Intermediate(s)`.  This should have Multiple begin and end certificates, which should be included.
@@ -149,3 +149,4 @@
       mv ${NEW_HOST_NAME}_princeton_edu_chained.pem roles/nginxplus/files/ssl/
       ```
 
+[1] Subject Alternative Names are used when multiple domains share the same certificate as shown ![SAN Example](images/san/san_example.png)
