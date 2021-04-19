@@ -24,6 +24,7 @@ In the event you are pairing and need a `.gitmessage`
 # Co-authored-by: Kevin Reiss <kevin.reiss@gmail.com>
 # Co-authored-by: Bess Sadler <bess@ibiblio.org>
 # Co-authored-by: Mark Zelesky <mzelesky@princeton.edu>
+# Co-authored-by: Kevin McElwee <26414213+kmcelwee@users.noreply.github.com>
 #
 # Include a link to the ticket, if any.
 ```
