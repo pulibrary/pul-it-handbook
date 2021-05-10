@@ -10,9 +10,13 @@ guest users and delete old searches rake tasks fail for an extended period of
 time you need to manually do this the by running the following commands in the 
 DB console:
 
-````delete from searches where user_id is NULL and updated_at <=
-'YYYY-MM-DD';```
-```delete from users where guest = 1 and provider is NULL and created_at <=
-'YYYY-MM-DD';```
+```
+delete from searches where user_id is NULL and updated_at <=
+'YYYY-MM-DD';
+```
+```
+delete from users where guest = 1 and provider is NULL and created_at <=
+'YYYY-MM-DD';
+```
 
-where ```YYYY-MM-DD``` is yesterday. 
+where `YYYY-MM-DD` is yesterday. 
