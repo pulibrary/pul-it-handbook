@@ -26,3 +26,4 @@ is specific to PU Library it will be possible to use it in your environment.
 * [Cicognara Let's Encrypt](services/letsencrypt.md)
 * [Certificate Signing Request](services/create_ssl_certs.md)
 * [AWS](services/aws.md)
+* [ProQuest SFTP](services/proquest_sftp.md)
