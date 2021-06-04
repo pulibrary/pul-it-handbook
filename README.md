@@ -6,7 +6,7 @@ parts that are tricky to fully automate or in some cases not possible to.
 The repository is mostly a way to learn about our environment which means things
 will never "settle" in this repository.
 
-[gitmessage][gitmessage.md]
+[gitmessage](gitmessage.md)
 
 ## Target Audience
 
