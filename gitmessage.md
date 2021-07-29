@@ -18,13 +18,12 @@ In the event you are pairing and need a `.gitmessage`
 # Co-authored-by: Anna Headley <anna.headley@gmail.com>
 # Co-authored-by: Eliot Jordan <eliot.jordan@gmail.com>
 # Co-authored-by: Francis Kayiwa <kayiwa@pobox.com>
-# Co-authored-by: Axa Mei Liauw <aliauw@princeton.edu>
 # Co-authored-by: Kate Lynch <katelynch@princeton.edu>
 # Co-authored-by: Trey Pendragon <tpendragon@princeton.edu>
 # Co-authored-by: Kevin Reiss <kevin.reiss@gmail.com>
 # Co-authored-by: Bess Sadler <bess@ibiblio.org>
 # Co-authored-by: Mark Zelesky <mzelesky@princeton.edu>
-# Co-authored-by: Kevin McElwee <26414213+kmcelwee@users.noreply.github.com>
+# Co-authored-by: Zaynab Masood <zmasood@princeton.edu>
 #
 # Include a link to the ticket, if any.
 ```
