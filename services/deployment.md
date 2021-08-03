@@ -9,7 +9,7 @@
 ## Things that could go wrong:
 * If pulbot is down it won't receive the event. It used to ack messages but at some point we updated and it doesn't do that anymore
   * troubleshoot: `pulbot ping` it should pong.
-  * pulbot is on libruby-dev
+  * pulbot is on appdeploy1
   * to restart pulbot do `killall -HUP node`
   * to deploy pulbot you can't do bundle exec cap deploy; you just need cap installed locally
 * go to [gh pulibrary org > webhooks](https://github.com/organizations/pulibrary/settings/hooks/6570702); you can see all the events that have been fired recently.
