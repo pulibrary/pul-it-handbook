@@ -58,6 +58,8 @@
         L=\"Princeton\"
         O=\"The Trustees of Princeton University\"
         OU=\"OIT\"
+        emailAddress=\"lsupport@princeton.edu\"
+        CN=\"$NEW_HOST_NAME.princeton.edu\"" > $NEW_HOST_NAME.cnf
         [ req_ext ]
         subjectAltName = @alt_names
         [alt_names]
