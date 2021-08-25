@@ -1,2 +1,3 @@
-## Information about how Orangelight gets indexed is kept track in a Google Doc:
-[Orangelight Indexing](https://docs.google.com/document/d/1bHvgfgyUmDXV7ROqEZFaRxJFEYhSSUbeQoQT883GMWg/edit)
+## Information about how Orangelight gets indexed is documented in the orangelight repo:
+
+https://github.com/pulibrary/bibdata/blob/main/docs/indexing.md
