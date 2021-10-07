@@ -1,5 +1,10 @@
+We have 2 load balancer machines running nginxplus, lib-adc1 and lib-adc2
+
 ## Admin UI
-To connect to the admin ui you must create an SSH tunnel from your machine
+
+On the Admin UI you can turn traffic on and off or view the status of any given machine.
+
+To connect to the admin UI you must create an SSH tunnel from your machine
 ```
 ssh -L 8080:localhost:8080 pulsys@lib-adc1
 ```
