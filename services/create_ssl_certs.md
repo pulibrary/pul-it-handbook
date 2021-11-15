@@ -1,6 +1,6 @@
 ### Creating a TLS Certificate
 
-1. Certificate Signing Request 
+1. Certificate Signing Request
 
    1. One with no Subject Alternative Name (SAN)[1]
 
@@ -38,11 +38,11 @@
 
 
    1. One with a Subject Alternative Name (SAN)
-     
+
       * Export an environment variable with the host name for later commands
         ```
         export NEW_HOST_NAME=<new host name>
-        ```   
+        ```
 
       * create a file named `${NEW_HOSTNAME}_san.cnf` with the following command:
 
@@ -82,7 +82,7 @@
 
 
 1. Submit the Certificate request to OIT
-  
+
    * (SKIP if not SAN) Before submitting it you can check to see if your CSR contains the SAN you
      specified in the `${NEW_HOST_NAME}_san.cnf` file by doing.
 
@@ -117,10 +117,10 @@
 1. Verify the certificates
 
     * Make sure the certificates match by running the following. (remembering to
-      unencypt the private key)
+      unencrypt the private key)
 
     ```bash
-    echo “--Certificate:” && openssl x509 -noout -modulus -in ${NEW_HOST_NAME}_princeton_edu_chained.pem && echo “--Key:” && openssl rsa -noout -modulus -in ${NEW_HOST_NAME}_princeton_edu_priv.key
+    echo "--Certificate:" && openssl x509 -noout -modulus -in ${NEW_HOST_NAME}_princeton_edu_chained.pem && echo "--Key:" && openssl rsa -noout -modulus -in ${NEW_HOST_NAME}_princeton_edu_priv.key
     ```
 
     * Make sure the CN name matches ${NEW_HOST_NAME}_princeton_edu by running the
@@ -134,7 +134,7 @@
 
     * Add the private key to `nginxplus/files/ssl/${NEW_HOST_NAME}_princeton_edu_priv.key`
     (remembering to encrypt it with ansible vault it)
-    
+
       ```
       ansible-vault encrypt ${NEW_HOST_NAME}_princeton_edu_priv.key
       mv ${NEW_HOST_NAME}_princeton_edu_priv.key roles/nginxplus/files/ssl/
@@ -146,7 +146,7 @@
       intermediate files.
 
     * add the resulting concatenated file to `nginxplus/files/ssl/`
-    
+
       ```
       mv ${NEW_HOST_NAME}_princeton_edu_chained.pem roles/nginxplus/files/ssl/
       ```
