@@ -6,8 +6,6 @@ parts that are tricky to fully automate or in some cases not possible to.
 The repository is mostly a way to learn about our environment which means things
 will never "settle" in this repository.
 
-[gitmessage](gitmessage.md)
-
 ## Target Audience
 
 The target audience for this tutorial is any person planning to support
@@ -16,14 +14,8 @@ is specific to PU Library it will be possible to use it in your environment.
 
 ## Services
 
-* [Prerequisites](services/prerequisites.md)
-* [PostgreSQL](services/postgresql.md)
-* [Deployment](services/deployment.md)
-* [Redis](services/redis.md)
-* [Orangelight Indexing](services/orangelight-indexing.md)
-* [MariaDB Cluster Restart](services/mariadb.md)
-* [MariaDB Windows Tunnel](services/aspace_tunnel.md)
-* [Cicognara Let's Encrypt](services/letsencrypt.md)
-* [Certificate Signing Request](services/create_ssl_certs.md)
-* [AWS](services/aws.md)
-* [ProQuest SFTP](services/proquest_sftp.md)
+See the list of services with hard-way documentation under [/services](/services).
+
+## Misc Resources
+
+* A [.gitmessage](gitmessage.md) template to add easy-to-uncomment co-authored-by lines for many PUL developers.
