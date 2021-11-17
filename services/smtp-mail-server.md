@@ -13,4 +13,8 @@ For a ruby app you'll need the following configuration in `config/environments/p
   config.action_mailer.smtp_settings = {
     address:              'lib-ponyexpr.princeton.edu'
   }
+
+  config.action_mailer.default_options = {
+    from: 'no-reply@princeton.edu'
+  }
 ```
