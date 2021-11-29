@@ -131,13 +131,14 @@
 
     * Add the unencrypted private key to Shared-SSLCerts directory of LastPass Enterprise
 
-1. Encrypt the private key, then add the encrypted private key and the chained file to princeton-ansible:
+1. Encrypt the private key, and add the encrypted private key and the chained file to princeton-ansible:
 
     * Encrypt the private key with `ansible-vault` and add it to `nginxplus/files/ssl/${NEW_HOST_NAME}_princeton_edu_priv.key`
 
       ```
+      cp ${NEW_HOST_NAME}_princeton_edu_priv.key roles/nginxplus/files/ssl/
+      cd roles/nginxplus/files/ssl/
       ansible-vault encrypt ${NEW_HOST_NAME}_princeton_edu_priv.key
-      mv ${NEW_HOST_NAME}_princeton_edu_priv.key roles/nginxplus/files/ssl/
       ```
     * add the chained file to `nginxplus/files/ssl/`
 
