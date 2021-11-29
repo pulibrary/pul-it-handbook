@@ -115,7 +115,7 @@
 
 1. Verify the certificates
 
-    * Make sure the certificates match by running the following. (the private key must be unencrypted):
+    * Make sure the certificates match (the private key must be unencrypted):
 
     ```bash
     echo "--Certificate:" && openssl x509 -noout -modulus -in ${NEW_HOST_NAME}_princeton_edu_chained.pem && echo "--Key:" && openssl rsa -noout -modulus -in ${NEW_HOST_NAME}_princeton_edu_priv.key
