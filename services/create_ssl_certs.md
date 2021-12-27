@@ -59,7 +59,7 @@
         O=\"The Trustees of Princeton University\"
         OU=\"OIT\"
         emailAddress=\"lsupport@princeton.edu\"
-        CN=\"$NEW_HOST_NAME.princeton.edu\"" > $NEW_HOST_NAME.cnf
+        CN=\"$NEW_HOST_NAME.princeton.edu\"
         [ req_ext ]
         subjectAltName = @alt_names
         [alt_names]
@@ -73,8 +73,7 @@
         with the following command
 
         ```bash
-        openssl req -out ${NEW_HOST_NAME}_princeton_edu.csr -newkey rsa:4096 -nodes -keyout
-        ${NEW_HOST_NAME}_princeton_edu_priv.key -config ${NEW_HOST_NAME}_san.cnf
+        openssl req -out ${NEW_HOST_NAME}_princeton_edu.csr -newkey rsa:4096 -nodes -keyout ${NEW_HOST_NAME}_princeton_edu_priv.key -config ${NEW_HOST_NAME}_san.cnf
         ```
 
       The step :point_up_2: above will create `${NEW_HOST_NAME}_princeton_edu.csr` and
