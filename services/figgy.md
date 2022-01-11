@@ -104,13 +104,13 @@ Sometimes the `simple-tiles` library and the related `simpler-tiles` gem need to
 
 ## Exporting Large Objects to Disk
 
-When we need to share a large number of full-resolution files with a user, exporting all the files
-attached to an object scales better than manually downloading each file. Use the
-`figgy:export:files` Rake task to export an item, which also includes files attached to child
-objects of MVWs. For example, for the Figgy object
-https://figgy.princeton.edu/catalog/5a6e59c2-8b8d-4a70-bc6c-cad38e781636 has the
-`source_metadata_identifier` C1384_c0289. To export this oobject, login to one of the lib-proc
-machines as the `deploy` user and run the Rake task:
+To export a large number of files related to a single object, use the `figgy:export:files` Rake
+task instead of manually downloading each file. The Rake task will export all files, including
+files attached to child objects of multi-volume works. For example, for the Figgy object
+https://figgy.princeton.edu/catalog/5a6e59c2-8b8d-4a70-bc6c-cad38e781636 has the Source Metadata
+Identifier `C1384_c0289` (the Source Metadata Identifier is displayed in the staff metadata
+display in Figgy). To export this oobject, login to one of the lib-proc machines as the `deploy`
+user and run the Rake task:
 
 ``` sh
 cd /opt/figgy/current
@@ -119,8 +119,9 @@ bundle exec rake figgy:export:files ID=5a6e59c2-8b8d-4a70-bc6c-cad38e781636 FIGG
 
 The `ID` variable specifies the object to export, and the `FIGGY_EXPORT_BASE` variable overrides
 the default export location to use Isilon-mounted storage to avoid filling up the local disk. This
-exports the files in `/mnt/hydra_sources/ingest_scratch/export/C1384_c0289`, with a subdirectory
-for each child volume, containing the files attached to that child.
+exports the files to a directory named after the Source Metadata Identifier, in this case in
+`/mnt/hydra_sources/ingest_scratch/export/C1384_c0289`, with a subdirectory for each child volume,
+containing the files attached to that child.
 
 It seems possible to mount Google Drive directly on a server, but we have not configured that. So
 transferring a large amount of files requires downloading the files and then uploading them to
