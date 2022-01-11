@@ -121,3 +121,15 @@ The `ID` variable specifies the object to export, and the `FIGGY_EXPORT_BASE` va
 the default export location to use Isilon-mounted storage to avoid filling up the local disk. This
 exports the files in `/mnt/hydra_sources/ingest_scratch/export/C1384_c0289`, with a subdirectory
 for each child volume, containing the files attached to that child.
+
+It seems possible to mount Google Drive directly on a server, but we have not configured that. So
+transferring a large amount of files requires downloading the files and then uploading them to
+Google Drive. RSync is a good tool for downloading a large number of files because it can sync
+whole directory trees and can resume transfers. To download the object above, I used this command:
+
+``` sh
+rsync -vaz lib-proc7.princeton.edu:/mnt/hydra_sources/ingest_scratch/export/C1384_c0289 .
+```
+
+Uploading to Google Drive works pretty well even for large volumes of files, and uploading 100GB
+in this case completed in a few hours with no issues.
