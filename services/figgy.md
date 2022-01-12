@@ -105,11 +105,12 @@ Sometimes the `simple-tiles` library and the related `simpler-tiles` gem need to
 ## Exporting Large Objects to Disk
 
 To export a large number of files related to a single object, use the `figgy:export:files` Rake
-task instead of manually downloading each file. The Rake task will export all files, including
-files attached to child objects of multi-volume works. For example, for the Figgy object
+task instead of manually downloading each file. The Rake task will export all files (including
+files attached to child objects of multi-volume works) to a directory named after the object's
+Source Metadata Identifier (or Figgy ID for objects without one). For example, the Figgy object
 https://figgy.princeton.edu/catalog/5a6e59c2-8b8d-4a70-bc6c-cad38e781636 has the Source Metadata
 Identifier `C1384_c0289` (the Source Metadata Identifier is displayed in the staff metadata
-display in Figgy). To export this oobject, login to one of the lib-proc machines as the `deploy`
+display in Figgy). To export this object, login to one of the lib-proc machines as the `deploy`
 user and run the Rake task:
 
 ``` sh
