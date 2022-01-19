@@ -101,3 +101,37 @@ Sometimes the `simple-tiles` library and the related `simpler-tiles` gem need to
   $ cd .. && sudo rm -r simple-tiles-0.6.0/
   ```
 1. Redeploy Figgy to the server using Capistrano or Pulbot.
+
+## Exporting Large Objects to Disk
+
+To export a large number of files related to a single object, use the `figgy:export:files` Rake
+task instead of manually downloading each file. The Rake task will export all files (including
+files attached to child objects of multi-volume works) to a directory named after the object's
+Source Metadata Identifier (or Figgy ID for objects without one). For example, the Figgy object
+https://figgy.princeton.edu/catalog/5a6e59c2-8b8d-4a70-bc6c-cad38e781636 has the Source Metadata
+Identifier `C1384_c0289` (the Source Metadata Identifier is displayed in the staff metadata
+display in Figgy). To export this object, login to one of the lib-proc machines as the `deploy`
+user and run the Rake task:
+
+``` sh
+cd /opt/figgy/current
+bundle exec rake figgy:export:files ID=5a6e59c2-8b8d-4a70-bc6c-cad38e781636 FIGGY_EXPORT_BASE=/mnt/hydra_sources/ingest_scratch/export
+```
+
+The `ID` variable specifies the object to export, and the `FIGGY_EXPORT_BASE` variable overrides
+the default export location to use Isilon-mounted storage to avoid filling up the local disk. This
+exports the files to a directory named after the Source Metadata Identifier, in this case in
+`/mnt/hydra_sources/ingest_scratch/export/C1384_c0289`, with a subdirectory for each child volume,
+containing the files attached to that child.
+
+It seems possible to mount Google Drive directly on a server, but we have not configured that. So
+transferring a large amount of files requires downloading the files and then uploading them to
+Google Drive. RSync is a good tool for downloading a large number of files because it can sync
+whole directory trees and can resume transfers. To download the object above, I used this command:
+
+``` sh
+rsync -vaz lib-proc7.princeton.edu:/mnt/hydra_sources/ingest_scratch/export/C1384_c0289 .
+```
+
+Uploading to Google Drive works pretty well even for large volumes of files, and uploading 100GB
+in this case completed in a few hours with no issues.
