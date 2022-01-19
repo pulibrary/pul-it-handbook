@@ -97,6 +97,8 @@
       cat ${NEW_HOST_NAME}_princeton_edu.csr
       ```
 
+   * Include a note requesting that the contact name be listed as "lsupport@princeton.edu" - this ensures that the certificate expiration notice generates a SN@P ticket instead of going to just an individual.
+
    * OIT will create the certificates and respond via email within 24 hours
 
    * Usually OIT provides the certificates in separate files, but sometimes they post them as comments in the ticket.  If this is the case copy the comments in the ticket into the files before proceeding to the next step:
