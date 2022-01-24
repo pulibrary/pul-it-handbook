@@ -27,6 +27,7 @@ In the event you are pairing and need a `.gitmessage`
 # Co-authored-by: Xander Gardner <xandergardner7@gmail.com>
 # Co-authored-by: Chun Ly <astro.chun@gmail.com>
 # Co-authored-by: Regine Heberlein <regineheberlein@gmail.com>
+# Co-authored-by: Alicia Cozine <879121+acozine@users.noreply.github.com>
 #
 # Include a link to the ticket, if any.
 ```
