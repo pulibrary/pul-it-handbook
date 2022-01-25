@@ -4,7 +4,7 @@ You can add storage space to an existing virtual machine without shutting it dow
 
 ### Confirm that a logical volume exists
 
-The existing partition must be a logical volume (LVM) for these steps to work. Identify the partition type with `sudo fdisk -l` (or run the command as the root user). Notice that each attached disk has both a `Disk` entry and a `Device` entry. You should see a device with the ID (hex code) "8e" and the Type "Linux LVM", which denotes a logical volume.
+The existing partition must be a logical volume (LVM) for these steps to work. Identify the partition type with `sudo fdisk -l` (or run the command as the root user). Notice that each attached disk has both a `Disk` entry and a `Device` entry. You should see a device with the ID (hex code) `8e` and the Type `Linux LVM`, which denotes a logical volume.
 
 ```bash
 root@lib-solr-prod6:/home/pulsys# fdisk -l
@@ -49,7 +49,7 @@ Sector size (logical/physical): 512 bytes / 512 bytes
 I/O size (minimum/optimal): 512 bytes / 512 bytes
 ```
 
-In the output above, /dev/sda1 is a Linux logical volume. Once you confirm that you are working with a logical volume, you can continue.
+In the output above, `/dev/sda1` is a Linux logical volume. Once you confirm that you are working with a logical volume, you can continue.
 
 ### Create a new disk in vSphere
 
@@ -63,7 +63,7 @@ SSH into the VM and do `sudo su root` to change users to the root user. You cann
 
 Once the physical disk has been added at the hardware level, you must connect the new disk to the operating system and create a new partition that makes use of this additional space.
 
-First, check that the new unallocated disk space is detected by the server. Run `df -h` to view the available disk space. You will most likely see that the disk space is still showing as the original size. Re-run `fdisk -l` to list all the disks. The new disk will be the last in the alphabetical list (for example, if the machine has `/dev/sda` through `/dev/sdd`, the new disk is `/dev/sdd`. Likewise, in `/sys/class/scsi_host/` the new disk will be the host with the largest number. To connect the new disk with the operating system on the VM without rebooting the VM, you must rescan all devices by running the command below as root. *Use the largest available `host#` on your specific VM.*
+First, check that the new unallocated disk space is detected by the server. Run `df -h` to view the available disk space. You will most likely see that the disk space is still showing as the original size. Re-run `fdisk -l` to list all the disks. The new disk will be the last in the alphabetical list (for example, if the machine has `/dev/sda` through `/dev/sdd`, the new disk is `/dev/sdd`. Likewise, in `/sys/class/scsi_host/` the new disk will be the host with the largest number. To connect the new disk with the operating system on the VM without rebooting the VM, you must rescan all devices by running the command below as root. **Use the largest available `host#` on your specific VM.**
 
 ```bash
 echo "- - -" > /sys/class/scsi_host/host2/scan
@@ -79,17 +79,17 @@ To partition this disk, run:
 fdisk /dev/sdd
 ```
 
-Use the `fdisk` command to create a partition on the new disk. This command kicks off an interactive script. Use the inputs shown below to work through the script. You can press ‘m’ at any time to get a full listing of the fdisk commands. For a full example, see the output of the interactive script below the list of inputs.
+The `fdisk` command kicks off an interactive script that creates a partition on the new disk. Use the inputs shown below to work through the script. You can press `m` at any time to get a full listing of `fdisk` commands. For a full example, see the output of the interactive script below the list of inputs.
 
- - select *'n'* for a new partition.
- - select *'p'* for a primary partition.
- - select the *(default)* for the next partition number (YMMV).
- - press enter to select the defaults for the first cylinder of the unallocated space. (YMMV)
- - press enter again to select the default for the last cylinder of the unallocated space. (YMMV)
- - select *'t'* for type.
- - optionally type *'L'* to list all available disk types.
- - enter *'8e'* for a Linux logical volume, so you can join the new disk space to the original /dev/sda1 Linux LVM.
- - select *'w'* to write the new partition table and get you out of this shell.
+ - select **`n`** for a new partition.
+ - press enter to accept the default **`p`** for a primary partition.
+ - press enter again to accept the **(default)** for the partition number. (YMMV)
+ - press enter again to accept the **(default)** for the first sector of the unallocated space. (YMMV)
+ - press enter again to select the **(default)** for the last sector of the unallocated space. (YMMV)
+ - select **`t`** to set the type.
+ - optionally type **`L`** to list all available disk types.
+ - select **`8e`** for a Linux logical volume, so you can join the new disk space to the original `/dev/sda1` Linux LVM.
+ - select **`w`** to write the new partition table and get you out of this shell.
 
  ```bash
  root@lib-solr-prod6:/home/pulsys# fdisk /dev/sdd
@@ -152,7 +152,7 @@ Use the `fdisk` command to create a partition on the new disk. This command kick
 
 ### Create a physical volume
 
-The `pvcreate` command which creates a physical volume for later use by the logical volume manager (LVM). In this case the physical volume will be the new /dev/sdb1 partition.
+The `pvcreate` command creates a physical volume for later use by the logical volume manager (LVM). In this example, the physical volume will be the new `/dev/sdd1` partition.
 
 ```bash
 root@lib-solr-prod6:/home/pulsys# pvcreate /dev/sdd1
@@ -163,7 +163,7 @@ Now you should see a `Device` as well as a `Disk` in the output of `fdisk -l`.
 
 ### Extend the logical volume
 
-Next, extend the existing logical volume to include the new device. First, confirm the name of the current volume group, use the `vgdisplay` command:
+Next, extend the existing logical volume to include the new device. First, confirm the name of the current volume group using the `vgdisplay` command:
 
 ```bash
 root@lib-solr-prod6:/home/pulsys# vgdisplay
@@ -189,14 +189,14 @@ root@lib-solr-prod6:/home/pulsys# vgdisplay
   VG UUID               hbeBYx-treH-UAUZ-0MZE-vBxN-FvFv-3zqHjx
 ```
 
-Next, extend the volume group by adding in the physical volume of /dev/sdb1 which we created using the `pvcreate` command earlier. Pass the VG Name from the output above, in this example, `lib-vg`, to the `vgextend` command:
+Next, extend the volume group by adding in the physical volume `/dev/sdd1` which you created using the `pvcreate` command earlier. Pass the VG Name from the output above (in this example, `lib-vg`) to the `vgextend` command:
 
 ```bash
 root@lib-solr-prod6:/home/pulsys# vgextend lib-vg /dev/sdd1
   Volume group "lib-vg" successfully extended
 ```
 
-Confirm these changes using the `pvscan` command to scan all disks for physical volumes. The output should confirm the original /dev/sdb1 partition and the newly created physical volume /dev/sdb1:
+Confirm these changes using the `pvscan` command to scan all disks for physical volumes. The output should confirm the original `/dev/sdd1` partition and the newly created physical volume `/dev/sdd1`:
 
 ```bash
 root@lib-solr-prod6:/home/pulsys# pvscan
@@ -207,7 +207,7 @@ root@lib-solr-prod6:/home/pulsys# pvscan
   Total: 4 [439.98 GiB] / in use: 4 [439.98 GiB] / in no VG: 0 [0   ]
 ```
 
-Next, extend the logical volume (we already did the physical volume) which basically means we will be taking our original logical volume and extending it over our new partition/physical volume of /dev/sdb1.
+Next, extend the logical volume (we already did the physical volume) which basically means we will be taking our original logical volume and extending it over our new partition/physical volume of `/dev/sdd1`.
 
 Confirm the path of the logical volume using `lvdisplay` (YMMV)
 
