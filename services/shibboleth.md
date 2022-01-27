@@ -26,9 +26,38 @@ Once all of this is in place, you should be able to go to `https://your_fqdn.pri
 ## Enabling your new endpoint
 Once the above is working, you can fill out a [Single Sign-on Integration Request Form](https://princeton.service-now.com/nav_to.do?uri=%2Fcom.glideapp.servicecatalog_cat_item_v[…]alog_view%3Dcatalog_default%26sysparm_view%3Dtext_search ). Put your SP metadata URL in the field called "Service Provider Metadata URL".
 
+You also need to tell them what shibboleth attributes you need. For vireo, this is the answer: 
+```
+  <Attribute name="urn:oid:0.9.2342.19200300.100.1.3" id="shib_mail"/>
+  <Attribute name="urn:oid:0.9.2342.19200300.100.1.1" id="shib_netid" />
+  <Attribute name="urn:oid:2.5.4.4" id="shib_sn"/>
+  <Attribute name="urn:oid:2.5.4.42" id="shib_givenname"/>
+```
+
 Once OIT responds to your request you should be able to go to `https://your_fqdn.princeton.edu/Shibboleth.sso/Login` and it should kick off a successful authentication session and redirect back to your application as expected.
 
 ## Useful Reference Documents
 [Prepping Apache](https://shibboleth.atlassian.net/wiki/spaces/SP3/pages/2065335062/Apache#Prepping-Apache) Useful guide from shibboleth SP re: how to configure an apache virtual host.
 
 [Installation of Shibboleth SP in Ubuntu](https://medium.com/@winma.15/shibboleth-sp-installation-in-ubuntu-d284b8d850da) Unofficial but useful installation guide. Most of the work described here is accomplished in our ansible role, but it provides a helpful overview of the installation process.
+
+## Troubleshooting shib attributes
+
+### 1. Turn on shibd debugging
+To increase the log level of the shibd service, edit the first line of `shibd.logger` and restart shibd (`service shibd restart`): 
+```
+log4j.rootCategory=DEBUG, shibd_log, warn_log
+```
+**Disable this once you have solved the problem!**
+
+### 2. Check what values you're getting from the IdP
+1. Edit `shibboleth2.xml` to show the attribute values:
+```
+<!-- Session diagnostic service. -->
+<Handler type="Session" Location="/Session" showAttributeValues="true"/>
+```
+2. Restart shibd (`service shibd restart`)
+3. Authenticate to shibboleth in a browser window
+4. In another browser window go to `https://your_fqdn.princeton.edu/Shibboleth.sso/Session` and you should see the attributes being sent from IdP
+
+**Disable this once you have solved the problem!**
