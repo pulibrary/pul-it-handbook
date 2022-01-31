@@ -1,14 +1,20 @@
-# Service Now tips and tricks
+# ServiceNow tips and tricks
 
-Service Now offers two ways to access information its database: "canned" views (also known as the Service Portal) and "bare-bones" (also called Classic UI) views. The two views offer different UIs, different options, and different default data sets. You can navigate from "canned" / Service Portal views to the "bare bones" / Classic UI by selecting `Switch to Classic UI` in the `My Account` menu. You cannot navigate the other direction (at least, not easily). Here's a single ticket shown both ways:
+ServiceNow offers two ways to access information its database: "canned" views (also known as the Service Portal) and "bare-bones" (also called Classic UI) views. The two views offer different UIs, different options, and different default data sets. You can navigate from "canned" / Service Portal views to the "bare bones" / Classic UI by selecting `Switch to Classic UI` in the `My Account` menu. You cannot navigate the other direction (at least, not easily). Here's a single ticket shown both ways:
 
 - ["canned" view of a ticket](https://princeton.service-now.com/service?id=ticket&sys_id=db679830874149107f147487cebb35f7&table=sc_req_item).
 
 - ["bare-bones" view of the same ticket](https://princeton.service-now.com/nav_to.do?uri=%2Fsc_req_item.do%3Fsys_id%3Ddb679830874149107f147487cebb35f7%26sysparm_record_target%3Dsc_req_item%26sysparm_record_row%3D1%26sysparm_record_rows%3D1%26sysparm_record_list%3DnumberCONTAINS335118%255EORDERBYnumber).
 
-# Using "canned" Service Now views
+Here's a view of tickets assigned to you, shown both ways:
 
-Service Now offers quite a few "canned" or default views linked to your login that can be helpful. Here are some sample "canned" views:
+- ["canned" view of My Work](https://princeton.service-now.com/now/workspace/agent/home)
+
+- ["bare bones" view of My Work](https://princeton.service-now.com/nav_to.do?uri=%2Ftask_list.do%3Fsysparm_userpref_module%3D1523b8d4c611227b00be8216ec331b9a%26sysparm_query%3Dactive%253Dtrue%255Eassigned_to%253Djavascript%253AgetMyAssignments%2528%2529%255EEQ%26sysparm_clear_stack%3Dtrue)
+
+# Using "canned" ServiceNow views
+
+ServiceNow offers quite a few "canned" or default views linked to your login that can be helpful. Here are some sample "canned" views:
 
 - https://princeton.service-now.com/service?id=tickets
   - by default, this view shows active tickets you created
@@ -18,11 +24,13 @@ Service Now offers quite a few "canned" or default views linked to your login th
   - by default, this view shows bookmarked services
   - with a single click, it can show bookmarked forms
 
-However, these views are restrictive. If you are searching for tickets **assigned** to you, or for a ticket someone else created, it's easier to use the "bare-bones" view of Service Now.
+The "canned" views mostly show the perspective of a requester - someone reporting work for others to do. However, you can view work assigned to you by selecting `Switch to Workspace` in the `My Account` menu.
 
-## Using "bare-bones" Service Now views and searching
+There is probably a way to do everything in ServiceNow in either view, but searching for tickets other people created, or tickets assigned to a group is often easier in the "bare-bones" view of ServiceNow.
 
-Service Now also offers a "bare-bones" view that allows more flexibility. You can access the entry point for the "bare-bones" view here:
+## Using "bare-bones" ServiceNow views and searching
+
+ServiceNow also offers a "bare-bones" view that allows more flexibility. You can access the entry point for the "bare-bones" view here:
 
 https://princeton.service-now.com/
 
@@ -33,7 +41,7 @@ To search, start with the `Filter navigator` in the upper left corner. If you kn
 - To search for Incidents: type `incident.list` in the Filter navigator and hit Enter, then wait.
 - To search for Requested items: type `sc_req_item.list` in the Filter navigator and hit Enter, then wait.
 
-In our Service Now environment, most tickets opened by OIT are 'Incidents', while tickets opened from Service Now forms are 'Requested items'. There are probably other ticket types. It helps to have an existing ticket as an example - the URL of an example "canned" view can provide helpful clues about the ticket type.
+In our ServiceNow environment, most tickets opened by OIT are 'Incidents', while tickets opened from ServiceNow forms are 'Requested items'. There are probably other ticket types. It helps to have an existing ticket as an example - the URL of an example "canned" view can provide helpful clues about the ticket type.
 
 Once you have a list of the type of ticket you want, you can filter the results by searching within the various categories:
 
