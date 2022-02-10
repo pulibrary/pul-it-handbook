@@ -23,7 +23,6 @@ In the event you are pairing and need a `.gitmessage`
 # Co-authored-by: Kevin Reiss <kevin.reiss@gmail.com>
 # Co-authored-by: Bess Sadler <bess@ibiblio.org>
 # Co-authored-by: Mark Zelesky <mzelesky@princeton.edu>
-# Co-authored-by: Zaynab Masood <zmasood@princeton.edu>
 # Co-authored-by: Xander Gardner <xandergardner7@gmail.com>
 # Co-authored-by: Chun Ly <astro.chun@gmail.com>
 # Co-authored-by: Regine Heberlein <regineheberlein@gmail.com>
