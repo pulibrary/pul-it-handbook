@@ -1,6 +1,15 @@
-### Creating a TLS Certificate
+## Creating a TLS Certificate
 
-1. Create the Certificate Signing Request
+### Overview of process
+
+1. Create a CSR (certificate signing request)
+2. Submit it to OIT via [this form](https://princeton.service-now.com/service?id=sc_cat_item&sys_id=c85dafbd4f752e0018ddd48e5210c7e4)
+3. Your SSL cert will be created and returned to you via a Princeton Service Portal ticket within 24 hours
+4. Verify the files you get back and add them to your server configuration.
+
+### Detailed instructions
+
+#### 1. Create the Certificate Signing Request
 
    1. For a site with no Subject Alternative Name (SAN)[1]
 
@@ -79,8 +88,9 @@
       The step :point_up_2: above will create `${NEW_HOST_NAME}_princeton_edu.csr` and
       `${NEW_HOST_NAME}_princeton_edu_priv.key` in your current directory.
 
+#### 2. Submit the Certificate request to OIT
 
-1. Submit the Certificate request to OIT
+Submit the CSR via [this form](https://princeton.service-now.com/service?id=sc_cat_item&sys_id=c85dafbd4f752e0018ddd48e5210c7e4). Use the following guidance:
 
    * (SKIP if not SAN) Before submitting it you can check to see if your CSR contains the SAN you
      specified in the `${NEW_HOST_NAME}_san.cnf` file by doing.
@@ -98,8 +108,14 @@
       ```
 
    * Include a note requesting that the contact name be listed as "lsupport@princeton.edu" - this ensures that the certificate expiration notice generates a SN@P ticket instead of going to just an individual.
+   
+   ![Screenshot of submitting a CRT](images/ssl_request.jpg "SSL Request Form")
+
+#### 3. Check your ticket the following day
 
    * OIT will create the certificates and respond via email within 24 hours
+
+#### 4. Verify the files you get back 
 
    * Usually OIT provides the certificates in separate files, but sometimes they post them as comments in the ticket.  If this is the case copy the comments in the ticket into the files before proceeding to the next step:
 
