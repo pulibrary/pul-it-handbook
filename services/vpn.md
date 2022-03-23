@@ -19,6 +19,7 @@ under "Palo Alto GLobalProtect Cloud Gateways". These have been copied into
 
 ### Get IPs
 
-To get the IPs to send to the vendor you can run `ruby services/vpn/resolve.rb`,
-copy all the output, and send it to the appropriate people. You should get an
-output which is an IP per line.
+1. Copy all the FQDNs from the article above into `services/vpn/ips.txt`,
+   deleting any empty lines or headers which aren't URLs.
+1. Run `ruby services/vpn/resolve.rb`
+1. Copy the output (IP per line) and send it to the appropriate people.
