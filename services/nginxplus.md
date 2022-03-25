@@ -20,11 +20,7 @@ Then you can open up a web browse to the link http://localhost:8080
 
 ## The active machine (more details)
 
-A specially assigned ip address is moved between the two boxes depending on
-which is active.
-
-On the active machine the output of `ip a` will have a line that reads
-`inet 128.112.203.146/32 scope global eno1` in `eno1`.
+A specially assigned ip address (128.112.203.146) is moved between the two boxes depending on which is active.
 
 ## Update on live box
 
