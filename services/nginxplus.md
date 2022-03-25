@@ -8,14 +8,23 @@ To connect to the admin UI you must create an SSH tunnel from your machine
 ```
 ssh -L 8080:localhost:8080 pulsys@lib-adc1
 ```
+
+Make sure it's the active box.
+```
+ip a | grep 146
+```
+
+You will see an `inet` line if it's the active box. If it's not exit and tunnel to `lib-adc2` instead.
+
 Then you can open up a web browse to the link http://localhost:8080
 
-## Determine active machine
+## The active machine (more details)
 
-To figure out which machine is active:
-- ssh to one of them
-- `ip a`
-- look for inet `inet 128.112.203.146/32 scope global eno1` in `eno1`. If you see it that's the active machine.
+A specially assigned ip address is moved between the two boxes depending on
+which is active.
+
+On the active machine the output of `ip a` will have a line that reads
+`inet 128.112.203.146/32 scope global eno1` in `eno1`.
 
 ## Update on live box
 
