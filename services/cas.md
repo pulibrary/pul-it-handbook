@@ -1,5 +1,23 @@
-# Cas Rails Integration
+# CAS Rails Integration
 
+Central Authentication Service ([CAS](https://apereo.github.io/cas/)) is a service that we use to authenticate users with their Princeton credentials. These instructions are the steps to allow a Rails application to authenticate a user with our CAS via the `devise` and `omniauth-cas` gems.
+
+You can also use [Shibboleth](https://github.com/pulibrary/pul-the-hard-way/blob/main/services/shibboleth.md) for similar purposes. Shibboleth provides its own benefits and we still don't know which one is best/preferred/recommended. But if you need CAS this page is for you.
+
+One advantage of using CAS over Shibboleth is that you don't need to setup anything on your local machine or on the server to use it.
+
+
+## General workflow
+When integrating CAS via these instructions the general workflow of the application is more or less as follows:
+
+* There is a button in the app to authenticate via CAS.
+* When a user clicks on this button they are taken to the Princeton authentication page (e.g. `https://fed.princeton.edu/cas/login?service=x&url=y`). Notice that OmniAuth is smart enough to pass the correct parameters to our CAS server so that the authentication service knows what to do after a user enters their credentials.
+* Upon authentication (username, password, and two-factor authentication) the CAS server will callback our application to an endpoint provided by OmniAuth (e.g. `http://yourapp/users/auth/cas/callback?url=...&ticket=...`)
+* At this point OmniAuth will call our code in `Users::OmniauthCallbacksController.cas()` with the information about the user that authenticated. From that point on we know we have a valid session and can allow the user to perform the activities that they are authorized in our application.
+* You can view what information is available via CAS about the authenticated user here: https://fed.princeton.edu/cas/login
+
+
+## Rails integration
 1. Update your Gemfile to include devise and cas
    ```
    # Single sign on
