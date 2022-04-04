@@ -1,5 +1,23 @@
-# Cas Rails Integration
+# CAS Rails Integration
 
+Central Authentication Service ([CAS](https://apereo.github.io/cas/)) is a service that we use to authenticate users with their Princeton credentials. These instructions are the steps to allow a Rails application to authenticate a user with our CAS via the `devise` and `omniauth-cas` gems.
+
+You can also use [Shibboleth](https://github.com/pulibrary/pul-the-hard-way/blob/main/services/shibboleth.md) for similar purposes. Shibboleth provides its own benefits and we still don't know which one is best/preferred/recommended. But if you need CAS this page is for you.
+
+One advantage of using CAS over Shibboleth is that you don't need to setup anything on your local machine or on the server to use it.
+
+
+## General workflow
+When integrating CAS via these instructions the general workflow of the application is more or less as follows:
+
+* There is a button in the app to authenticate via CAS.
+* When a user clicks on this button they are taken to the Princeton authentication page (e.g. `https://fed.princeton.edu/cas/login?service=x&url=y`). Notice that OmniAuth is smart enough to pass the correct parameters to our CAS server so that the authentication service knows what to do after a user enters their credentials.
+* Upon authentication (username, password, and two-factor authentication) the CAS server will callback our application to an endpoint provided by OmniAuth (e.g. `http://yourapp/users/auth/cas/callback?url=...&ticket=...`)
+* At this point OmniAuth will call our code in `Users::OmniauthCallbacksController.cas()` with the information about the user that authenticated. From that point on we know we have a valid session and can allow the user to perform the activities that they are authorized in our application.
+* You can view what information is available via CAS about the authenticated user here: https://fed.princeton.edu/cas/login
+
+
+## Rails integration
 1. Update your Gemfile to include devise and cas
    ```
    # Single sign on
@@ -13,10 +31,14 @@
    rails generate devise User
    ```
 
-1. Add authentication to your app/controllers/application_controller.rb
+1. Add authentication to your `app/controllers/application_controller.rb`
    ```
       protect_from_forgery with: :exception
       before_action :authenticate_user!
+
+      def new_session_path(_scope)
+        new_user_session_path
+      end
    ```
 
 1. Create a new controller  `app/controllers/users/omniauth_callbacks_controller.rb`
@@ -37,7 +59,7 @@
         end
       end
     end
-   
+
    ```
 
 1. Add Omni auth to app/models/user.rb
@@ -46,39 +68,52 @@
 
     def self.from_cas(access_token)
       User.where(provider: access_token.provider, uid: access_token.uid).first
+
+      # You can update this logic to create users automatically after they have authenticated
+      # via CAS. The hash in `request.env["omniauth.auth"]` has the information about the
+      # authenticated user.
+
     end
    ```
 
-1. Add a login button to one of your pages
+1. Update `config/initializers/devise.rb` to tell Devise the location of our CAS server and change they key if needed (`:uid` in our CAS server maps to the user's `netid`)
 
    ```
-   <%= button_to "Login", user_cas_omniauth_callback_path %>
-   ```
-
-1. Change the devise key if needed in config/inititalizers/deviser.rb
-
-   ```
+   config.omniauth :cas, host: "fed.princeton.edu", url: "https://fed.princeton.edu/cas"
+   ...
    config.case_insensitive_keys = [:uid]
    ...
    config.strip_whitespace_keys = [:uid]
    ```
 
-1. Make sure you have a root path in config/routs.rb
+1. Add a login button to one of your pages
+
+   ```
+   <%= button_to "Login", user_cas_omniauth_authorize_path %>
+   ```
+
+1. Make sure you have a root path in `config/routes.rb`
    ```
    root <your root path>
    ```
 
-1. Add a route for the cas controller by changing devise_for in config/routes.rb to
+1. Add a route for the CAS controller by changing devise_for in `config/routes.rb` to
 
    ```
    devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+
+   devise_scope :user do
+     get "sign_in", to: "devise/sessions#new", as: :new_user_session
+     get "sign_out", to: "devise/sessions#destroy", as: :destroy_user_session
+   end
    ```
 
-1. Generate a migration to add the cas fields to a user
+1. Generate a migration to add the CAS fields to a user
    ```
    rails generate migration AddCasToUser provider:string:index uid:string:index
    ```
-1.  add Devise helpers to you spec/rails_helper.rb 
+
+1. Add Devise helpers to you `spec/rails_helper.rb`
 
     ```
     # note: require 'devise' after require 'rspec/rails'
@@ -93,6 +128,7 @@
       config.include Devise::Test::IntegrationHelpers, type: :request
     end
     ```
+
 1. Add Sign_in to tests that are behind the login
 
    ```
@@ -124,7 +160,7 @@
    1. Add factorybot to your Gemfile
       ```
       group :development, :test do
-        gem 'factory_bot_rails', require: false 
+        gem 'factory_bot_rails', require: false
       end
    1. Add a spec/factories directory and include spec/factories/user.rb
       ```
@@ -135,5 +171,5 @@
           provider 'cas'
           password 'foobarfoo'
         end
-      end    
+      end
       ```
