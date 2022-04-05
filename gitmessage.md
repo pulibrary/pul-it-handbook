@@ -10,25 +10,25 @@ In the event you are pairing and need a `.gitmessage`
 # * Are there any side effects?
 # * PUL Co-authored-by:
 #
-# Co-authored-by: Thanya Begum <tbegum@princeton.edu>
 # Co-authored-by: Alicia Cozine<acozine@users.noreply.github.com>
-# Co-authored-by: Christina Chortaria <actspatial@gmail.com>
-# Co-authored-by: Carolyn Cole <cac9@princeton.edu>
-# Co-authored-by: Hector Correa <hector@hectorcorrea.com>
-# Co-authored-by: Shaun Ellis <shaun@sdellis.com>
-# Co-authored-by: Xander Gardner <xandergardner7@gmail.com>
-# Co-authored-by: James R. Griffin III <jrgriffiniii@gmail.com>
 # Co-authored-by: Anna Headley <anna.headley@gmail.com>
+# Co-authored-by: Bess Sadler <bess@ibiblio.org>
+# Co-authored-by: Carolyn Cole <cac9@princeton.edu>
+# Co-authored-by: Christina Chortaria <actspatial@gmail.com>
+# Co-authored-by: Chun Ly <astro.chun@gmail.com>
 # Co-authored-by: Eliot Jordan <eliot.jordan@gmail.com>
 # Co-authored-by: Francis Kayiwa <kayiwa@pobox.com>
-# Co-authored-by: Rebecca Sutton Koeser <rlskoeser@users.noreply.github.com>
-# Co-authored-by: Chun Ly <astro.chun@gmail.com>
-# Co-authored-by: Kate Lynch <katelynch@princeton.edu>
-# Co-authored-by: Trey Pendragon <tpendragon@princeton.edu>
-# Co-authored-by: Kevin Reiss <kevin.reiss@gmail.com>
-# Co-authored-by: Bess Sadler <bess@ibiblio.org>
+# Co-authored-by: Hector Correa <hector@hectorcorrea.com>
+# Co-authored-by: James R. Griffin III <jrgriffiniii@gmail.com>
 # Co-authored-by: Jane Sandberg <js7389@princeton.edu>
+# Co-authored-by: Kate Lynch <katelynch@princeton.edu>
+# Co-authored-by: Kevin Reiss <kevin.reiss@gmail.com>
 # Co-authored-by: Mark Zelesky <mzelesky@princeton.edu>
+# Co-authored-by: Rebecca Sutton Koeser <rlskoeser@users.noreply.github.com>
+# Co-authored-by: Shaun Ellis <shaun@sdellis.com>
+# Co-authored-by: Thanya Begum <tbegum@princeton.edu>
+# Co-authored-by: Trey Pendragon <tpendragon@princeton.edu>
+# Co-authored-by: Xander Gardner <xandergardner7@gmail.com>
 #
 # Include a link to the ticket, if any.
 ```
