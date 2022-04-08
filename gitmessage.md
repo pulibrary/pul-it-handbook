@@ -25,6 +25,7 @@ In the event you are pairing and need a `.gitmessage`
 # Co-authored-by: Kevin Reiss <kevin.reiss@gmail.com>
 # Co-authored-by: Mark Zelesky <mzelesky@princeton.edu>
 # Co-authored-by: Rebecca Sutton Koeser <rlskoeser@users.noreply.github.com>
+# Co-authored-by: regineheberlein <regineheberlein@gmail.com>
 # Co-authored-by: Shaun Ellis <shaun@sdellis.com>
 # Co-authored-by: Thanya Begum <tbegum@princeton.edu>
 # Co-authored-by: Trey Pendragon <tpendragon@princeton.edu>
