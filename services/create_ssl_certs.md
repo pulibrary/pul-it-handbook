@@ -2,7 +2,7 @@
 
 ### Overview of process
 
-1. Create a CSR (certificate signing request)
+1. Create a CSR (certificate signing request) - can be automated with [playbooks/cert_renewal.yml](https://github.com/pulibrary/princeton_ansible/blob/main/playbooks/cert_renewal.yml)
 2. Submit it to OIT via [this form](https://princeton.service-now.com/service?id=sc_cat_item&sys_id=c85dafbd4f752e0018ddd48e5210c7e4)
 3. Your SSL cert will be created and returned to you via a Princeton Service Portal ticket within 24 hours
 4. Verify the files you get back and add them to your server configuration.
@@ -10,6 +10,10 @@
 ### Detailed instructions
 
 #### 1. Create the Certificate Signing Request
+
+To genrate a CSR using Ansible, run the [cert_renewal playbook](https://github.com/pulibrary/princeton_ansible/blob/main/playbooks/cert_renewal.yml).
+
+To generate a CSR manually:
 
    1. For a site with no Subject Alternative Name (SAN)[1]
 
