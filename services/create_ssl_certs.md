@@ -11,7 +11,7 @@
 
 #### 1. Create the Certificate Signing Request
 
-To genrate a CSR using Ansible, run the [cert_renewal playbook](https://github.com/pulibrary/princeton_ansible/blob/main/playbooks/cert_renewal.yml).
+To generate a CSR using Ansible, run the [cert_renewal playbook](https://github.com/pulibrary/princeton_ansible/blob/main/playbooks/cert_renewal.yml).
 
 To generate a CSR manually:
 
