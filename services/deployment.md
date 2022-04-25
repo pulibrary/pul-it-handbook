@@ -1,22 +1,49 @@
 # Deployment
 
 ## Sequence of deployment events
-* ask pulbot to deploy
-* it sends a deployment event to github
-* github POSTs that event to heaven via a hook set up in the pulibrary organization
-* heaven catches the event and runs the deployment
+* ask [pulbot](https://github.com/pulibrary/pulbot) to deploy
+* it sends a [deployment event to github](https://docs.github.com/en/rest/deployments/deployments)
+* github POSTs that event to [heaven](https://github.com/pulibrary/heaven) via a hook set up in the pulibrary organization
+* heaven catches the event and runs the deployment using [capistrano](https://capistranorb.com/)
 
-## Things that could go wrong:
-* If pulbot is down it won't receive the event. It used to ack messages but at some point we updated and it doesn't do that anymore
-  * troubleshoot: `pulbot ping` it should pong.
-  * pulbot is on appdeploy1
-  * to restart pulbot do `killall -HUP node`
-  * to deploy pulbot you can't do bundle exec cap deploy; you just need cap installed locally
+### Troubleshooting
+
+#### When pulbot is unresponsive
+
+Attempting to (re)deploy a service using pulbot does not always succeed, but in
+all cases where pulbot deployments fail, one should observe that pulbot logs
+these errors:
+
+![An example of a pulbot deployment failure](./pulbot_failure.png "An example of a pulbot deployment failure")
+
+However, when pulbot simply does not respond, one of two issues may be affecting infrastructure:
+
+- There are delays for the GitHub deployment API (please inspect [https://status.github.com/](https://status.github.com) in order to eliminate this possibility)
+- pulbot itself is not running or accessible over the HTTP
+- Heaven is not running or accessible over the network
+
+##### Troubleshooting pulbot
+
+* troubleshoot: `pulbot ping` it should pong
+* pulbot is on appdeploy1
+* to restart pulbot, please invoke `killall -HUP node` on appdeploy1
+* to deploy pulbot you can't invoke `bundle exec cap deploy`; you just need `cap` installed locally
+
+##### Troubleshooting the GitHub Deployments API configuration
+
 * go to [gh pulibrary org > webhooks](https://github.com/organizations/pulibrary/settings/hooks/6570702); you can see all the events that have been fired recently.
   * you can redeliver these events through that UI in github
+
+##### Troubleshooting Heaven
+
 * heaven service could be down
   * you can try to hit the heaven box via the browser; it redirects to the github page
-  * heaven is on appdeploy
+  * heaven is on [appdeploy](https://appdeploy.princeton.edu/)
+* heaven heavily relies upon [redis](https://redis.io/) to enqueue deployment jobs for pulbot
+  * please invoke `sudo systemctl restart appdeploy-workers.service` to restart
+    the `redis` worker processes
+  * also please attempt to monitor the activity for these jobs using
+    `tail -f /opt/pulbot/current/log/hubot.log` and `sudo journalctl -xfu appdeploy-workers.service`
 
 ## Heaven and automatic deployment
 
@@ -51,7 +78,9 @@ When you update pulbot's configuration, it needs to be redeployed, which you can
 $ pulbot deploy pulbot
 ```
 
-### Deploy troubleshooting: public key problems
+### Deploy troubleshooting
+
+#### public key problems
 
 If deploying to a pre-ansible box, you must add heaven's public key to the deploy user's authorized_keys on the box that will be deployed to.
 
