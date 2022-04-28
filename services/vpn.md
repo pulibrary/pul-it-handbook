@@ -14,8 +14,7 @@ of IP numbers, so we have to resolve the FQDNs and provide them.
 
 All of the endpoints can be found here:
 [https://princeton.service-now.com/service?id=kb_article&sys_id=KB0012390](https://princeton.service-now.com/service?id=kb_article&sys_id=KB0012390)
-under "Palo Alto GLobalProtect Cloud Gateways". These have been copied into
-`services/vpn/ips.txt` in this repository.
+under "Palo Alto GLobalProtect Cloud Gateways".
 
 ### Get IPs
 
