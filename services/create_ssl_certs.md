@@ -4,7 +4,10 @@
 
 1. Create a CSR (certificate signing request) - can be automated with [playbooks/cert_renewal.yml](https://github.com/pulibrary/princeton_ansible/blob/main/playbooks/cert_renewal.yml)
 2. Submit it to OIT via [this form](https://princeton.service-now.com/service?id=sc_cat_item&sys_id=c85dafbd4f752e0018ddd48e5210c7e4)
-3. Your SSL cert will be created and returned to you via a Princeton Service Portal ticket within 24 hours
+    1. Submit it to gandi via [this form](https://shop.gandi.net/en/certificate/create) when creating non-princeton.edu domains
+3. Your TLS/SSL cert will be created and returned to you via a Princeton Service Portal ticket within 24 hours
+    1. Your TLS/SSL cert will be created and returned to you via a email within
+       3 hours from gandi.net
 4. Verify the files you get back and add them to your server configuration.
 
 ### Detailed instructions
@@ -148,7 +151,7 @@ Submit the CSR via [this form](https://princeton.service-now.com/service?id=sc_c
     openssl x509 -in ${NEW_HOST_NAME}_princeton_edu_chained.pem -text
     ```
 
-1. Save the unencrypted private key
+1. Save the unencrypted private key for names that are not under ansible control
 
     * Add the unencrypted private key to Shared-SSLCerts directory of LastPass Enterprise
 
