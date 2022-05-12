@@ -11,7 +11,7 @@ In the event you are pairing and need a `.gitmessage`
 # * PUL Co-authored-by:
 #
 # Co-authored-by: Alicia Cozine<acozine@users.noreply.github.com>
-# Co-authored-by: Anna Headley <harkistan@users.noreply.github.com>
+# Co-authored-by: Anna Headley <hackartisan@users.noreply.github.com>
 # Co-authored-by: Bess Sadler <bess@users.noreply.github.com>
 # Co-authored-by: Carolyn Cole <carolyncole@users.noreply.github.com>
 # Co-authored-by: Christina Chortaria <christinach@users.noreply.github.com>
