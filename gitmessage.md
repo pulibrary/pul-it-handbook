@@ -27,6 +27,7 @@ In the event you are pairing and need a `.gitmessage`
 # Co-authored-by: Max Kadel <maxkadel@users.noreply.github.com>
 # Co-authored-by: Michelle Liu <m-ichelleliu@users.noreply.github.com>
 # Co-authored-by: Rebecca Sutton Koeser <rlskoeser@users.noreply.github.com>
+# Co-authored-by: Ryan Laddusaw <rladdusaw@users.noreply.github.com>
 # Co-authored-by: regineheberlein <regineheberlein@users.noreply.github.com>
 # Co-authored-by: Shaun Ellis <sdellis@users.noreply.github.com>
 # Co-authored-by: Taylor Yamashita <taylor-yamashita@users.noreply.github.com>
