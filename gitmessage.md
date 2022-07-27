@@ -34,6 +34,7 @@ In the event you are pairing and need a `.gitmessage`
 # Co-authored-by: Taylor Yamashita <taylor-yamashita@users.noreply.github.com>
 # Co-authored-by: Thanya Begum <thanyabegum@users.noreply.github.com>
 # Co-authored-by: Trey Pendragon <tpendragon@users.noreply.github.com>
+# Co-authored-by: Tyler Wade <twade968@users.noreply.github.com>
 # Co-authored-by: Vickie Karasic <vickiekarasic@users.noreply.github.com>
 #
 # Include a link to the ticket, if any.
