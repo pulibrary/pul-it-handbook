@@ -1,4 +1,4 @@
-# PU Library The Hard Way
+# PU Library IT Handbook
 
 The repository walks you through the corner cases on PU Library. These are the
 parts that are tricky to fully automate or in some cases not possible to.
