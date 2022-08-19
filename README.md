@@ -1,6 +1,6 @@
 # PU Library IT Handbook
 
-The repository walks you through the corner cases on PU Library. These are the
+The repository walks you through best practices, culture, and technological corner cases on PU Library. These are the
 parts that are tricky to fully automate or in some cases not possible to.
 
 The repository is mostly a way to learn about our environment which means things
