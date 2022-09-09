@@ -8,7 +8,7 @@ If you encounter non-inclusive language in the course of your work, open an issu
 
 The following table includes examples of alternate labels PUL IT has adopted for some common non-inclusive or harmful terms:
 
-| Depricated             | Inclusive         |
+| Deprecated             | Inclusive         |
 | ---------------------- | -------------- |
 | Whitelist              | Allowlist |
 | Blacklist              | Denylist (or ignore_list, excluded_x, skipped_x) as appropriate for the context   |
@@ -24,3 +24,4 @@ The following table includes examples of alternate labels PUL IT has adopted for
 | Freshman               | 		First-year |
 | User testing           | 	Usability testing |
 | Backlog/feature grooming       | 	Backlog/feature refinement |
+| Mob programming/swarming       | 	Ensemble programming |
