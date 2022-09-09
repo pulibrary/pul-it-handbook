@@ -1,60 +1,65 @@
 # New Mac Setup
 This is a get started guide to make it easier to setup your mac.
 
-When you get a new mac here are some helpful guides to setting it up for software development in RDSS.
+When you get a new mac here are some helpful guides to setting it up for PUL software development.
 
-Use the URL below to customize/setup your unix prompt.
-We use zsh as a unix prompt. The last two setup steps(8,9) are not necessary for mac setup but will add more custimization options if you feel the need to install.
+1. Use the URL below to customize/setup your unix prompt.
+We use zsh as a unix prompt. The last two setup steps(8,9) are not necessary for mac setup but will add more customization options if you feel the need to install.
 
 https://www.freecodecamp.org/news/how-to-configure-your-macos-terminal-with-zsh-like-a-pro-c0ab3f3c1156/ 
 
 
-A new SSH key will also need to be installed on your mac. Below is the link with the steps for connecting to github using SSH keys. The SSH key will be needed to connect with your github account and grants you the ability to start adding data into PUL repositories.  
+2. A new SSH key will also need to be installed on your mac. Below is the link with the steps for connecting to github using SSH keys. The SSH key will be needed to connect with your github account and grants you the ability to start adding data into PUL repositories. To check and see if this step was completed correctly you will need to go to the github webpage that shows your public keys. listed below the SSH key documetation is an example of the github URL used to check your public keys. Make sure that your github profile name is included and followed by .keys (github.com/your_github_id.keys)
 
-https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwjJ8fzNxtr5AhXokmoFHU2CC5YQFnoECAUQAQ&url=https%3A%2F%2Fdocs.github.com%2Fen%2Fauthentication%2Fconnecting-to-github-with-ssh&usg=AOvVaw0ObLt130kJ7y4IwQ-069jU
+https://docs.github.com/en/authentication/connecting-to-github-with-ssh
 
-New fellows may also want to rename the computer name,hostname and local hostname on your Mac machine. Below is the link to help rename.
+https://github.com/twade968.keys
+
+![alt text](images/github_keys.png "Title")
+
+
+3. New fellows may also want to rename the computer name,hostname and local hostname on your Mac machine. Below is the link to help rename.
 
 https://jumpcloud.com/blog/how-to-rename-computer-name-hostname-local-hostname-macos
 
+Before I changed my hostname this is what my unix prompt looked like
+![alt text](images/change_hostname.png "Title")
 
-New fellows will need to download and install microsoft visual studio (VS Code) for mac os. You will also need to install the commands that allow you to launch VS Code from the iterm2 terminal command line. Link to instructions are below.
+This is what the unix prompt should look like after change
+![alt text](images/unix_prompt_newhostname.png "Title")
+
+
+
+4. New fellows will need to download and install microsoft visual studio (VS Code) for mac os. You will also need to install the commands that allow you to launch VS Code from the iterm2 terminal command line. Link to instructions are below.
 
 https://code.visualstudio.com/docs/setup/mac
 
 
-go to the pdc_describe github page and checkout the projects dependencies and the local development setup information to become aware of the specific software plugins you will need to work on the project
-https://github.com/pulibrary/pdc_describe
+5. install these programs with homebrew
+```
+brew install bat
+brew install gpg 
+brew install postgres
+brew install --cask lando
+brew install asdf
+```
 
 
-Fellows will also need to install asdf plugins to work with pdc_describe. Below is the link to install asdf plugins. check dependencies in step 1, download asdf in step 2, and run the ZSH & Homebrew command in step 3
+6. After installing asdf you will need a few other asdf plugins to work with PUL projects. Common plugins needed are below.
 
-https://asdf-vm.com/guide/getting-started.html
-
-
-after installing asdf you will need the nodejs plugin for asdf version manager and a few other asdf plugins to work with PUL projects  (code "brew install gpg" may be needed as a dependency plugin for the asdf version manager). All plugins needed are below.
-
-https://github.com/asdf-vm/asdf-nodejs
-https://github.com/asdf-vm/asdf-ruby
-https://github.com/twuni/asdf-yarn
-https://gist.github.com/johnny-aroza/ab1ef0db48118f156bf39ed25b509544
+* https://asdf-vm.com/guide/getting-started.html
+* https://github.com/asdf-vm/asdf-nodejs
+* https://github.com/asdf-vm/asdf-ruby
+* https://github.com/twuni/asdf-yarn
+* https://gist.github.com/johnny-aroza/ab1ef0db48118f156bf39ed25b509544
 
 
-
-Create a specific project profile in iterm2
-1.Go to profile at the tab at the top of screen while in iterm2 terminal
-2.click open profile
-3.click edit profile
-4. press the + button at the bottom of the current window to add pdc_describe profile.
-
-While still in current window add pdc_describe to the fields listed below.
-1.add name = pdc_describe
-2.tag = pdc_describe
-3.badge = pdc_describe
-4.send text at start = cd ~/projects/pdc_describe
-customize the color and text size of your terminal to your personal likeing.
-
-
+7. You will also need to install git config commands. The git config command is a convenience function that is used to set Git configuration values on a global or local project level. You can use the Git configuration file to customize how Git works.
+```
+git config --global user.name "Your Name"
+git config --global user.email "your_princeton_email"
+git config --global core.pager bat
+```
 
 Trouble shooting: 
 1. 
