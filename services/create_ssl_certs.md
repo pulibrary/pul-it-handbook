@@ -3,7 +3,7 @@
 ### Overview of process
 
 1. Create a CSR (certificate signing request) - can be automated with [playbooks/cert_renewal.yml](https://github.com/pulibrary/princeton_ansible/blob/main/playbooks/cert_renewal.yml)
-2. Submit it to OIT via [this form](https://princeton.service-now.com/service?id=sc_cat_item&sys_id=c85dafbd4f752e0018ddd48e5210c7e4)
+2. Submit it to OIT via [this form](https://princeton.service-now.com/service?id=sc_cat_item&sys_id=cae90ab81bd1595098d1217e6e4bcb3d)
     1. Submit it to gandi via [this form](https://shop.gandi.net/en/certificate/create) when creating non-princeton.edu domains
 3. Your TLS/SSL cert will be created and returned to you via a Princeton Service Portal ticket within 24 hours
     1. Your TLS/SSL cert will be created and returned to you via a email within
@@ -42,7 +42,7 @@ To generate a CSR manually:
         ```
 
       * Generate the certificate which you will provide to
-        [OIT](https://princeton.service-now.com/snap?sys_id=c85dafbd4f752e0018ddd48e5210c7e4&id=sc_cat_item&table=sc_cat_item)
+        [OIT](https://princeton.service-now.com/service?id=sc_cat_item&sys_id=cae90ab81bd1595098d1217e6e4bcb3d)
         with the following command
 
         ```bash
@@ -53,7 +53,7 @@ To generate a CSR manually:
       `${NEW_HOST_NAME}_princeton_edu_priv.key` in your current directory.
 
 
-   1. For a site with a Subject Alternative Name (SAN)
+   2. For a site with a Subject Alternative Name (SAN)
 
       * Export an environment variable with the host name for later commands
         ```
@@ -85,7 +85,7 @@ To generate a CSR manually:
       * Edit the file to add your additional Alternative name
 
       * Generate the certificate you will provide to
-        [OIT](https://princeton.service-now.com/snap?sys_id=c85dafbd4f752e0018ddd48e5210c7e4&id=sc_cat_item&table=sc_cat_item)
+        [OIT](https://princeton.service-now.com/service?id=sc_cat_item&sys_id=cae90ab81bd1595098d1217e6e4bcb3d)
         with the following command
 
         ```bash
@@ -97,7 +97,7 @@ To generate a CSR manually:
 
 #### 2. Submit the Certificate request to OIT
 
-Submit the CSR via [this form](https://princeton.service-now.com/service?id=sc_cat_item&sys_id=c85dafbd4f752e0018ddd48e5210c7e4). Use the following guidance:
+Submit the CSR via [this form](https://princeton.service-now.com/service?id=sc_cat_item&sys_id=cae90ab81bd1595098d1217e6e4bcb3d). Use the following guidance:
 
    * (SKIP if not SAN) Before submitting it you can check to see if your CSR contains the SAN you
      specified in the `${NEW_HOST_NAME}_san.cnf` file by doing.
@@ -107,7 +107,7 @@ Submit the CSR via [this form](https://princeton.service-now.com/service?id=sc_c
       ```
 
     * Provide a `cat`'ed copy of the Certificate Signing Request to
-      [OIT](https://princeton.service-now.com/snap?sys_id=c85dafbd4f752e0018ddd48e5210c7e4&id=sc_cat_item&table=sc_cat_item)
+      [OIT](https://princeton.service-now.com/service?id=sc_cat_item&sys_id=cae90ab81bd1595098d1217e6e4bcb3d)
       with the following command
 
       ```
@@ -120,11 +120,11 @@ Submit the CSR via [this form](https://princeton.service-now.com/service?id=sc_c
 
 #### 3. Check your ticket the following day
 
-   * OIT will create the certificates and respond via email within 24 hours
+   * OIT automated process will generate tickets with Sectigo which will return in a matter of minutes
 
 #### 4. Verify the files you get back 
 
-   * Usually OIT provides the certificates in separate files, but sometimes they post them as comments in the ticket.  If this is the case copy the comments in the ticket into the files before proceeding to the next step:
+   * OIT provides the certificates in the form of an email from the Certificate Manager. You will want the Certificate and Root/Intermediate files:
 
       * `vi ${NEW_HOST_NAME}_princeton_edu_cert.cer` and copy and paste including `-----BEGIN CERTIFICATE-----` to `-----END CERTIFICATE-----`
       * `vi ${NEW_HOST_NAME}_princeton_edu_interm.cer` and copy and paste the rest of the certificates marked as `X.509 Root/Intermediate(s)`.  This should have Multiple begin and end certificates, which should be included.
@@ -137,7 +137,7 @@ Submit the CSR via [this form](https://princeton.service-now.com/service?id=sc_c
       cat ${NEW_HOST_NAME}_princeton_edu_cert.cer ${NEW_HOST_NAME}_princeton_edu_interm.cer > ${NEW_HOST_NAME}_princeton_edu_chained.pem
       ```
 
-1. Verify the certificates
+2. Verify the certificates
 
     * Make sure the certificates match (the private key must be unencrypted):
 
@@ -151,11 +151,11 @@ Submit the CSR via [this form](https://princeton.service-now.com/service?id=sc_c
     openssl x509 -in ${NEW_HOST_NAME}_princeton_edu_chained.pem -text
     ```
 
-1. Save the unencrypted private key for names that are not under ansible control
+3. Save the unencrypted private key for names that are not under ansible control
 
     * Add the unencrypted private key to Shared-SSLCerts directory of LastPass Enterprise
 
-1. Encrypt the private key, and add the encrypted private key and the chained file to princeton-ansible:
+4. Encrypt the private key, and add the encrypted private key and the chained file to princeton-ansible:
 
     * Encrypt the private key with `ansible-vault` and add it to `nginxplus/files/ssl/${NEW_HOST_NAME}_princeton_edu_priv.key`
 
