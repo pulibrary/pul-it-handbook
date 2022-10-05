@@ -31,7 +31,7 @@ However, when pulbot simply does not respond, one of two issues may be affecting
 
 ##### Troubleshooting the GitHub Deployments API configuration
 
-* go to [gh pulibrary org > webhooks](https://github.com/organizations/pulibrary/settings/hooks/6570702); you can see all the events that have been fired recently.
+* go to [gh pulibrary org > webhooks](https://github.com/organizations/pulibrary/settings/hooks/309731714?tab=deliveries); you can see all the events that have been fired recently.
   * you can redeliver these events through that UI in github
 
 ##### Troubleshooting Heaven
