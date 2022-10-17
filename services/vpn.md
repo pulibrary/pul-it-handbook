@@ -21,4 +21,8 @@ under "Palo Alto GLobalProtect Cloud Gateways".
 1. Copy all the FQDNs from the article above into `services/vpn/ips.txt`,
    deleting any empty lines or headers which aren't URLs.
 1. Run `ruby services/vpn/resolve.rb`
-1. Copy the output (IP per line) and send it to the appropriate people.
+1. Copy the output (IP per line) into a local file.
+1. Add the entries from the article under the headings `Palo Alto GlobalProtect` and `Palo Alto GlobalProtect Clientless VPN (Portal)`.
+1. Add the IPs for our application VMs. Find them in the lastpass in Shared-ITIMS-Passwords/PUL-VM-IP-ranges
+1. Send the list to the appropriate people. This should be the complete list of
+   machines that need access.
