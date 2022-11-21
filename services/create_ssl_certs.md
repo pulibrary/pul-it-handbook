@@ -124,10 +124,10 @@ Submit the CSR via [this form](https://princeton.service-now.com/service?id=sc_c
 
 #### 4. Verify the files you get back 
 
-   * OIT provides the certificates in the form of an email from the Certificate Manager. You will want the Certificate and Root/Intermediate files:
+   * OIT provides links to the certificates in an email from the Certificate Manager. The email generally includes seven links. You want two of them:
 
-      * `vi ${NEW_HOST_NAME}_princeton_edu_cert.cer` and copy and paste including `-----BEGIN CERTIFICATE-----` to `-----END CERTIFICATE-----`
-      * `vi ${NEW_HOST_NAME}_princeton_edu_interm.cer` and copy and paste the rest of the certificates marked as `X.509 Root/Intermediate(s)`.  This should have Multiple begin and end certificates, which should be included.
+      * `as Certificate only, PEM encoded: https://cert-manager.com/customer/InCommon/ssl?action=download&sslId=1234567&format=x509CO`, which downloads as `$NEW_HOST_princeton_edu_cert.cer`
+      * `as Root/Intermediate(s) only, PEM encoded: https://cert-manager.com/customer/InCommon/ssl?action=download&sslId=1234567&format=x509IO`, which downloads as `$NEW_HOST_princeton_edu_interm.cer`. This file should have Multiple begin and end certificates included.
 
 1. Create the chained file from the data returned by OIT:
 
