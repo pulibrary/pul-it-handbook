@@ -33,7 +33,7 @@ Make sure it's the active box.
 ip a | grep 146
 ```
 
-You will see an `inet` line if `lib-adc2` is the active box. If it's not exit and tunnel to `lib-adc2` instead.
+You will see an `inet` line if `lib-adc1` is the active box. If it's not exit and tunnel to `lib-adc2` instead.
 
 Once you have a tunnel open to the active load balancer, you can open up a web browser to http://localhost:8080 and access the Admin UI dashboard. From there, click on `HTTP Upstreams` to view sites, VMs, health checks, and more.
 
