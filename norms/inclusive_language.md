@@ -25,3 +25,4 @@ The following table includes examples of alternate labels PUL IT has adopted for
 | User testing           | 	Usability testing |
 | Backlog/feature grooming       | 	Backlog/feature refinement |
 | Mob programming/swarming       | 	Ensemble programming |
+| Tombstone              | DeletionMarker |
