@@ -16,7 +16,7 @@ values.
 ## SSH Into a EC2 Instance
 EC2 Instance can be found by logging into [aws](https://princeton.edu/aws)
 * Click on Services and choose EC2
-* Click on instaces link
+* Click on instances link
 * Copy the public ip address for the machine you would like to ssh to
 * ssh pulsys@<public ip address>
 ### Trouble shooting
@@ -27,7 +27,7 @@ EC2 Instance can be found by logging into [aws](https://princeton.edu/aws)
      * Click on `Edit Inbound Rules`
      * Click on `Add Rule` in bottom left
      * Add VPN IP Address which is found by:
-        * clicking the hamberger menu on global protect
+        * clicking the hamburger menu on global protect
         * choosing settings
         * Choose `Connection` tab
         * Gateway IP is the IP address to add
