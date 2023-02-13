@@ -1,0 +1,12 @@
+# Workshops
+
+Workshops may be hosted in `workshops/` or may be links to external resources
+
+## Workshops we've given
+
+This is a list of workshops that PUL IT staff have given in the past.
+
+
+## Workshops we like
+
+This is a list of workshops that PUL IT staff otherwise recommend.
