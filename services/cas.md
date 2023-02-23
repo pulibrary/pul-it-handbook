@@ -67,16 +67,35 @@ When integrating CAS via these instructions the general workflow of the applicat
     devise :omniauthable
 
     def self.from_cas(access_token)
-      User.where(provider: access_token.provider, uid: access_token.uid).first
-
-      # You can update this logic to create users automatically after they have authenticated
-      # via CAS. The hash in `request.env["omniauth.auth"]` has the information about the
-      # authenticated user.
-
+      user = User.find_by(provider: access_token.provider, uid: access_token.uid)
+      if user.nil?
+        # Create the user with some basic information from CAS.
+        #
+        # Other bits of information that we could use are:
+        #
+        #   access_token.extra.department (e.g. "Library - Information Technology")
+        #   access_token.extra.extra.departmentnumber (e.g. "41006")
+        #   access_token.extra.givenname (e.g. "Harriet")
+        #   access_token.extra.displayname (e.g. "Harriet Tubman")
+        #
+        user = User.new
+        user.provider = access_token.provider
+        user.uid = access_token.uid # this is the netid
+        user.email = access_token.extra.mail
+        user.save
+      end
+      user
     end
    ```
 
-1. Update `config/initializers/devise.rb` to tell Devise the location of our CAS server and change they key if needed (`:uid` in our CAS server maps to the user's `netid`)
+1. On the welcome page for your site, allow unauthenticated access. (Without this, we get `undefined method 'session_path'`.)
+
+   ```
+   class WelcomeController < ApplicationController
+       skip_before_action :authenticate_user!
+   ```
+
+3. Update `config/initializers/devise.rb` to tell Devise the location of our CAS server and change they key if needed (`:uid` in our CAS server maps to the user's `netid`)
 
    ```
    config.omniauth :cas, host: "fed.princeton.edu", url: "https://fed.princeton.edu/cas"
@@ -126,8 +145,28 @@ When integrating CAS via these instructions the general workflow of the applicat
       ...
       config.include Devise::Test::ControllerHelpers, type: :controller
       config.include Devise::Test::IntegrationHelpers, type: :request
+      config.include Devise::Test::IntegrationHelpers, type: :system
     end
     ```
+
+1. If you do not already have factory bot installed:
+
+   1. Add factorybot to your Gemfile
+      ```
+      group :development, :test do
+        gem 'factory_bot_rails', require: false
+      end
+   1. Add a spec/factories directory and include spec/factories/user.rb
+      ```
+      FactoryBot.define do
+        factory :user do
+          sequence(:uid) { "uid#{srand}" }
+          sequence(:email) { "email-#{srand}@princeton.edu" }
+          provider 'cas'
+          password 'foobarfoo'
+        end
+      end
+      ```
 
 1. Add Sign_in to tests that are behind the login
 
@@ -154,22 +193,3 @@ When integrating CAS via these instructions the general workflow of the applicat
       end
     end
    ```
-
-1. If you do not already have factory bot installed:
-
-   1. Add factorybot to your Gemfile
-      ```
-      group :development, :test do
-        gem 'factory_bot_rails', require: false
-      end
-   1. Add a spec/factories directory and include spec/factories/user.rb
-      ```
-      FactoryBot.define do
-        factory :user do
-          sequence(:uid) { "uid#{srand}" }
-          sequence(:email) { "email-#{srand}@princeton.edu" }
-          provider 'cas'
-          password 'foobarfoo'
-        end
-      end
-      ```
