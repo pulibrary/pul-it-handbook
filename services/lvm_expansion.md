@@ -223,7 +223,7 @@ Confirm these changes using the `pvscan` command to scan all disks for physical 
 pvscan
 ```
 
-You will see output like this
+You will see output like this:
 
 ```bash
   PV /dev/sda1   VG lib-vg          lvm2 [<40.00 GiB / 0    free]
