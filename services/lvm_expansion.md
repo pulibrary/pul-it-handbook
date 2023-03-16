@@ -299,7 +299,7 @@ Finally, resize the overall `ext` based file system using the `resize2fs` comman
 resize2fs /dev/lib-vg/root
 ```
 
-You will see output similar to this
+You will see output like this:
 
 ```bash
 resize2fs 1.44.1 (24-Mar-2018)
