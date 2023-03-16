@@ -7,7 +7,12 @@ You can add storage space to an existing virtual machine without shutting it dow
 The existing partition must be a logical volume (LVM) for these steps to work. Identify the partition type with `sudo fdisk -l` (or run the command as the root user). Notice that each attached disk has both a `Disk` entry and a `Device` entry. You should see a device with the ID (hex code) `8e` and the Type `Linux LVM`, which denotes a logical volume.
 
 ```bash
-root@lib-solr-prod6:/home/pulsys# fdisk -l
+fdisk -l
+```
+
+You will see output like this:
+
+```bash
 Disk /dev/sda: 40 GiB, 42949672960 bytes, 83886080 sectors
 Units: sectors of 1 * 512 = 512 bytes
 Sector size (logical/physical): 512 bytes / 512 bytes
@@ -92,8 +97,12 @@ The `fdisk` command kicks off an interactive script that creates a partition on 
  - select **`w`** to write the new partition table and get you out of this shell.
 
  ```bash
- root@lib-solr-prod6:/home/pulsys# fdisk /dev/sdd
+ fdisk /dev/sdb
+ ```
+ 
+ You will see output like this: 
 
+ ```bash
  Welcome to fdisk (util-linux 2.31.1).
  Changes will remain in memory only, until you decide to write them.
  Be careful before using the write command.
@@ -155,8 +164,12 @@ The `fdisk` command kicks off an interactive script that creates a partition on 
 The `pvcreate` command creates a physical volume for later use by the logical volume manager (LVM). In this example, the physical volume will be the new `/dev/sdd1` partition.
 
 ```bash
-root@lib-solr-prod6:/home/pulsys# pvcreate /dev/sdd1
-  Physical volume "/dev/sdd1" successfully created.
+pvcreate /dev/sdb1
+```
+You will see output like this:
+
+```bash
+  Physical volume "/dev/sdb1" successfully created.
 ```
 
 Now you should see a `Device` as well as a `Disk` in the output of `fdisk -l`.
@@ -166,7 +179,11 @@ Now you should see a `Device` as well as a `Disk` in the output of `fdisk -l`.
 Next, extend the existing logical volume to include the new device. First, confirm the name of the current volume group using the `vgdisplay` command:
 
 ```bash
-root@lib-solr-prod6:/home/pulsys# vgdisplay
+vgdisplay
+```
+You will see output like this:
+
+```bash
   --- Volume group ---
   VG Name               lib-vg
   System ID             
@@ -189,17 +206,26 @@ root@lib-solr-prod6:/home/pulsys# vgdisplay
   VG UUID               hbeBYx-treH-UAUZ-0MZE-vBxN-FvFv-3zqHjx
 ```
 
-Next, extend the volume group by adding in the physical volume `/dev/sdd1` which you created using the `pvcreate` command earlier. Pass the VG Name from the output above (in this example, `lib-vg`) to the `vgextend` command:
+Next, extend the volume group by adding in the physical volume `/dev/sdb1` which you created using the `pvcreate` command earlier. Pass the VG Name from the output above (in this example, `lib-vg`) to the `vgextend` command:
 
 ```bash
-root@lib-solr-prod6:/home/pulsys# vgextend lib-vg /dev/sdd1
+vgextend lib-vg /dev/sdb1
+```
+You will see output like this:
+
+```bash
   Volume group "lib-vg" successfully extended
 ```
 
-Confirm these changes using the `pvscan` command to scan all disks for physical volumes. The output should confirm the original `/dev/sdd1` partition and the newly created physical volume `/dev/sdd1`:
+Confirm these changes using the `pvscan` command to scan all disks for physical volumes. The output should confirm the original `/dev/sdb1` partition and the newly created physical volume `/dev/sdb1`:
 
 ```bash
-root@lib-solr-prod6:/home/pulsys# pvscan
+pvscan
+```
+
+You will see output like this:
+
+```bash
   PV /dev/sda1   VG lib-vg          lvm2 [<40.00 GiB / 0    free]
   PV /dev/sdb1   VG lib-vg          lvm2 [<200.00 GiB / 0    free]
   PV /dev/sdc1   VG lib-vg          lvm2 [<100.00 GiB / 0    free]
@@ -207,12 +233,17 @@ root@lib-solr-prod6:/home/pulsys# pvscan
   Total: 4 [439.98 GiB] / in use: 4 [439.98 GiB] / in no VG: 0 [0   ]
 ```
 
-Next, extend the logical volume (we already did the physical volume) which basically means we will be taking our original logical volume and extending it over our new partition/physical volume of `/dev/sdd1`.
+Next, extend the logical volume (we already did the physical volume) which basically means we will be taking our original logical volume and extending it over our new partition/physical volume of `/dev/sdb1`.
 
 Confirm the path of the logical volume using `lvdisplay` (YMMV)
 
 ```bash
-root@lib-solr-prod6:/home/pulsys# lvdisplay
+lvdisplay
+```
+
+You will see output like this:
+
+```bash
   --- Logical volume ---
   LV Path                /dev/lib-vg/root
   LV Name                root
@@ -251,7 +282,13 @@ root@lib-solr-prod6:/home/pulsys# lvdisplay
 Extend the logical volume using the `lvextend` command:
 
 ```bash
-root@lib-solr-prod6:/home/pulsys# lvextend /dev/lib-vg/root /dev/sdd1
+lvextend /dev/lib-vg/root /dev/sdb1
+```
+
+You will see output like this:
+
+
+```bash
   Size of logical volume lib-vg/root changed from 339.03 GiB (86792 extents) to <439.03 GiB (112391 extents).
   Logical volume lib-vg/root successfully resized.
 ```
@@ -259,7 +296,12 @@ root@lib-solr-prod6:/home/pulsys# lvextend /dev/lib-vg/root /dev/sdd1
 Finally, resize the overall `ext` based file system using the `resize2fs` command:
 
 ```bash
-root@lib-solr-prod6:/home/pulsys# resize2fs /dev/lib-vg/root
+resize2fs /dev/lib-vg/root
+```
+
+You will see output like this:
+
+```bash
 resize2fs 1.44.1 (24-Mar-2018)
 Filesystem at /dev/lib-vg/root is mounted on /; on-line resizing required
 old_desc_blocks = 43, new_desc_blocks = 55
@@ -269,7 +311,12 @@ The filesystem on /dev/lib-vg/root is now 115088384 (4k) blocks long.
 Confirm that the VM can now access the additional disk space using the `df` (disk free) command:
 
 ```bash
-root@lib-solr-prod6:/home/pulsys# df -h
+df -h
+```
+
+You will see output like this:
+
+```bash
 Filesystem                                 Size  Used Avail Use% Mounted on
 udev                                        20G     0   20G   0% /dev
 tmpfs                                      4.0G  904K  4.0G   1% /run
