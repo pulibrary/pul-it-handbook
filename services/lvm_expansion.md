@@ -211,7 +211,7 @@ Next, extend the volume group by adding in the physical volume `/dev/sdb1` which
 ```bash
 vgextend lib-vg /dev/sdb1
 ```
-You will see output like this
+You will see output like this:
 
 ```bash
   Volume group "lib-vg" successfully extended
