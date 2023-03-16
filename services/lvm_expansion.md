@@ -314,7 +314,7 @@ Confirm that the VM can now access the additional disk space using the `df` (dis
 df -h
 ```
 
-You will see output like this
+You will see output like this:
 
 ```bash
 Filesystem                                 Size  Used Avail Use% Mounted on
