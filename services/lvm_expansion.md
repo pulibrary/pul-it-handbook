@@ -285,7 +285,7 @@ Extend the logical volume using the `lvextend` command:
 lvextend /dev/lib-vg/root /dev/sdb1
 ```
 
-You will see output similar to this:
+You will see output like this:
 
 
 ```bash
