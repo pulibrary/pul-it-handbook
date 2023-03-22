@@ -25,5 +25,7 @@ under "Palo Alto GLobalProtect Cloud Gateways".
 1. Copy the output (IP per line) into a local file.
 1. Add the entries from the article under the headings `Palo Alto GlobalProtect` and `Palo Alto GlobalProtect Clientless VPN (Portal)`.
 1. Add the IPs for our application VMs. Find them in the lastpass in Shared-ITIMS-Passwords/PUL-VM-IP-ranges
+1. Add the IPs for any other applications.
+   1. for pulfalight, add the libnova ip, found in lastpass in Shared-ITIMS-Passwords/libnova-IP
 1. Send the list to the appropriate people. This should be the complete list of
    machines that need access.
