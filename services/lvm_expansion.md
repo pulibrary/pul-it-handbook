@@ -10,7 +10,7 @@ The existing partition must be a logical volume (LVM) for these steps to work. I
 sudo fdisk -l
 ```
 
-You will see output similar this:
+You will see output similar to this:
 
 ```bash
 Disk /dev/sda: 40 GiB, 42949672960 bytes, 83886080 sectors
