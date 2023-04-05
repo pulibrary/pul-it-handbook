@@ -1,16 +1,16 @@
 ## Expanding a logical volume with an additional disk
 
-You can add storage space to an existing virtual machine without shutting it down by adding a new disk to the VM, then expanding the existing logical volume to include the new space. **This document does not describe how to expand the size of an existing disk on VMWare.**
+You can add storage space to an existing virtual machine without shutting it down by adding a new disk to the VM, then expanding the existing logical volume to include the new space. 
 
 ### Confirm that a logical volume exists
 
 The existing partition must be a logical volume (LVM) for these steps to work. Identify the partition type with `sudo fdisk -l` (or run the command as the root user). Notice that each attached disk has both a `Disk` entry and a `Device` entry. You should see a device with the ID (hex code) `8e` and the Type `Linux LVM`, which denotes a logical volume.
 
 ```bash
-fdisk -l
+sudo fdisk -l
 ```
 
-You will see output like this:
+You will see output similar to this:
 
 ```bash
 Disk /dev/sda: 40 GiB, 42949672960 bytes, 83886080 sectors
@@ -54,7 +54,7 @@ Sector size (logical/physical): 512 bytes / 512 bytes
 I/O size (minimum/optimal): 512 bytes / 512 bytes
 ```
 
-In the output above, `/dev/sda1` is a Linux logical volume. Once you confirm that you are working with a logical volume, you can continue.
+In the example output above, `/dev/sda1` is a Linux logical volume. Once you confirm that you are working with a logical volume, you can continue.
 
 ### Create a new disk in vSphere
 
@@ -66,9 +66,9 @@ SSH into the VM and do `sudo su root` to change users to the root user. You cann
 
 ### Detect and connect the new disk
 
-Once the physical disk has been added at the hardware level, you must connect the new disk to the operating system and create a new partition that makes use of this additional space.
+The steps here are not needed if you have power cycled the VM. Once the physical disk has been added at the hardware level, you must connect the new disk to the operating system and create a new partition that makes use of this additional space.
 
-First, check that the new unallocated disk space is detected by the server. Run `df -h` to view the available disk space. You will most likely see that the disk space is still showing as the original size. Re-run `fdisk -l` to list all the disks. The new disk will be the last in the alphabetical list (for example, if the machine has `/dev/sda` through `/dev/sdd`, the new disk is `/dev/sdd`. Likewise, in `/sys/class/scsi_host/` the new disk will be the host with the largest number. To connect the new disk with the operating system on the VM without rebooting the VM, you must rescan all devices by running the command below as root. **Use the largest available `host#` on your specific VM.**
+First, check that the new unallocated disk space is detected by the server. Run `df -h` to view the available disk space. You will most likely see that the disk space is still showing as the original size. Re-run `sudo fdisk -l` to list all the disks. The new disk will be the last in the alphabetical list (for example, if the machine has `/dev/sda` through `/dev/sdd`, the new disk is `/dev/sdd`. Likewise, in `/sys/class/scsi_host/` the new disk will be the host with the largest number. To connect the new disk with the operating system on the VM without rebooting the VM, you must rescan all devices by running the command below as root. **Use the largest available `host#` on your specific VM.**
 
 ```bash
 echo "- - -" > /sys/class/scsi_host/host2/scan
@@ -76,12 +76,12 @@ echo "- - -" > /sys/class/scsi_host/host2/scan
 
 ### Partition the new disk
 
-Re-run `fdisk -l` after the command above to confirm that you see a new disk. You will now notice a new entry `/dev/sdd` (YMMV). The new disk will have a `Disk` entry but no `Device` entry yet.
+Re-run `sudo fdisk -l` after the command above to confirm that you see a new disk. You will now notice a new entry (typically) `/dev/sdb` (YMMV). The new disk will have a `Disk` entry but no `Device` entry yet.
 
-To partition this disk, run:
+To partition this new disk, run:
 
 ```bash
-fdisk /dev/sdd
+fdisk /dev/sdb
 ```
 
 The `fdisk` command kicks off an interactive script that creates a partition on the new disk. Use the inputs shown below to work through the script. You can press `m` at any time to get a full listing of `fdisk` commands. For a full example, see the output of the interactive script below the list of inputs.
@@ -161,7 +161,7 @@ The `fdisk` command kicks off an interactive script that creates a partition on 
 
 ### Create a physical volume
 
-The `pvcreate` command creates a physical volume for later use by the logical volume manager (LVM). In this example, the physical volume will be the new `/dev/sdd1` partition.
+The `pvcreate` command creates a physical volume for later use by the logical volume manager (LVM). In this example, the physical volume will be the new `/dev/sdb1` partition.
 
 ```bash
 pvcreate /dev/sdb1
