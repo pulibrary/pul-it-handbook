@@ -1,89 +1,55 @@
 # Deployment
 
 ## Sequence of deployment events
-* ask [pulbot](https://github.com/pulibrary/pulbot) to deploy
-* it sends a [deployment event to github](https://docs.github.com/en/rest/deployments/deployments)
-* github POSTs that event to [heaven](https://github.com/pulibrary/heaven) via a hook set up in the pulibrary organization
-* heaven catches the event and runs the deployment using [capistrano](https://capistranorb.com/)
+* ask ansible-tower to deploy your code
+* ansible-tower runs the deployment appdeploy.princeton.edu
+* You are notifed via slack when the deployment completes
 
-### Troubleshooting
+## Detailed ansible tower instructions
+1. To deploy code using Ansible Tower:
+Go to https://ansible-tower.princeton.edu/ and log in using CAS.
+1. Go to Resources -> Templates in the left sidebar.
+1. To the right of "Capistrano deploy", click on the little rocket ship to Launch the template. (Alternatively, click on “Capistrano deploy” and then click the "Launch" button at the bottom of the page.)
+1. On the next screen, pick the verbosity you want (it defaults to ‘normal’ but you can use this to debug).
+1. On the next screen, select your options:
+    1. use the dropdown to pick the repository you want to deploy
+    1. (optional) if you are not deploying the “main” branch, replace “main” with the name of your branch
+    1. (optional) if you are not deploying to the “staging” environment, use the dropdown to pick the environment you want
+    1. (optional) if you want slack alerts for this job to go to a channel other than “ansible-alerts”, use the dropdown to pick the slack channel 
+1. Click Next to reach the review screen.
+1. Click Launch to launch the job.
+1. Refresh the page periodically to watch progress or click on `Back to jobs` (or on `Jobs` in the left sidebar) , click on a job to see details.
 
-#### When pulbot is unresponsive
+## To add a new slack channel to the options for slack alerts
+1. In Slack, add the TowerNotifications bot to the channel
+    1. in the channel, type `@TowerNotifications` - if the bot is not in that channel yet, it should show a ‘Not in channel’ message to the right of the bot name
+    1. enter your message to the bot to invite the bot into the channel
+1. In Ansible Tower, add the slack channel to the Capistrano deploy template’s Survey question 
+   1. Go to `Resources => Templates` and select `Capistrano deploy`
+   1. Select the Survey pane on the far right
+   1. Click on the question ‘What slack channel do you want alerts to go to?’ to edit it
+   1. Click at the end of the last entry under ‘Multiple Choice Options’ and hit ‘Enter’ to open a new line
+   1. Click on the new line and enter the value you want to add - every slack channel must begin with ‘#’
 
-Attempting to (re)deploy a service using pulbot does not always succeed, but in
-all cases where pulbot deployments fail, one should observe that pulbot logs
-these errors:
+## To add a new repository to the options for deploying
+  1. In Ansible Tower, add the new repository to the Capistrano deploy template’s Survey question
+     1. Go to `Resources => Templates` and select `Capistrano deploy`
+     1. Select the Survey pane on the far right
+     1. Click on the question ‘Which repo do you want to deploy?’ to edit it
+     1. Click at the end of the last entry under ‘Multiple Choice Options’ and hit ‘Enter’ to open a new line
+     1. Click on the new line and enter the value you want to add - the repository name here must match the repository name in GitHub
 
-![An example of a pulbot deployment failure](./pulbot_failure.png "An example of a pulbot deployment failure")
+## Troubleshooting
 
-However, when pulbot simply does not respond, one of two issues may be affecting infrastructure:
+### When the deploy fails
 
-- There are delays for the GitHub deployment API (please inspect [https://status.github.com/](https://status.github.com) in order to eliminate this possibility)
-- pulbot itself is not running or accessible over the HTTP
-- Heaven is not running or accessible over the network
+#### You may need to add a gem your capistrano deployment depends on to the towerdeploy role
+  1. Add the gem to the list of gems [here](https://github.com/pulibrary/princeton_ansible/blob/main/roles/towerdeploy/tasks/main.yml#L16)
+  1. Generate a PR for your change in priceton ansible
+  1. Run the towerdeploy playbook from princeton ansible `ansible-playbook playbooks/towerdeploy`
+  1. verify the PR fixed your issue and request for it to be merged
 
-##### Troubleshooting pulbot
+#### Document other reasons for failure here as we see them
 
-* troubleshoot: `pulbot ping` it should pong
-* pulbot is on appdeploy1
-* to restart pulbot, please invoke `killall -HUP node` on appdeploy1
-* to deploy pulbot you can't invoke `bundle exec cap deploy`; you just need `cap` installed locally
-
-##### Troubleshooting the GitHub Deployments API configuration
-
-* go to [gh pulibrary org > webhooks](https://github.com/organizations/pulibrary/settings/hooks/309731714?tab=deliveries); you can see all the events that have been fired recently.
-  * you can redeliver these events through that UI in github
-
-##### Troubleshooting Heaven
-
-* heaven service could be down
-  * you can try to hit the heaven box via the browser; it redirects to the github page
-  * heaven is on [appdeploy](https://appdeploy.princeton.edu/)
-* heaven heavily relies upon [redis](https://redis.io/) to enqueue deployment jobs for pulbot
-  * please invoke `sudo systemctl restart appdeploy-workers.service` to restart
-    the `redis` worker processes
-  * also please attempt to monitor the activity for these jobs using
-    `tail -f /opt/pulbot/current/log/hubot.log` and `sudo journalctl -xfu appdeploy-workers.service`
-
-## Heaven and automatic deployment
-
-[heaven](https://github.com/pulibrary/heaven) is a Rails app that we run locally to receive webhooks from
-Github (with an organization-wide webhook). Each app is configured with a Github auto-deployment integration
-that sends a webhook call to heaven when there is a CI success on new commits to master.
-
-## pulbot and on-demand deployment
-
-[pulbot](https://github.com/pulibrary/pulbot) is our instance of [hubot](https://hubot.github.com/), a robot
-that listens in slack for deployment commands.  Our deployable apps are configured in pulbot's. Note the [open ticket for fixing the README](https://github.com/pulibrary/pulbot/issues/15)
-[apps.json](https://github.com/pulibrary/pulbot/blob/master/apps.json).  Once an app is configured, you can
-deploy it in slack with the command:
-
-```
-$ pulbot deploy my_app to staging
-```
-
-Custom branches can be deployed:
-
-```
-$ pulbot deploy my_app/my_branch to staging
-```
-
-You can also deploy to other environments (like `production`) or deploy branches with CI failures by using `deploy!`.
-
-### Updating pulbot
-
-When you update pulbot's configuration, it needs to be redeployed, which you can do using pulbot:
-
-```
-$ pulbot deploy pulbot
-```
-
-### Deploy troubleshooting
-
-#### public key problems
-
-If deploying to a pre-ansible box, you must add heaven's public key to the deploy user's authorized_keys on the box that will be deployed to.
-
-`curl https://raw.githubusercontent.com/pulibrary/princeton_ansible/master/keys/heaven.pub >> authorized_keys`
-
-Ensure that your app's capfile deploys via https, not the git protocol. If switching from the git protocol, you'll need to delete the `./repo` directory or you'll get an error that looks like a problem with a public key.
+### Having issues logging into ansible-tower
+  Ping the `#infrastructure` channel to be added to the ansible tower group
