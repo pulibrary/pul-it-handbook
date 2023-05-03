@@ -19,7 +19,7 @@ Attempting to (re)deploy a service using pulbot does not always succeed, but in
 all cases where pulbot deployments fail, one should observe that pulbot logs
 these errors:
 
-![An example of a pulbot deployment failure](./pulbot_failure.png "An example of a pulbot deployment failure")
+![An example of a pulbot deployment failure](./images/pulbot_failure.png "An example of a pulbot deployment failure")
 
 However, when pulbot simply does not respond, one of two issues may be affecting infrastructure:
 
