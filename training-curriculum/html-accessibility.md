@@ -1,6 +1,6 @@
 # HTML and Accessibility Curriculum
 
-Desired Learning Outcomes
+## Desired Learning Outcomes
 * Be familiar with HTML Document structure, including
   * head, body
   * script references
@@ -13,14 +13,14 @@ Desired Learning Outcomes
 * Be able to test with a keyboard
 * Be able to use a [Color Contrast checker tool](https://www.tpgi.com/cca-download/) 
 
-Videos
-* https://teamtreehouse.com/library/introduction-to-html-and-cs://teamtreehouse.com/library/introduction-to-html-and-css
-* https://teamtreehouse.com/library/html-basics-2
-* https://teamtreehouse.com/library/html-forms
-* https://teamtreehouse.com/library/html-tables
-* https://teamtreehouse.com/library/accessibility-for-web-developers
+## Videos
+* [Introduction to HTML and CSS](https://teamtreehouse.com/library/introduction-to-html-and-css)
+* [HTML basics](https://teamtreehouse.com/library/html-basics-2)
+* [HTML forms](https://teamtreehouse.com/library/html-forms)
+* [HTML tables](https://teamtreehouse.com/library/html-tables)
+* [Accessibility for web developers](https://teamtreehouse.com/library/accessibility-for-web-developers)
 
-Reading
+## Reading
 * Accessibility basics
   * [WebAIM: Keyboard Accessibility](https://webaim.org/techniques/keyboard/)
   * [WebAIM: Contrast and Color Accessibility - Understanding WCAG 2 Contrast and Color Requirements](https://webaim.org/articles/contrast/)
