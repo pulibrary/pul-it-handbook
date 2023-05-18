@@ -9,6 +9,8 @@ the value we get out of it.
 
 ## Tips for Controlling Costs
 
+[Summary of our DataDog usage is available on this dashboard](https://app.datadoghq.com/dash/integration/apm_estimated_usage?_gl=1%2A352rem%2A_ga%2AMjA1NzE0OTk4OS4xNjg0MzQ4ODgy%2A_ga_KN80RDFSQK%2AMTY4NDQyNjQ3NS40LjEuMTY4NDQyNzIyMC4zNC4wLjA.%2A_fplc%2ANGFSQ3MlMkZPMDIzYldNSVRZVzVCTUhIeFk3JTJGV1RzSFppU2pySzloajZ3WFklMkJ0bVFBWmRFWjU1JTJGeUt1bSUyRndPMnQlMkZkWDJMU25zbkglMkY3ZXgyMkFUbWhsTU1vQTF5dWNMVFFhekpjcGVoU0RJUUh6UVBidDBoZWlFcGUlMkJmM25oUSUzRCUzRA..&from_ts=1684423665468&to_ts=1684427265468&live=true)
+
 ### Logs
 
 We aggregate load balancer and application logs, but try to avoid log monitoring
