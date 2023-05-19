@@ -1,6 +1,6 @@
 # About Ansible Tower
 
-Ansible Tower is a GUI-based service for running Ansible playbooks. It stores playbook output for asynchronous debugging, is accessible from outside the VPN, and connects to both Slack and GitHub to support cross-team communication.
+Ansible Tower (aka Controller) is a GUI-based service for running Ansible playbooks. It stores playbook output for asynchronous debugging, is accessible from outside the VPN, and connects to both Slack and GitHub to support cross-team communication.
 
 ## Authenticating to Ansible Tower
 
@@ -19,17 +19,19 @@ The main components of automation in Ansible Tower are:
 
 ### Organizations in PUL Tower
 
-We only have one organization in Tower. It's called Default. Every object we use in Tower MUST belong to the Default organization.
+We only have one organization in Tower. It's called DevOps. Every object we use in Tower MUST belong to the DevOps organization.
 
-The Organization contains all permissions for other Tower objects. Tower does not force you to select an Organization for every object (for example, you can create a template or inventory that does not belong to any organization). However, if you do not select the Default Organization for your object, it will not be covered by the permissions of the Organization and no-one will be able to use it.
+The DevOps Organization contains all permissions for other Tower objects. Tower does not force you to select an Organization for every object (for example, you can create a template or inventory that does not belong to any organization). However, if you do not select the DevOps Organization for your object, it will not be covered by the permissions of the Organization and no-one will be able to use it.
 
 ### Projects in PUL Tower
 
-We only have one project in Tower. It's called Princeton Ansible and it is linked to the princeton_ansible repo on GitHub.
+We only have one project in Tower. It's called Princeton Ansible Project and it is linked to the princeton_ansible repo on GitHub.
 
-#### Updating the Princeton Ansible project
+#### Updating the Princeton Ansible Project
 
-The Princeton Ansible project automatically updates daily in the early morning hours, deleting the entire repository and cloning a fresh copy from GitHub. If you are running a Template from a branch, Tower automatically pulls the latest commits on that branch before it executes. You can also update the project manually.
+The Princeton Ansible project automatically updates daily in the early morning hours, deleting the entire repository and cloning a fresh copy from GitHub. This automatic update is configured in Schedules.
+
+If you are running a Template from a branch, Tower automatically pulls the latest commits on that branch before it executes. You can also update the project manually.
 
 ** You must sync the project manually to pull in any branch that has had a force-push to it.**
 
@@ -40,14 +42,14 @@ To update the Princeton Ansible project manually:
 
 ### Inventories in PUL Tower
 
-We only have one inventory in Tower. It's called Princeton Ansible and it is linked to the 'inventory' directory of the princeton_ansible repo on GitHub.
+We only have one inventory in Tower. It's called Princeton Ansible Inventory and it is linked to the 'inventory' directory of the princeton_ansible repo on GitHub.
 
 #### Updating the Princeton Ansible inventory
 
 The Princeton Ansible inventory does not automatically update. When you add new machines or groups to the inventory directory on GitHub, you must first update the Princeton Ansible project, then separately update the Princeton Ansible inventory.
 
 To update the Princeton Ansible inventory:
-1. Make sure the Project has already been updated.
+1. Make sure the Princeton Ansible project has already been updated.
 2. Select Inventories from the left navigation.
 3. Select the Princeton Ansible Inventory.
 4. Select the Sources tab.
@@ -56,13 +58,18 @@ To update the Princeton Ansible inventory:
 
 ## Adding templates to tower
 
-You cannot build a template off a playbook until that playbook exists in the main branch – in other words, you can’t test a playbook in Tower Template while it’s still in a PR or on a branch.
+You cannot build a template off a playbook until that playbook exists in the main branch. In other words, you cannot test a playbook in a Tower Template while it only exists in a PR or on a branch. If you want to test a playbook from Tower:
+1. Merge a minimal version of the playbook into the main branch.
+2. Update the Princeton Ansible project.
+3. Update the Princeton Ansible inventory.
+4. Create a Template based on the minimal playbook and set Source Control Branch to 'Prompt on launch'.
+5. Create a new branch for changes to the playbook.
+6. Launch the template and select the new branch to run with the latest changes to the branch.
 
-All templates should include the Vault credential. Remember that you have to select the credential TYPE first, then the specific credential.
+All templates must include the Princeton Ansible Vault credential. Most templates also need the VM SSH Connections credential. When you add credentials to a template, you must add them one at a time. Select the credential TYPE (Vault for the Vault cred, Machine for the SSH cred) first, then the specific credential.
 
 ## Managing the Ansible Tower VM/service:
 
 The VM for Tower is 'ansible-tower1'.
 The service is called 'automation-controller'.
 The working directories are in '/var/lib/awx/'.
-
