@@ -71,7 +71,7 @@ The steps here are not needed if you have power cycled the VM. Once the physical
 First, check that the new unallocated disk space is detected by the server. Run `df -h` to view the available disk space. You will most likely see that the disk space is still showing as the original size. Re-run `sudo fdisk -l` to list all the disks. The new disk will be the last in the alphabetical list (for example, if the machine has `/dev/sda` through `/dev/sdd`, the new disk is `/dev/sdd`. Likewise, in `/sys/class/scsi_host/` the new disk will be the host with the largest number. To connect the new disk with the operating system on the VM without rebooting the VM, you must rescan all devices by running the command below as root. **Use the largest available `host#` on your specific VM.**
 
 ```bash
-echo "- - -" > /sys/class/scsi_host/host2/scan
+for host in /sys/class/scsi_host/*; do echo "- - -" | sudo tee $host/scan; ls /dev/sd* ; done
 ```
 
 ### Partition the new disk
