@@ -3,11 +3,12 @@ This is a get started guide to make it easier to setup your mac.
 
 When you get a new mac here are some helpful guides to setting it up for PUL software development.
 
-1. Use the URL below to customize/setup your unix prompt.
-We use zsh as a unix prompt. The last two setup steps(8,9) are not necessary for mac setup but will add more customization options if you feel the need to install.
-
-https://www.freecodecamp.org/news/how-to-configure-your-macos-terminal-with-zsh-like-a-pro-c0ab3f3c1156/ 
-
+1. Customize and setup your unix prompt.
+    1. Install Xcode CLI tools: `xcode-select —-install`
+    2. [Install homebrew](https://brew.sh/)
+    3. Many of us prefer using iTerm2 over the default terminal.  You can install it with `brew install iterm2 --cask`
+    4. We use zsh as a unix prompt. This is the default for newer Macs, but if it is not installed, you can install it with `brew install zsh`.
+    5. Many of us use Oh My Zsh.  You can install it with `sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"`
 
 2. A new SSH key will also need to be installed on your mac. Below is the link with the steps for connecting to github using SSH keys. The SSH key will be needed to connect with your github account and grants you the ability to start adding data into PUL repositories. To check and see if this step was completed correctly you will need to go to the github webpage that shows your public keys. listed below the SSH key documetation is an example of the github URL used to check your public keys. Make sure that your github profile name is included and followed by .keys (github.com/your_github_id.keys)
 
