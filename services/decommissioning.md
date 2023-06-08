@@ -15,8 +15,13 @@ For Virtual Servers:
 
 Once the server is decommissioned, remove all traces of it:
 1. Remove Host database entry.
+  * [https://princeton.service-now.com/service?id=sc_category&sys_id=0c0591f14f9d270c18ddd48e5210c79c](https://princeton.service-now.com/service?id=sc_category&sys_id=0c0591f14f9d270c18ddd48e5210c79c)
+  * Select "Network Record - Delete"
 2. Remove from any monitoring services(IE: Nagios, Datadog, etc).
 3. Remove from firewall rules.
+  * Send a note to lsupport@ 
+  * Subject: Hardware Firewall Change - oldvm.princeton.edu
+  * Body: Please delete all rules for
 4. Remove from BigFix.
 5. Remove from inventory spreadsheet.
 6. Remove from TSM.
