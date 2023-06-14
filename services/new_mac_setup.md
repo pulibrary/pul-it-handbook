@@ -11,21 +11,22 @@ This is a get started guide to make it easier to setup your mac.
   1. [follow the
      steps](https://princeton.service-now.com/service?id=kb_article&sys_id=9f7a4f5387ca0dd012ae43bd0ebb3589#section4) to set up your princeton password
 1. Log in to eduroam with your princeton netid and password
-
-## Important accounts to create
-
-1. Lastpass
-1. GitHub (use a personal email address for this -- you will use this account
-   throughout your career)
+1. Set up the duo 2-factor authentication phone app.
 
 ## General applications you will need to set up
 
-Most of these are documented on OIT pages.
+Most of these are documented on OIT pages. If you meet with Terry he will get you through these steps as well.
+
 * Outlook
 * Slack
 * Zoom
 * Crashplan
 * Creative Cloud (this can wait for a bit later)
+
+## Important accounts to create
+
+1. Lastpass
+1. GitHub (Use any email address; you can [change it later](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-email-preferences/changing-your-primary-email-address) if you need to)
 
 ## Machine setup
 
