@@ -17,7 +17,7 @@
 # RSpec materials
 * [RSpec 3 Tutorial - Introduction and basic syntax p.1 youtube video](https://www.youtube.com/watch?v=Tg4MxCo1x-0)
 * [Review built-in rspec matchers](https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/)
-* [TDD Kata: Tennis in Ruby & RSpec youtube video](https://www.youtube.com/watch?v=MLhoqpSz7CI)
+* [RubyConf 2021 - Blank Page Panic! Creating Confidence with TDD by Elayne Juten youtube video](https://www.youtube.com/watch?v=3E5TRUtlLFw)
 * [RubyConf 2021 - Clean RSpec: A Workshop on Ruby Testing Craftsmanship by Jesse Spevack youtube video](https://www.youtube.com/watch?v=i6h0-ZSe49I)
 
 Time estimate: 1 week
