@@ -39,6 +39,10 @@ Go to https://ansible-tower.princeton.edu/ and log in using CAS.
      1. Click at the end of the last entry under ‘Multiple Choice Options’ and hit ‘Enter’ to open a new line
      1. Click on the new line and enter the value you want to add - the repository name here must match the repository name in GitHub
 
+## Maintaining the slack app
+
+The connection from Tower to Slack (including the auth token) is configured in the PUL slack org: https://api.slack.com/apps.
+
 ## Troubleshooting
 
 ### When the deploy fails
