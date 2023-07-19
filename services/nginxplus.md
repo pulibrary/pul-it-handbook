@@ -39,6 +39,7 @@ Once you have a tunnel open to the active load balancer, you can open up a web b
 
 ## Running the nginx playbook
 
+1. Let folks know that you're running the playbook in the #infrastructure channel.
 1. Check which load balancer is active (see above).
 2. Run the nginx playbook against the non-active load balancer. For example, if `lib-adc1` is active, run the `nginxplus.yml` playbook against `lib-adc2`: `ansible-playbook playbooks/nginxplus.yml --limit lib-adc2.princeton.edu`.
 3. If the playbook fails, fix the failures and run it against the non-active load balancer again, until it succeeds.
@@ -46,6 +47,7 @@ Once you have a tunnel open to the active load balancer, you can open up a web b
 5. Run the nginx playbook against the second load balancer, the one that was active when you started, and is now non-active.
 
 ### Only upload the new config files
+1. Let folks know that you're running the playbook in the #infrastructure channel.
 1. Check which load balancer is active (see above).
 2. Run the nginx playbook against the non-active load balancer. For example, if `lib-adc1` is active, run the `nginxplus.yml` playbook against `lib-adc2`: `ansible-playbook playbooks/nginxplus.yml --limit lib-adc2.princeton.edu -t update_conf`.
 3. If the playbook fails, fix the failures and run it against the non-active load balancer again, until it succeeds.
