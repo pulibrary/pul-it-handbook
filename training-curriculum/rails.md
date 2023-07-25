@@ -11,9 +11,14 @@
 * Bootstrap 4
 
 ## Videos
-* [Rails development treehouse course](https://teamtreehouse.com/tracks/rails-development)
+* [Rails 5 basics](https://teamtreehouse.com/library/ruby-on-rails-5-basics)
+* [Rails routes and resources](https://teamtreehouse.com/library/rails-routes-and-resources)
+* [Troubleshooting rails](https://teamtreehouse.com/library/troubleshooting-a-rails-application)
+* [Active record associations](https://teamtreehouse.com/library/active-record-associations-in-rails)
+* [Rails application walkthrough](https://teamtreehouse.com/library/rails-application-walkthrough)
+* [Rails scaffolding](https://teamtreehouse.com/library/ruby-on-rails-scaffolding)
 * [Bootstrap basics treehouse video](https://teamtreehouse.com/library/bootstrap-basics)
-* [Testing with RSpec video](https://www.driftingruby.com/episodes/testing-with-rspec)
+* [Testing rails with RSpec video](https://www.driftingruby.com/episodes/testing-with-rspec)
 * [Feature testing with Capybara video](https://www.driftingruby.com/episodes/feature-testing-with-capybara)
 * [RSpec 3 Tutorial - Rails model test p.2 youtube video](https://youtu.be/fSTjQsWrfF4)
 
