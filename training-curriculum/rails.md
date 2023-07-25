@@ -11,7 +11,7 @@
 * Bootstrap 4
 
 ## Videos
-* [Rails 5 basis](https://teamtreehouse.com/library/ruby-on-rails-5-basics)
+* [Rails 5 basics](https://teamtreehouse.com/library/ruby-on-rails-5-basics)
 * [Rails routes and resources](https://teamtreehouse.com/library/rails-routes-and-resources)
 * [Troubleshooting rails](https://teamtreehouse.com/library/troubleshooting-a-rails-application)
 * [Active record associations](https://teamtreehouse.com/library/active-record-associations-in-rails)
