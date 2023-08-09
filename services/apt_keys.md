@@ -13,7 +13,7 @@ If you run `apt-get update` on a machine with a useless key, you will see an err
 ### Fixing apt public key failures
 
 To update the key and upgrade apt packages:
-1. run `playbooks/update_expired_certs.yml` on the affected machines, passing `-e recv_key=<key-hash>`
+1. run `playbooks/fix_apt_issues.yml` on the affected machines, passing `-e recv_key=<key-hash>`
 2. run `playbooks/os_updates.yml` (in Tower the Template is called Patch Tuesday) on the affected machines to confirm the fix, update the cache, and upgrade all packages
 
 ### Apt repository failures
@@ -25,5 +25,5 @@ If you run `apt-get update` on a machine with a outdated repository in the sourc
 ### Fixing apt repository failures
 
 To remove an apt repository from the sources list:
-1. run `playbooks/update_expired_certs.yml` on the affected machines, passing `-e useless_apt_repo='<repo-details>'` (include the full repository definition, for example 'deb https://oss-binaries.phusionpassenger.com/apt/passenger bionic main')
+1. run `playbooks/fix_apt_issues.yml` on the affected machines, passing `-e useless_apt_repo='<repo-details>'` (include the full repository definition, for example 'deb https://oss-binaries.phusionpassenger.com/apt/passenger bionic main')
 2. run `playbooks/os_updates.yml` (in Tower the Template is called Patch Tuesday) on the affected machines to confirm the fix, update the cache, and upgrade all packages
