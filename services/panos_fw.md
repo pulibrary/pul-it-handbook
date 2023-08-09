@@ -28,6 +28,8 @@ Using your browser (best results with Microsoft Edge) connect to the home of the
 
 ## Follow Template below for Service Portal:
 
+Find the Service Portal Ticket that needs to be worked on. Add the examples below in the internal work notes.
+
 ### Check Hardware Firewall Change most recent closed ticket
 
 Example Ticket Template:
