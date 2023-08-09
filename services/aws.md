@@ -19,6 +19,13 @@ EC2 Instance can be found by logging into [aws](https://princeton.edu/aws)
 * Click on instances link
 * Copy the public ip address for the machine you would like to ssh to
 * ssh pulsys@<public ip address>
+
+## Create an Elastic IP
+For those EC2 Instances that cannot lose their fixed IP we can register one with [AWS](http://princeton.edu/aws) with the following steps
+* From Management console navigate to Compute >> EC2 and under Network and Security select Elastic IPs
+* Select *Allocate Elastic IP address*
+* Once an IP is allocated you can associate it with the EC2 Instance by selecting the checkbox of your EC2 instance and click *Actions* and choose *Associate Elastic IP address.*
+
 ### Trouble shooting
   * You must be on VPN
   * The VPN IP must be in pul-acdc-ssh-princeton-network
