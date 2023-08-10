@@ -62,7 +62,8 @@ After saving all your changes and additions, you must commit and push your chang
 
 ## 4. Update the Service Portal Ticket
 
-All firewall changes must be logged in the Service Portal.
+All firewall changes must be logged in the Service Portal. You must describe every action you do in the firewall interface in your notes in the Service Portal ticket. If you create an Object, add a note describing the new object. If you create new rules, add a note describing each new rule. If you rename anything or update anything, add a note for each change showing the old state and the new state. If you delete anything, add a note describing the thing you deleted.
+
   * Find the ticket that requested the changes
   * Update that ticket by adding detailed notes in the `Work notes (internal only)` section describing the changes you made (see examples below)
     * Optionally search closed tickets for similar changes, so you can copy/paste/modify the notes from those
@@ -80,8 +81,6 @@ Most firewall-change tickets in the Service Portal have the title `Hardware Fire
   * Search through the results for a useful example
 
 ## Sample notes for the Service Portal
-
-You must describe every action you do in the firewall interface in your notes in the Service Portal ticket. If you create an Object, add a note describing the new object. If you create new rules, add a note describing each new rule. If you rename anything or update anything, add a note for each change showing the old state and the new state. If you delete anything, add a note describing the thing you deleted.
 
 ### Adding a new VM: what to add to the Service Portal ticket
 
