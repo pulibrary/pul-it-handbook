@@ -72,7 +72,7 @@ All firewall changes must be logged in the Service Portal. You must describe eve
   * Update that ticket by adding detailed notes in the `Work notes (internal only)` section describing the changes you made (see examples below)
     * Optionally search closed tickets for similar changes, so you can copy/paste/modify the notes from those
   * Optionally add a message in the `Comments (Customer visible)` section to send an email to the person who opened the ticket
-  * Change the status of the ticket to `Closed Complete`
+  * Change the `State` of the ticket to `Closed Complete`
   * Click on `Update` to save your changes, close the ticket, and return to the list of tickets
 
 ### Searching for examples among closed tickets
