@@ -53,12 +53,16 @@ Make the necessary changes to the firewall. The most common task is creating a n
 
 After saving all your changes and additions, you must commit and push your changes - otherwise they will not go into effect. When you have saved all of your changes:
 
-1.	In the upper right, click the `Commit` link at the upper right
-2.	In the Commit dropdown, select `Commit to Panorama`
-3.	In the popup, click ??? to save changes to Panorama, then wait for the process to finish
-4.	After the Commit step is complete, click the `Commit` link at the upper right again
-5.	This time select `Push to Devices`
-6.	Click `Push` to propagate your committed changes to the firewalls. This may take some time. You can close the window if you wish - to open it again, click on `Tasks` at the bottom right
+1.	Commit your changes to Panorama
+    * In the upper right, click the `Commit` link
+    * In the Commit dropdown, select `Commit to Panorama`
+    * In the popup, click `Commit` to save changes to Panorama, then wait for the process to finish - ignore warnings about "Disabled applications"
+    * When `Status` changes to `Completed` and `Result` to `Successful`, click `Close` to close out the Commit popup
+2.	Push your committed changes to the firewall Devices
+    * In the upper right, click the `Commit` link
+    * This time select `Push to Devices`, you should see both Forrestal and New South in the popup
+    *	Click `Push` to propagate your committed changes to the firewalls.
+    * If the process is slow, you can close the popup window; the push process will continue. To open the window again and check the status, click on `Tasks` at the bottom right
 
 ## 4. Update the Service Portal Ticket
 
