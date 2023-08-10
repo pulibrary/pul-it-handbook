@@ -143,7 +143,11 @@ IP Address: 128.112.###.###/32
 
 ## Advanced use cases
 
-These changes go beyond creating new VMs and opening them to standard traffic. If we add a new You will sometimes need ports not available from Palo Alto. Add and name the new port you want to open.
+These changes go beyond creating new VMs and opening them to standard traffic. 
+
+### Adding Ports
+
+You will sometimes need ports not available as "services" from Palo Alto. Add and name the new port you want to open.
 
 ### Adding services
 
