@@ -20,63 +20,63 @@ Make the necessary changes to the firewall. The most common task is creating a n
 ### For new VMs
 
 #### Add the Object to the Firewall
-  * Go to *Objects* Tab (middle of the screen)
-  * *Add* the new IP address using the '+' at the bottom left
-    * Give it the name ideally same name as first part of DNS like 'figgy-db-staging1'
-    * Check the *Shared* box so it is available in both data centers
+  * Go to `Objects` Tab (middle of the screen)
+  * Add the new IP address using the '+' at the bottom left
+    * Give it the name ideally same name as first part of DNS like `figgy-db-staging1`
+    * Check the `Shared` box so it is available in both data centers
     * Add the IP address in the right panel
     * Optionally add a description; all other fields can be left blank
     * Save the object
 
 #### Add policies (firewall rules) for the new Object
 
-  * Go to the *Policies* Tab (also middle of screen)
-  * In the *Device Group* dropdown, make sure you have selected *Shared*
+  * Go to the `Policies` Tab (also middle of screen)
+  * In the `Device Group` dropdown, make sure you have selected `Shared`
   * Search for a similar rule to clone
-    * You can search for VM names (figgy-db-staging1) or services (ssh) to find a similar rule
-    * Alternatively, go to the bottom of the *Shared_Rules* after all the *Deny Rules*
-  * *Clone* a rule
+    * You can search for VM names (`figgy-db-staging1`) or services (`ssh`) to find a similar rule
+    * Alternatively, go to the bottom of the `Shared_Rules` after all the `Deny Rules`
+  * Clone a rule
     * Find a rule that is similar to the one you want to create - one with the same service, or one for a similar VM (another database VM, for example) usually works well
     * Highlight it by clicking in the row (but not on the rule name, which opens the edit screen) - you can CTRL-click to select multiple rules to clone
-    * At the bottom of the window, click on the 'Clone' button
-    * Put the new rule under the rule you just cloned: make sure the *Rule Order* says "After Rule" and the rule listed is the one you cloned
-    * Click 'OK', the new rule appears in the list of rules with a name like 'Shared_vm-name-from-cloned-rule_Rule#-1'. For example, if you cloned "Shared_orangelight-prod2_Rule1" the resulting rule will be "Shared_orangelight-prod2_Rule1-1"
+    * At the bottom of the window, click on the `Clone` button
+    * Put the new rule under the rule you just cloned: make sure the `Rule Order` says "After Rule" and the rule listed is the one you cloned
+    * Click `OK`, the new rule appears in the list of rules with a name like `Shared_vm-name-from-cloned-rule_Rule#-1`. For example, if you cloned `Shared_orangelight-prod2_Rule1` the resulting rule will be `Shared_orangelight-prod2_Rule1-1`
   * Edit the cloned rule
     * Click on the title of the cloned rule to open the edit screen
-    * Change the name of the cloned rule - usually you just need to change the VM name and remove the '-1' from the end of the name. 
-    * In the *Source* tab, make sure these are the networks you want. (It is rare that you will need to modify this)
-    * In the *Destination* tab, delete the object (VM) from the cloned rule and add the new VM (the Object you created in the first section)
-    * In the *Application* Tab, select the applications you would like. This selects the signature of an application like SSH, PostgreSQL etc., (rule definition can be found on [applepedia](https://applepedia.com)). If you have cloned a similar rule, you probably won't need to change this.
-    * Click 'Save' to save the changes to the rule
+    * Change the name of the cloned rule - usually you just need to change the VM name and remove the `-1` from the end of the name. 
+    * In the `Source` tab, make sure these are the networks you want. (It is rare that you will need to modify this)
+    * In the `Destination` tab, delete the object (VM) from the cloned rule and add the new VM (the Object you created in the first section)
+    * In the `Application` Tab, select the applications you would like. This selects the signature of an application like SSH, PostgreSQL etc., (rule definition can be found on [applepedia](https://applepedia.com)). If you have cloned a similar rule, you probably won't need to change this.
+    * Click `Save` to save the changes to the rule
 
 ## 3. Commit and push firewall changes
 
 After saving all your changes and additions, you must commit and push your changes - otherwise they will not go into effect. When you have saved all of your changes:
 
-1.	In the upper right, click the “Commit” link at the upper right
-2.	In the Commit dropdown, select “Commit to Panorama”
+1.	In the upper right, click the `Commit` link at the upper right
+2.	In the Commit dropdown, select `Commit to Panorama`
 3.	In the popup, click ??? to save changes to Panorama, then wait for the process to finish
-4.	After the Commit step is complete, click the “Commit” link at the upper right again
-5.	This time select “Push to Devices”
-6.	Select “Push” to propagate your committed changes to the firewalls. This may take some time. You can close the window if you wish - to open it again, click on 'Tasks' at the bottom right
+4.	After the Commit step is complete, click the `Commit` link at the upper right again
+5.	This time select `Push to Devices`
+6.	Click `Push` to propagate your committed changes to the firewalls. This may take some time. You can close the window if you wish - to open it again, click on `Tasks` at the bottom right
 
 ## 4. Update the Service Portal Ticket
 
 All firewall changes must be logged in the Service Portal.
   * Find the ticket that requested the changes
-  * Update that ticket by adding detailed notes in the 'Work notes (internal only)' section describing the changes you made (see examples below)
+  * Update that ticket by adding detailed notes in the `Work notes (internal only)` section describing the changes you made (see examples below)
     * Optionally search closed tickets for similar changes, so you can copy/paste/modify the notes from those
-  * Optionally add a message in the 'Comments (Customer visible)' section to send an email to the person who opened the ticket
-  * Change the status of the ticket to 'Closed Complete'
-  * Click on 'Update' to save your changes and close the ticket
+  * Optionally add a message in the `Comments (Customer visible)` section to send an email to the person who opened the ticket
+  * Change the status of the ticket to `Closed Complete`
+  * Click on `Update` to save your changes, close the ticket, and return to the list of tickets
 
 ### Searching for examples among closed tickets
 
-Most firewall-change tickets in the Service Portal have the title 'Hardware Firewall Change – <vm-name>'. To find a closed ticket that can give you a useful example:
+Most firewall-change tickets in the Service Portal have the title `Hardware Firewall Change – <vm-name>`. To find a closed ticket that can give you a useful example:
   * Click on the funnel icon above your list of tickets
-  * Change the default 'Active - is - true' to 'Active - is -false'
-  * Make any other changes you need (for example, if you know the ticket was assigned to Alicia, set 'Assigned to - is - Alicia Cozine')
-  * Click on the 'Run' button to apply your new filters
+  * Change the default `Active - is - true` to `Active - is -false`
+  * Make any other changes you need (for example, if you know the ticket was assigned to Alicia, set `Assigned to - is - Alicia Cozine`)
+  * Click on the `Run` button to apply your new filters
   * Search through the results for a useful example
 
 ## Sample notes for the Service Portal
