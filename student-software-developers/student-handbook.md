@@ -47,3 +47,5 @@
   * Other machine configuration
   * Team meet & greet
 
+
+See also [the list of requirements and policies](requirements-and-policies.md)
