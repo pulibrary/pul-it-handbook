@@ -1,4 +1,4 @@
-# Studen Software Developers
+# Student Software Developers
 ## See also relevant pages in individual team handbooks:
 
 - https://pulibrary.github.io/dls-handbook/student_software_developers.html
