@@ -329,3 +329,6 @@ diglibdata1.princeton.edu:/ifs/solrbackup  1.5P  874T  549T  62% /mnt/solrbackup
 tmpfs                                      4.0G     0  4.0G   0% /run/user/1001
 tmpfs                                      4.0G     0  4.0G   0% /run/user/1000
 ```
+## Troubleshooting logical volume issues
+
+If you find a machine where `df -h` does not show all available disk space, but the physical and logical volumes both exist, it's possible that a step got skipped. If you try `vgextend` and you get `Physical volume '/dev/sdb1' is already in volume group 'ubuntu-vg'`, and you try `lvextend` and get ` WARNING: No free extents on physical volume "/dev/sdb1"`, then you can format any free space on the logical volume with `sudo lvextend -l +100%FREE /dev/ubuntu-vg/ubuntu-lv`, after which you can do `sudo resize2fs /dev/ubuntu-vg/ubuntu-lv` and you should see the space available in `df -h`.
