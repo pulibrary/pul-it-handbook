@@ -21,10 +21,11 @@ Make the necessary changes to the firewall. The most common task is creating a n
 
 #### Add the Object to the Firewall
   * Go to `Objects` Tab (middle of the screen)
+    * make sure `addresses` is selected in the left panel
   * Add the new IP address using the '+' at the bottom left
     * Give it the name ideally same name as first part of DNS like `figgy-db-staging1`
     * Check the `Shared` box so it is available in both data centers
-    * Add the IP address in the right panel
+    * Add the IP (use CIDR notation with a `/32`) address in the right panel
     * Optionally add a description; all other fields can be left blank
     * Save the object
 
