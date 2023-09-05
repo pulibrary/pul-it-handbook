@@ -1,17 +1,6 @@
 ### Early February: Perform search
 
-#### (Optional) 1st week of February: Host a table at the Student Employment Office’s Spring Job Fair
-
-We did this in 2023. 11 people signed our interest form, but none of them applied for either of our positions, so it may not make sense to do this again.
-
--   Brandon in the communications office made us some signs and loaned us a library-branded tablecloth.
-	-   Tablecloth: There were definitely people who approached looking for more general library jobs. It would be good to know where to direct these inquiries. Or maybe just don’t have a tablecloth
-	-   Signs: said, "Full-Time Summer Jobs" and "Software Development and UX / Web Development." Maybe add the word "mentorship" to one of these or a third sign? Maybe say "full-time summer jobs in software development at the library"?
-	   -   Sign-up sheet:
-		    -   Heading: "Summer Software and UX Web Developer - Sign up and I’ll email you the job listings"
-		    - Columns: Name, email address, class year (so we can properly inform seniors). Add a column for which position they’re interested in.
-
-[More about recruitment](../recruitment.md).
+[Continue recruiting candidates and advertising the position](../recruitment.md).
 
 #### 2nd week of February: Review applications
 

@@ -2,8 +2,7 @@
 ### Mid January: Post the position
 
 -   2 weeks before first day of classes: post the position. When we do it at this time we get more applicants, I think because they are looking for spring positions.
--   Advertising
--   Ask [Colleen Kenny](https://www.cs.princeton.edu/people/profile/ckenny) to send out the position to any student who has taken a CS course
+-   [Advertise the position](../recruitment.md)
     
 
 #### Prepare search documents
