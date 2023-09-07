@@ -9,6 +9,7 @@
 #### Hire
 
 -   Scheduling: Set start / end dates, daily summer hours with the student.    
+-   If you don't yet have one, [create a jobx account](../jobx.md)
 -   Hire each student in the jobx system.
 -   If the student has worked a campus job before they’ll likely have the required paperwork on file
 -   If the student doesn’t have the required paperwork, you “initiate” the hire by filling out the form, and then SE contacts the student to work with them on getting the paperwork done. [Documentation for students about that process](https://finaid.princeton.edu/student-employment/information-undergraduates/prior-working) is on the financial aid website.
