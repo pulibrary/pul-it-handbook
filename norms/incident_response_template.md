@@ -2,12 +2,14 @@
 
 ### Step 1: Declare an incident
 An incident is when we have a service outage, degraded service, or a security concern that needs immediate attention.
-- [ ] Post in #incident_reports on Slack
-```
+
+Fill in the incident details in the text below, then post in #incident_reports on Slack:
+
 @here We have the following incident: [Service] is [down|degraded|insecure].
 
 [Notes document](https://docs.google.com/document/d/1Q0GFVxVDO64O7zrb3gc5y-EXAxxyoM3VQvHQjIdq9hs/edit)
-Zoom link is the first bookmark on this channel
+
+Zoom link is the first bookmark on this channel.
 
 Our goal in response is to learn about the causes, fix the issue, reflect on these, and take steps toward never having to respond to this particular issue again.
 
@@ -19,7 +21,6 @@ We need people in the following roles (all roles are transferrable and do not ha
 - IT manager: Communicates to external stakeholders - see [communication plan](https://lib-confluence.princeton.edu/display/IT/IT+Outages+Communication+Plan)
 - The Ensemble: Domain experts, learners
 - Interpreter: Helps learners understand what's happening on the call, especially defining domain specific language. May summarize current situation as needed.
-```
 
 ### Step 2: Investigate and resolve the incident
 
