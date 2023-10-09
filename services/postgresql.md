@@ -6,15 +6,19 @@
 
 Our postgresql database backups are stored in a [Google Cloud bucket](https://console.cloud.google.com/storage/browser?project=pul-gcdc&prefix=&forceOnObjectsSortingFiltering=false&pli=1&forceOnBucketsSortingFiltering=true) alongside backups for Solr, MariaDB, and more.
 
-Most of our applications are running postgresql 13 on the main psql cluster. Backups for psql 13 databases go to a folder named `pul-postgres-backup/13/daily/`. Within this folder, each application has a directory full of backup files.
+Most of our applications are running postgresql 15 on lib-postgres-prod1. Backups for psql 15 databases go to a folder named `postgres-15-backup/15/daily/`.
 
-Figgy still runs on postgresql 10. Backups for figgy go to a folder named `pul-postgresql-backup/daily/`.
+Some applications are still running postgresql 13 on lib-postgres-prod3. Backups for psql 13 databases go to a folder named `pul-postgres-backup/13/daily/`. Within this folder, each application has a directory full of backup files.
+
+Figgy now runs on postgresql 15 on its own database servers. Backups for figgy go to a folder named `figgy-db-backup/daily/`.
 
 Navigate to the correct folder for the application you are seeking. By default, Google Cloud storage sorts files with oldest on top. To find the most recent backups within a folder, in the row above the column names (scroll up if necessary), change `Filter by name prefix only` to `Sort and filter`, then click twice on the `Created` column header. When the arrow in the `Created` column header points down, the most recent backup appears at the top of the list.
 
 ### How our backups work
 
-The backups run in two stages:
+The postgres 15 backups (including Figgy and Geoserver) are run using [restic](https://restic.readthedocs.io/en/latest/010_introduction.html), see their docs for more information.
+
+The postgres 13 backups are run using postgres tools. These backups run in two stages:
 1. We run the postgresql script (`/var/lib/postgresql/backup/autopgsqlbackup.sh`) first. The script creates backup files in the `/var/lib/postgresql/postgres_backup/13/daily/` directory.
 2. We run an rsync process to move the backup files to the cloud an hour or two later.
 Both steps are set in the `postgres` user's crontab. To view them:
@@ -22,11 +26,9 @@ Both steps are set in the `postgres` user's crontab. To view them:
 - become the postgres user with `sudo su postgres`
 - view the postgres user's crontab with `crontab -l`
 
-### Replication and resilience
+### Standbys and resilience
 
-We maintain multiple postgresql VMs for our psql 13 applications. This database cluster automatically replicates database updates on all VMs. If one VM in the cluster goes down, another one picks up the load, providing operating resilience.
-
-Add more details on the postgresql cluster and replication here.
+Our postgres 15 servers (including Figgy and Geoserver) have warm standby capability configured. We maintain two servers for each cluster - a leader and a follower. Add more details on the postgresql cluster and replication here.
 
 ## Allowing database access from a new VM
 
