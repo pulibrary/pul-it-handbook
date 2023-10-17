@@ -1,3 +1,13 @@
+### Program Objectives
+
+* Provide training and mentorship to students interested in software development
+* Provide students with skills and experience relevant to being part of a software development team, as well as a remote work environment
+* Provide development staff with mentorship, hiring, supervisory, onboarding, and training opportunities
+
+### Hiring Objectives
+
+We seek to hire students who will benefit the most from our curriculum and development practices. Candidates should demonstrate good communication skills, a willingness to learn, and the ability to work independently and as part of a team. In our hiring process we will work to counteract biases in tech internship hiring practices at large.
+
 ### Timeline
 
 * [December](administration-handbook/timeline/12-december.md)
