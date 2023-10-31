@@ -14,7 +14,7 @@
 * [Enhancing design with CSS treehouse video](https://teamtreehouse.com/library/enhancing-design-with-css)
 * [Debugging CSS with Chrome DevTools treehouse video](https://teamtreehouse.com/library/debugging-css-with-chrome-devtools)
 * [Mobile-First CSS Layout treehouse video](https://teamtreehouse.com/library/mobilefirst-css-layout)
-* [CSS Flexbox layout treehouse video](https://teamtreehouse.com/library/responsive-layouts)
+* [Responsive layouts treehouse video](https://teamtreehouse.com/library/responsive-layouts)
 * [CSS Flexbox layout treehouse video](https://teamtreehouse.com/library/css-flexbox-layout)
 * [CSS Selectors treehouse video](https://teamtreehouse.com/library/css-selectors)
 * [CSS Grid Layout treehouse video](https://teamtreehouse.com/library/css-grid-layout)
