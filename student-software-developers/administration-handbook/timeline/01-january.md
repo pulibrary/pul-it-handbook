@@ -1,9 +1,16 @@
 
 ### Mid January: Post the position
 
--   2 weeks before first day of classes: post the position. When we do it at this time we get more applicants, I think because they are looking for spring positions.
--   [Advertise the position](../recruitment.md)
-    
+- 2 weeks before first day of classes: post the position.
+    - We may not know yet exactly how many students we will hire. It's okay because the ad says "The Library is seeking up to x student developers"
+    - When we do it at this time we get more applicants, I think because they are looking for spring positions.
+- [Advertise the position](../recruitment.md)
+
+#### Finalize the search committee
+
+- Finalize decisions from students about whether they will return next year, and
+    using that information finalize the staff who will be hiring / mentoring new
+    students.
 
 #### Prepare search documents
 
@@ -12,11 +19,11 @@
     -   The hiring contact status spreadsheet - copy from the template in [Hiring](https://drive.google.com/drive/u/2/folders/1gzyj1Oc7ELChwTCKdiwmNVD-l3l5FIWq)
     -   The rubric - copy from the template in [Hiring](https://drive.google.com/drive/u/2/folders/1gzyj1Oc7ELChwTCKdiwmNVD-l3l5FIWq)
     -   A folder for each candidate interviewed containing
-		-   Resume
-		-   code sample
-		-   text from their online application (optional)
-		-   a copy of the interview agenda for adding candidate-specific questions
-	    -   Create a notes folder and document in [Notes](https://drive.google.com/drive/u/2/folders/1qBVzjAp7eaxBUVnehC3YX2wEqmjJdMh0).
+        -   Resume
+        -   code sample
+        -   text from their online application (optional)
+        -   a copy of the interview agenda for adding candidate-specific questions
+        -   Create a notes folder and document in [Notes](https://drive.google.com/drive/u/2/folders/1qBVzjAp7eaxBUVnehC3YX2wEqmjJdMh0).
 -   Add links to the new folder, new drive, and this documentation at the top of the notes document.
 
 #### Plan interviews
