@@ -1,8 +1,8 @@
 ### Program Objectives
 
 * Provide training and mentorship to students interested in software development
-* Provide students with skills and experience relevant to being part of a software development team, as well as a remote work environment
-* Provide development staff with mentorship, hiring, supervisory, onboarding, and training opportunities
+* Provide students with skills and experience relevant to being part of a software engineering team, as well as a remote work environment
+* Provide software engineering staff with mentorship, hiring, supervisory, onboarding, and training opportunities
 
 ### Hiring Objectives
 
