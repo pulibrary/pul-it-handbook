@@ -16,7 +16,7 @@
 
 ## Manually managed certs list
 
-These certs are for sites we do not serve from the load balancers. These certs must be renewed and deployed manually.
+These certs are not managed by our usual process. They may be for sites we do not serve from the load balancers, or for sites without the '.princeton.edu' name. These certs must be renewed and deployed manually.
 
 cicognara.org
 Purpose: public site for the Cicognara collection (a collaborative project)
@@ -26,13 +26,7 @@ Deployed: on the load balancers
 dataspace-staging.princeton.edu
 Purpose: staging site for dspace
 Managed: in ServiceNow, private key is on princeton_ansible
-Deployed: on google cloud - staging.pulcloud.io
-
-diglib.princeton.edu
-Purpose: was landing page for all digital library pages
-Managed:
-Deployed: on the load balancers
-Now uses letsencrypt - can get rid of the ServiceNow cert(s)
+Deployed: on Google cloud - staging.pulcloud.io
 
 dss2.princeton.edu
 Purpose: secures dataset downloads from a separate server for DSS via a web browser
@@ -60,10 +54,9 @@ ask Philippe - can we shut this down?
 
 lib-aeon.princeton.edu
 Purpose: redirects traffic to hosted Aeon service at https://princeton.aeon.atlas-sys.com
-Managed:
-Deployed:
-Notes: vendor maintains the cert for the new service
-will redirect the old URL, power off the old lib-aeon machine
+Managed: by the vendor
+Deployed: by the vendor
+Notes: can we redirect the old URL on the load balancers and power off the old lib-aeon machine?
 
 lib-gisportal.princeton.edu
 Purpose:
@@ -75,7 +68,7 @@ lib-illsql.princeton.edu
 Purpose: interlibrary loan
 Managed: in ServiceNow
 Deployed: in IIS
-Notes: windows box, cert has a SAN name of lib-illiad.princeton.edu
+Notes: Windows box, cert has a SAN name of lib-illiad.princeton.edu
 
 lib-rbrr.princeton.edu
 Purpose: rare books reading room
@@ -88,11 +81,6 @@ Purpose: accessing desktops during the pandemic
 Managed:
 Deployed:
 Notes: Stokes still uses this, but should move to Princeton Virtual Desktop soon, then we can decommission this
-
-libweb5.princeton.edu
-Purpose: Redirects traffic; previously an alias for the lib-dbserver Windows box
-Managed: by letsencrypt
-Deployed: on the load balancers
 
 libserv447.princeton.edu
 Purpose:
@@ -123,7 +111,7 @@ Managed: in ServiceNow, private key is on princeton_ansible
 Deployed: on Google cloud at staging.pulcloud.io
 
 pulmirror.princeton.edu
-Purpose:
+Purpose: distributing Ubuntu packages
 Managed: in ServiceNow - will add private key to princeton_ansible
 Deployed: on Google cloud at pulmirror.princeton.edu
 
