@@ -16,17 +16,17 @@
 
 ## Manually managed certs list
 
-These certs are not managed by our usual process. They may be for sites we do not serve from the load balancers, or for sites without the '.princeton.edu' name. These certs must be renewed and deployed manually.
+These certs are not managed by our usual process. They may be for sites we do not serve from the load balancers, or for sites without the '.princeton.edu' name, or for vendor-hosted sites with the '.princeton.edu' name. These certs must be renewed and deployed manually.
 
 cicognara.org
 Purpose: public site for the Cicognara collection (a collaborative project)
 Managed: on gandi.net, private key is in princeton_ansible
 Deployed: on the load balancers
 
-dataspace-staging.princeton.edu
-Purpose: staging site for dspace
+dataspace-dev.princeton.edu
+Purpose: dev/staging site for dspace
 Managed: in ServiceNow, private key is on princeton_ansible
-Deployed: on Google cloud - staging.pulcloud.io
+Deployed: on Google cloud - dev.pulcloud.io? staging.pulcloud.io?
 
 dss2.princeton.edu
 Purpose: secures dataset downloads from a separate server for DSS via a web browser
@@ -40,11 +40,8 @@ Managed: locally by letsencrypt
 Deployed: in /etc/letsencrypt/live/ezproxy on the ezproxy-prod1 server
 
 gisserver-dev.princeton.edu
-Purpose:
-Managed:
-Deployed:
-libserv101
-ask Eliot, might be a windows server? might be obsolete?
+obsolete, revoked the cert
+was an alias for libserv101
 
 imagecat2.princeton.edu
 Purpose: alias for libserv37.princeton.edu, but why?
@@ -54,8 +51,8 @@ ask Philippe - can we shut this down?
 
 lib-aeon.princeton.edu
 Purpose: redirects traffic to hosted Aeon service at https://princeton.aeon.atlas-sys.com
-Managed: by the vendor
-Deployed: by the vendor
+Managed: for new site by the vendor
+Deployed: to new site by the vendor
 Notes: can we redirect the old URL on the load balancers and power off the old lib-aeon machine?
 
 lib-gisportal.princeton.edu
@@ -89,12 +86,6 @@ Deployed:
 Ask Philippe
 
 libserv97.princeton.edu
-Purpose:
-Managed:
-Deployed:
-Ask Philippe
-
-meridian-dev.princeton.edu
 Purpose:
 Managed:
 Deployed:
