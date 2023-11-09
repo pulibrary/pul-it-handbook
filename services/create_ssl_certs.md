@@ -19,9 +19,124 @@
 These certs are for sites we do not serve from the load balancers. These certs must be renewed and deployed manually.
 
 cicognara.org
+Purpose: public site for the Cicognara collection (a collaborative project)
+Managed: on gandi.net, private key is in princeton_ansible
+Deployed: on the load balancers
+
 dataspace-staging.princeton.edu
+Purpose: staging site for dspace
+Managed: in ServiceNow, private key is on princeton_ansible
+Deployed: on google cloud - staging.pulcloud.io
+
+diglib.princeton.edu
+Purpose: was landing page for all digital library pages
+Managed:
+Deployed: on the load balancers
+Now uses letsencrypt - can get rid of the ServiceNow cert(s)
+
+dss2.princeton.edu
+Purpose: secures dataset downloads from a separate server for DSS via a web browser
+Managed: in ServiceNow - John will move to letsencrypt
+Deployed: on the CentOS server - will move to letsencrypt on the same server
+Notes: cannot be a SAN name for the main DSS cert, because we only want to secure this functionality on one machine - can be tricky to maintain because server access requires signing nondisclosure agreements (for protected data)
+
+ezproxy.princeton.edu
+Purpose: allows access to journals by confirming Princeton affiliation
+Managed: locally by letsencrypt
+Deployed: in /etc/letsencrypt/live/ezproxy on the ezproxy-prod1 server
+
+gisserver-dev.princeton.edu
+Purpose:
+Managed:
+Deployed:
+libserv101
+ask Eliot, might be a windows server? might be obsolete?
+
+imagecat2.princeton.edu
+Purpose: alias for libserv37.princeton.edu, but why?
+Managed:
+Deployed:
+ask Philippe - can we shut this down?
+
+lib-aeon.princeton.edu
+Purpose:
+Managed:
+Deployed:
+service has moved to the cloud: https://princeton.aeon.atlas-sys.com/logon
+ask Kevin how we maintain the cert for the new service
+will redirect the old URL, power off the old lib-aeon machine
+
+lib-gisportal.princeton.edu
+Purpose:
+Managed: in ServiceNow
+Deployed: in IIS - need to be an admin on the Windows box
+Notes: windows machine
+
 lib-illsql.princeton.edu
+Purpose: interlibrary loan
+Managed: in ServiceNow
+Deployed: in IIS
+Notes: windows box, cert has a SAN name of lib-illiad.princeton.edu
+
+lib-rbrr.princeton.edu
+Purpose: rare books reading room
+Managed:
+Deployed:
+ask Philippe
+
+lib-remote.princeton.edu
+Purpose: accessing desktops during the pandemic
+Managed:
+Deployed:
+Notes: Stokes still uses this, but should move to Princeton Virtual Desktop soon, then we can decommission this
+
+lib-web5.princeton.edu
+Purpose:
+Managed:
+Deployed:
+lives on the LB, cert lives there too, what the heck is this for? ask Kevin
+
+libserv447.princeton.edu
+Purpose:
+Managed:
+Deployed:
+Ask Philippe
+
+libserv97.princeton.edu
+Purpose:
+Managed:
+Deployed:
+Ask Philippe
+
+meridian-dev.princeton.edu
+Purpose:
+Managed:
+Deployed:
+Ask Philippe
+
+oar-dev.princeton.edu
+Purpose:
+Managed: in ServiceNow, private key is on princeton_ansible
+Deployed: on Google cloud at dev.pulcloud.io
+
 oar-staging.princeton.edu
+Purpose:
+Managed: in ServiceNow, private key is on princeton_ansible
+Deployed: on Google cloud at staging.pulcloud.io
+
+ojs-staging.princeton.edu
+revoke ServiceNow cert - this site and its cert live on the load balancer
+
+pulmirror.princeton.edu
+Purpose:
+Managed: in ServiceNow - will add private key to princeton_ansible
+Deployed: on Google cloud at pulmirror.princeton.edu
+
+tigris.princeton.edu
+Purpose:
+Managed: in ServiceNow - will add private key to princeton_ansible
+Deployed:
+Main user is Anne Marie Somebody - ask Kevin
 
 ### Detailed instructions for sites outside the Princeton domain
 
@@ -171,4 +286,3 @@ Submit the CSR to gandi.net. Use the following guidance:
       ```
 
 [1] Subject Alternative Names are used when multiple domains share the same certificate as shown ![SAN Example](images/san/san_example.png)
-
