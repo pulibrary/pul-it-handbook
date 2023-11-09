@@ -59,11 +59,10 @@ Deployed:
 ask Philippe - can we shut this down?
 
 lib-aeon.princeton.edu
-Purpose:
+Purpose: redirects traffic to hosted Aeon service at https://princeton.aeon.atlas-sys.com
 Managed:
 Deployed:
-service has moved to the cloud: https://princeton.aeon.atlas-sys.com/logon
-ask Kevin how we maintain the cert for the new service
+Notes: vendor maintains the cert for the new service
 will redirect the old URL, power off the old lib-aeon machine
 
 lib-gisportal.princeton.edu
@@ -90,11 +89,10 @@ Managed:
 Deployed:
 Notes: Stokes still uses this, but should move to Princeton Virtual Desktop soon, then we can decommission this
 
-lib-web5.princeton.edu
-Purpose:
-Managed:
-Deployed:
-lives on the LB, cert lives there too, what the heck is this for? ask Kevin
+libweb5.princeton.edu
+Purpose: Redirects traffic; previously an alias for the lib-dbserver Windows box
+Managed: by letsencrypt
+Deployed: on the load balancers
 
 libserv447.princeton.edu
 Purpose:
@@ -124,19 +122,15 @@ Purpose:
 Managed: in ServiceNow, private key is on princeton_ansible
 Deployed: on Google cloud at staging.pulcloud.io
 
-ojs-staging.princeton.edu
-revoke ServiceNow cert - this site and its cert live on the load balancer
-
 pulmirror.princeton.edu
 Purpose:
 Managed: in ServiceNow - will add private key to princeton_ansible
 Deployed: on Google cloud at pulmirror.princeton.edu
 
 tigris.princeton.edu
-Purpose:
+Purpose: hosted service for University Records management
 Managed: in ServiceNow - will add private key to princeton_ansible
-Deployed:
-Main user is Anne Marie Somebody - ask Kevin
+Deployed: by vendor; to update, email a .pfx file of the cert to support@gimmal.com
 
 ### Detailed instructions for sites outside the Princeton domain
 
