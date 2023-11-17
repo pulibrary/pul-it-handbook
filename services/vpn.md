@@ -19,6 +19,9 @@ under "Palo Alto GLobalProtect Cloud Gateways".
 
 ### Get IPs
 
+Currently, this process does not account for all the possible IPs we may get
+from Global Protect.
+
 1. Copy all the FQDNs from the article above into `services/vpn/ips.txt`,
    deleting any empty lines or headers which aren't URLs.
 1. Run `ruby services/vpn/resolve.rb`
