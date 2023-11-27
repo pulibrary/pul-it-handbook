@@ -44,52 +44,50 @@ obsolete, revoked the cert
 was an alias for libserv101
 
 imagecat2.princeton.edu
-Purpose: alias for libserv37.princeton.edu, but why?
-Managed:
-Deployed:
-ask Philippe - can we shut this down?
+Alicia will revoke cert, Philippe will shut down the server once he has copied whatever we need from it
 
 lib-aeon.princeton.edu
 Purpose: redirects traffic to hosted Aeon service at https://princeton.aeon.atlas-sys.com
 Managed: for new site by the vendor
 Deployed: to new site by the vendor
-Notes: can we redirect the old URL on the load balancers and power off the old lib-aeon machine?
+Notes: Ask John if we can redirect the old URL on the load balancers and power off the old lib-aeon machine
 
 lib-gisportal.princeton.edu
 Purpose:
 Managed: in ServiceNow
-Deployed: in IIS - need to be an admin on the Windows box
-Notes: windows machine
+Deployed: in IIS on ???? server
+Notes: windows machine, you must be an admin on the Windows box
 
 lib-illsql.princeton.edu
 Purpose: interlibrary loan
 Managed: in ServiceNow
-Deployed: in IIS
+Deployed: in IIS, which server?
 Notes: Windows box, cert has a SAN name of lib-illiad.princeton.edu
+may be obsolete, Philippe will investigate
 
 lib-rbrr.princeton.edu
 Purpose: rare books reading room
-Managed:
-Deployed:
-ask Philippe
+Managed: in ServiceNow
+Deployed: to a physical server in the reading room, lib-rbrr and libserv447
+We can get rid of either this cert or the libserv447 one Philippe will check
 
 lib-remote.princeton.edu
 Purpose: accessing desktops during the pandemic
 Managed:
 Deployed:
 Notes: Stokes still uses this, but should move to Princeton Virtual Desktop soon, then we can decommission this
+Ask Shelly or John
 
 libserv447.princeton.edu
-Purpose:
+Purpose: rare books reading room
 Managed:
 Deployed:
-Ask Philippe
+See listing for lib-rbrr above
 
 libserv97.princeton.edu
-Purpose:
-Managed:
-Deployed:
-Ask Philippe
+Purpose: Philippe's test machine, may disappear in 2024
+Managed: in ServiceNow
+Deployed: directly on the libserv97 VM
 
 oar-dev.princeton.edu
 Purpose:
