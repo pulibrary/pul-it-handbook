@@ -2,6 +2,13 @@
 
 You can add storage space to an existing virtual machine without shutting it down by adding a new disk to the VM, then expanding the existing logical volume to include the new space. 
 
+### Expand Inital Disk Size
+
+```bash 
+sudo lvextend -l +100%FREE /dev/ubuntu-vg/ubuntu-lv
+sudo resize2fs /dev/ubuntu-vg/ubuntu-lv
+```
+
 ### Confirm that a logical volume exists
 
 The existing partition must be a logical volume (LVM) for these steps to work. Identify the partition type with `sudo fdisk -l` (or run the command as the root user). Notice that each attached disk has both a `Disk` entry and a `Device` entry. You should see a device with the ID (hex code) `8e` and the Type `Linux LVM`, which denotes a logical volume.
