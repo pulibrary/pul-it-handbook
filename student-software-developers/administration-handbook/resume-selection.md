@@ -1,20 +1,24 @@
 # Resume Selection
 We may have a large number of applicants for the positions. The initial screen of resumes can be very time intensive, so we want to make the resume review process efficient.  
 
-If possible the two roles should be spearat folks.
+If possible the two roles should be separate folks.
 
-## Roles
- * Resume Acceptor
- * Resume Reviwer
+## Roles ([see roles for a complete list of hiring roles](https://github.com/pulibrary/pul-it-handbook/blob/main/student-software-developers/administration-handbook/roles.md))
+ * Initial point of contact 
+ * Initial document organization
+ * Resume Reviewer
 
-### Resume Acceptor
-The Resume Acceptor is the person that gathers resumes from the students.  
-The resume acceptor: 
+### Initial point of contact
+The Initial point of contact is the person that gathers resumes from the students.  
+The Initial point of contact: 
    1. Has thier email on the job posting
    1. Reaches out to the student if the information is not complete.
-   1. Redacts Personal Names and Buisness Names from the Resume and cover letters
+
+### Initial document organization
+The Initial document organizer is the person who redacts the resumes and set tem up for review.  This may or may not be the same person as the Initial point of contact, but likely is the same person.
+   1. Redacts Personal Names and Business Names from the Resume and cover letters
    1. Stores the information under the student netid on a google drive accessible to the committee
-   1. Creates and maintains a spreadheet that has the netid, a link to the content and a slot for two reviewers
+   1. Creates and maintains a spreadsheet that has the netid, a link to the content and a slot for two reviewers  [see template](https://docs.google.com/spreadsheets/d/1rw_kw7psuiWlvJtjbfwyXjWxPsyfNCqSIWafj4Gm5YE/edit#gid=0) 
 
 ### Resume Reviewer
 The Resume review will:
