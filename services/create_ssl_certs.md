@@ -17,7 +17,7 @@
 ## Verifying certbot certificate renewals
 To verify that a certificate on a server will auto-renew:
 
-sudo certbot --standalone --non-interactive --agree-tos --email simonlee@princeton.edu --server https://acme.sectigo.com/v2/InCommonRSAOV --eab-kid  <main-certbot-key-ID> --eab-hmac-key <main-certbot-key-value> renew --dry-run
+sudo certbot --standalone --non-interactive --agree-tos --email simonlee@princeton.edu --server https://acme.sectigo.com/v2/InCommonRSAOV --eab-kid  <certbot-key-eab-kid> --eab-hmac-key <certbot-key-eab-hmac-key> renew --dry-run
 
 This command checks all certs that certbot knows about on that server.
 
