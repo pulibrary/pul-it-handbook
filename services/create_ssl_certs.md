@@ -14,9 +14,20 @@
 3. Your TLS/SSL cert will be created and returned to you via a email within 3 hours from gandi.net
 4. Verify the files you get back and add them to your server configuration.
 
+## Verifying certbot certificate renewals
+To verify that a certificate on a server will auto-renew:
+
+sudo certbot --standalone --non-interactive --agree-tos --email simonlee@princeton.edu --server https://acme.sectigo.com/v2/InCommonRSAOV --eab-kid  <main-certbot-key-ID> --eab-hmac-key <main-certbot-key-value> renew --dry-run
+
+This command checks all certs that certbot knows about on that server.
+
 ## Manually managed certs list
 
-These certs are not managed by our usual process. They may be for sites we do not serve from the load balancers, or for sites without the '.princeton.edu' name, or for vendor-hosted sites with the '.princeton.edu' name. These certs must be renewed and deployed manually.
+These certs are not managed by our usual process. These certs cover:
+- sites we do not serve from the load balancers
+- sites without the '.princeton.edu' extension
+- vendor-hosted sites with the '.princeton.edu' extension
+Many of these certs must be deployed manually. Some must also be renewed manually. If a private key is kept in princeton_ansible, it is encrypted as a file in the `/keys/` directory of the repo.
 
 cicognara.org
 Purpose: public site for the Cicognara collection (a collaborative project)
@@ -26,87 +37,74 @@ Deployed: on the load balancers
 dataspace-dev.princeton.edu
 Purpose: dev/staging site for dspace
 Managed: in ServiceNow, private key is on princeton_ansible
-Deployed: on Google cloud - dev.pulcloud.io? staging.pulcloud.io?
+Deployed: on Google cloud, on dev.pulcloud.io
 
 dss2.princeton.edu
 Purpose: secures dataset downloads from a separate server for DSS via a web browser
 Managed: in ServiceNow - John will move to letsencrypt
-Deployed: on the CentOS server - will move to letsencrypt on the same server
+Deployed: on the dss2 CentOS VM
 Notes: cannot be a SAN name for the main DSS cert, because we only want to secure this functionality on one machine - can be tricky to maintain because server access requires signing nondisclosure agreements (for protected data)
 
 ezproxy.princeton.edu
 Purpose: allows access to journals by confirming Princeton affiliation
-Managed: locally by letsencrypt
+Managed: on ezproxy-prod1 by letsencrypt
 Deployed: in /etc/letsencrypt/live/ezproxy on the ezproxy-prod1 server
 
-gisserver-dev.princeton.edu
-obsolete, revoked the cert
-was an alias for libserv101
-
 imagecat2.princeton.edu
-Alicia will revoke cert, Philippe will shut down the server once he has copied whatever we need from it
+Philippe will shut down the server once he has copied whatever we need from it. Once it's gone, we can revoke the cert.
 
 lib-aeon.princeton.edu
 Purpose: redirects traffic to hosted Aeon service at https://princeton.aeon.atlas-sys.com
 Managed: for new site by the vendor
 Deployed: to new site by the vendor
-Notes: Ask John if we can redirect the old URL on the load balancers and power off the old lib-aeon machine
+Notes: We would like to redirect the old URL on the load balancers and power off the old lib-aeon machine, but it still holds the templates for printing Aeon call slips.
 
 lib-gisportal.princeton.edu
-Purpose:
+Purpose: for maps (Wangyal)
 Managed: in ServiceNow
-Deployed: in IIS on ???? server
-Notes: windows machine, you must be an admin on the Windows box
+Deployed: in IIS on a physical machine that runs MS HyperV virtualization - cluster of lib-geoserv1 and lib-geoserv2 (not the Lib-Gisportal2 VM) server
+Notes: windows physical machine, you must be an admin on the Windows box, expires 2024/07/30
 
 lib-illsql.princeton.edu
 Purpose: interlibrary loan
 Managed: in ServiceNow
-Deployed: in IIS, which server?
-Notes: Windows box, cert has a SAN name of lib-illiad.princeton.edu
-may be obsolete, Philippe will investigate
+Deployed: in IIS, on the lib-illiad-new VM
+Notes: Windows VM; cert has a SAN name of lib-illiad.princeton.edu; we hope to migrate this to a hosted platform in 2024
 
 lib-rbrr.princeton.edu
 Purpose: rare books reading room
-Managed: in ServiceNow
-Deployed: to a physical server in the reading room, lib-rbrr and libserv447
-We can get rid of either this cert or the libserv447 one Philippe will check
-
-lib-remote.princeton.edu
-Purpose: accessing desktops during the pandemic
-Managed:
-Deployed:
-Notes: Stokes still uses this, but should move to Princeton Virtual Desktop soon, then we can decommission this
-Ask Shelly or John
+Managed: by letsencrypt on lib-rbrr
+Deployed: to a physical server in the reading room - server has an alias of libserv447
+Notes: will be replaced in 2024 by a laptop that does not use the LAN. In the interim we need both this cert and the libserv447 cert.
 
 libserv447.princeton.edu
 Purpose: rare books reading room
-Managed:
-Deployed:
-See listing for lib-rbrr above
+Managed: in ServiceNow
+Deployed: deployed on the lib-rbrr physical machine, see listing for lib-rbrr above
 
 libserv97.princeton.edu
 Purpose: Philippe's test machine, may disappear in 2024
 Managed: in ServiceNow
-Deployed: directly on the libserv97 VM
+Deployed: directly on the libserv97 VM (dev environment)
 
 oar-dev.princeton.edu
-Purpose:
+Purpose: open access repository
 Managed: in ServiceNow, private key is on princeton_ansible
 Deployed: on Google cloud at dev.pulcloud.io
 
 oar-staging.princeton.edu
-Purpose:
+Purpose: open access repository
 Managed: in ServiceNow, private key is on princeton_ansible
 Deployed: on Google cloud at staging.pulcloud.io
 
 pulmirror.princeton.edu
 Purpose: distributing Ubuntu packages
-Managed: in ServiceNow - will add private key to princeton_ansible
+Managed: in ServiceNow, private key is in princeton_ansible
 Deployed: on Google cloud at pulmirror.princeton.edu
 
 tigris.princeton.edu
 Purpose: hosted service for University Records management
-Managed: in ServiceNow - will add private key to princeton_ansible
+Managed: in ServiceNow, private key is in princeton_ansible
 Deployed: by vendor; to update, email a .pfx file of the cert to support@gimmal.com
 
 ### Detailed instructions for sites outside the Princeton domain
