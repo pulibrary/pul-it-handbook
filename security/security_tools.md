@@ -91,14 +91,6 @@ These allow a human user to send requests to a running application to identify p
 
 ### [Burp Suite](https://portswigger.net/burp/documentation/desktop)
 
--   How do users install this?
-
--   How is this run locally?
-
--   Which Operating Systems are currently supported?
-
--   Which type of security checks are being performed?
-
 Burp Suite serves as a comprehensive platform for undertaking manual vulnerability testing and discovery for web applications. Burp is available to users as a Community Edition, which is released under an open source license, and offers a graphical user interface within supported operating system environments (Burp itself is implemented using Java and distributed as a JAR). Further, there also exists a distribution of Burp, Dastardly, which provides a release of the suite which is optimized for continuous integration (CI) workflows. As a JAR, support for the Burp Suite is provided for Windows, macOS, and all major distributions of the Linux operating system.
 
 Addressing the features of Burp, the suite provides users with the ability to send and modify HTTP request headers with the intended outcome of ensuring that a vulnerability is exploited, and that the target web application behavior provides a level of privilege escalation required to provide clients with some pathway to gaining security-sensitive information, or abnormal control over the behavior of the web application.
