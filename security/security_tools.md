@@ -65,8 +65,8 @@ The main thing Bearer brings to the table that other SAST tools do not is a focu
 ### [CodeQL](https://codeql.github.com/)
 
 CodeQL is a hosted service provided by GitHub which provides vulnerability scanning on behalf of GitHub users. While GitHub provides their dedicated Advanced Security service separately from the CodeQL project, the documentation within the CodeQL project confirms that CodeQL libraries provide the underlying architecture for this Advanced Security solution.
-
-While CodeQL provides vulnerability scanning features which are automated for GitHub repositories, there currently exist no implementation of any integration of CodeQL with any alternative
+While CodeQL provides vulnerability scanning features which are automated for GitHub repositories, there currently exist no implementation of any integration of CodeQL with any alternative version control projects dependent upon git (such as GitLab).
+CodeQL itself contains various extensions to the underlying rulesets which is offered for a set of default languages and frameworks. More specifically, the following languages and frameworks are supported: C, C++, C#, Go, Java, Kotlin, JavaScript, Python, Ruby, Swift, and TypeScript. While there exist GitHub repositories through which one may be able to submit support for additional languages, the size of the user community (which includes GitHub itself) will ensure that the requirements for integrating CodeQL are fairly high. Beyond this, CodeQL is typically integrated into any given GitHub repository by modifying specific repository settings (this is described in the [community documentation](https://docs.github.com/en/code-security/code-scanning/introduction-to-code-scanning/about-code-scanning)). As such, end-users will then receive the vulnerability scanning reports when commits have been pushed to the repository, or in response to a pull request having been opened.
 
 ### [Semgrep](https://semgrep.dev/)
 
