@@ -39,6 +39,9 @@ Staff clients are part of a Windows image. These are typically updated when Aeon
 * "Staff Manager" allows you to create and manage existing staff client users. Including reseting passwords. 
 * "Customization Manager" contains configuration settings for ILLiad as well as configuration settings for server-side add-ons.
 
+## Printing
+Aeon staff clients print out various labels that are used in the Reading Room circulation process. A description is available in the [Aeon print documentation](https://support.atlas-sys.com/hc/en-us/articles/360011920833-Aeon-Default-Print-Templates). All clients have a path that they resolve set in the Aeon Customization Manager key "PrintDocumentsPath". Currently that is set to a file share on the lib-aeon.princeton.edu server. 
+
 ## Add-ons
 Aeon has an add-on architecture implemented in [LUA](https://www.lua.org/). Add-ons can be added at the individual client level or on the server. Client add-ons are incorporated into our Aeon client install in our staff workstation image and replicated on every client instance. Server add-ons are installed in a single place within the ILLiad server application. See available [add-ons](https://atlas-sys.atlassian.net/wiki/spaces/ILLiadAddons/pages/3149603/Aeon+Addon+Directory).
 
