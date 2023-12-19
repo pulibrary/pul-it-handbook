@@ -10,7 +10,7 @@ Web interface [landing page](https://lib-illiad.princeton.edu/illiad/). The logi
 ILLiad has SQL Server database and application server installation that includes the web application and server Windows services that run on the server that support the application's processing of requests. The database, ILLiad web application and the Illiad server-side application both live on the server lib-illsql.princeton.edu. There is an alias "lib-illiad.princeton.edu" that is attached to that server and used for the web application. 
 
 ### Troubleshooting the server. 
-When things go wrong on teh server you usually need to do to do one of two things after connecting with an account with administration rights on the lib-illsql.princeton.edu server. 
+When things go wrong on the server you usually need to do to do one of two things after connecting with an account with administration rights on the lib-illsql.princeton.edu server. 
 
 #### Restart the IIS Manager
 
