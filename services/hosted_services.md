@@ -3,7 +3,7 @@
 ## Infolinx/Tigris
 
 ### Purpose
-Records management software used by both University staff and Library staff in the Library's Records Management. Anne-Marie Phillips is the primary contact for the software. The software product name for this is "Infolinx". [Further information](https://aisww.com/infolinx/). 
+Records management software used by both University staff and Library staff in the Library's Records Management. Anne-Marie Phillips is the primary contact for the software. The software product name for this is "Infolinx". [Further information](https://aisww.com/infolinx/). Our implementation is called Tigris.
 
 ### Access
 Web [tigris login](https://tigris.princeton.edu). Tigris is integrated with our campus IDP. Access to it is governed by membership in certain Active Directory groups established specifically for tigris. These need to be managed via OIT's [web tools portal](https://tools.princeton.edu). 
