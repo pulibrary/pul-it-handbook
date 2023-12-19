@@ -52,7 +52,7 @@ Aeon has an add-on architecture implemented in [LUA](https://www.lua.org/). Add-
 General documentation is available on the [Atlas website](https://support.atlas-sys.com/hc/en-us/categories/360000720853-Aeon). Support can be requested through the [Atlas Web Portal](https://support.atlas-sys.com/hc/en-us/requests/new)
 
 ## Using the client for troubleshooting/account management
-We have several desktop machines that are available for remote desktop connection that will allow IT staff who don't use windows to utilize. Once connected you need to use actual Aeon client staff credentials to login into the various clients. 
+The Aeon client can only be reached from PUL Windows machines. IT staff who do not regularly work on Windows machines must use Windows Remote Desktop to connect to one of the desktop Windows machines listed below. Once connected, staff must use actual Aeon client staff credentials to login into the various clients. 
 
 * lib-ares-cli1
 * lib-ares-cli2
