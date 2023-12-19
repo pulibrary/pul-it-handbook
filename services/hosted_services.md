@@ -30,7 +30,7 @@ General application support questions should be sent via the vendor [web portal]
 Our Special Collections staff responsible for supervising the use of requested materials are the primary users of Aeon. 
 
 ### Web Interface
-Atlas hosts the web interface code in a [Github repot](https://github.com/AtlasSystems/hosting-aeon-princeton). You need to request access to this via Atlas support. [Documentation](https://support.atlas-sys.com/hc/en-us/articles/4407504126611-Editing-Atlas-Hosted-Aeon-Web-Pages-in-GitHub) on the workflow to allow PUL users to submit updates is available. The web interface is integrated via Shibboleth for Princeton net ID holders and offers a self-managed username and password for SC users outside of Princeton who want to request SC items. 
+Atlas hosts the web interface code in a [Github repo](https://github.com/AtlasSystems/hosting-aeon-princeton). You need to request access to this via Atlas support. [Documentation](https://support.atlas-sys.com/hc/en-us/articles/4407504126611-Editing-Atlas-Hosted-Aeon-Web-Pages-in-GitHub) on the workflow to allow PUL users to submit updates is available. The web interface is integrated via Shibboleth for Princeton net ID holders and offers a self-managed username and password for SC users outside of Princeton who want to request SC items. 
 
 ## Staff Clients
 Staff clients are part of a Windows image. These are typically updated when Aeon has a new release or Atlas releases a security patch. Staff users have a unique username/password stored in Aeon itself that they use to sign to the client. 
