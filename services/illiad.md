@@ -32,7 +32,7 @@ When things go wrong on the server you usually need to do to do one of two thing
 
 
 ## Staff Clients
-Staff clients are part of a Windows image. These are typically updated when ILLiad has a new release. The ILLiad has three different clients. Staff users have a unique username/password stored in Illiad itself that they use to sign to the client. 
+Staff clients are part of a Windows image. When ILLiad has a new release, we must download new images and apply them to the client-side system manually. Staff users have a unique username/password stored in Illiad itself that they use to sign in to one of the three ILLiad clients: 
 
 * The "ILLiad" staff client users sign in to do requests. 
 * "Staff Manager" allows you to create and manage existing staff client users. Including reseting passwords. 
