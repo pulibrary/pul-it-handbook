@@ -37,13 +37,13 @@ Staff clients are part of a Windows image. These are typically updated when Aeon
 
 * The "Aeon" staff client allows staff to process requests. 
 * "Staff Manager" allows you to create and manage existing staff client users. Including reseting passwords. 
-* "Customization Manager" contains configuration settings for ILLiad as well as configuration settings for server-side add-ons.
+* "Customization Manager" contains configuration settings for Aeon as well as configuration settings for server-side add-ons.
 
 ## Printing
 Aeon staff clients print out various labels that are used in the Reading Room circulation process. A description is available in the [Aeon print documentation](https://support.atlas-sys.com/hc/en-us/articles/360011920833-Aeon-Default-Print-Templates). All clients have a path that they resolve set in the Aeon Customization Manager key "PrintDocumentsPath". Currently that is set to a file share on the lib-aeon.princeton.edu server. 
 
 ## Add-ons
-Aeon has an add-on architecture implemented in [LUA](https://www.lua.org/). Add-ons can be added at the individual client level or on the server. Client add-ons are incorporated into our Aeon client install in our staff workstation image and replicated on every client instance. Server add-ons are installed in a single place within the ILLiad server application. See available [add-ons](https://atlas-sys.atlassian.net/wiki/spaces/ILLiadAddons/pages/3149603/Aeon+Addon+Directory).
+Aeon has an add-on architecture implemented in [LUA](https://www.lua.org/). Add-ons can be added at the individual client level or on the server. Client add-ons are incorporated into our Aeon client install in our staff workstation image and replicated on every client instance. Server add-ons are installed in a single place within the Aeon server application. See available [add-ons](https://atlas-sys.atlassian.net/wiki/spaces/ILLiadAddons/pages/3149603/Aeon+Addon+Directory).
 
 ### Server Add-ons we use.
 * [ReCAP Add-On](https://github.com/PrincetonUniversityLibrary/aeon_scsb_addon) - Facilitates transactions with SCSB
@@ -73,14 +73,14 @@ Ares has a web interface that Atlas hosts for us. The current web interface code
 [Canvas](https://princeton.instructure.com/) is Princeton's Learning Management System (LMS). Reading lists prepared for courses each semester are delivered through an integration with Ares that uses the [Learning Technology Interoperability](https://support.atlas-sys.com/hc/en-us/articles/5659979374483-Integrating-Ares-and-Canvas-with-LTI-1-3) (LTI) standard. Each active course that has a reading list created in Ares displays that list by linking the course identifier in Canvas with the course identifier in Aeon. There is an example test course in the system under "Library Sandbox" that can be utilized for testing Ares features in canvas. Only users who have successfully authenticated in canvas are able to see Ares contact. Ares content is available under the "Reserves" link in the individual course menu options. Ask the resource sharing staff about utilizing the [test reading list](https://princeton.instructure.com/courses/254/external_tools/399) if needed. 
 
 ## Add-ons
-Aeon has an add-on architecture implemented in [LUA](https://www.lua.org/). Add-ons can be added at the individual client level or on the server. Client add-ons are incorporated into our Aeon client install in our staff workstation image and replicated on every client instance. Server add-ons are installed in a single place within the ILLiad server application. See available [add-ons](https://atlas-sys.atlassian.net/wiki/spaces/ILLiadAddons/pages/3149456/Ares+Addon+Directory).
+Aeon has an add-on architecture implemented in [LUA](https://www.lua.org/). Add-ons can be added at the individual client level or on the server. Client add-ons are incorporated into our Aeon client install in our staff workstation image and replicated on every client instance. Server add-ons are installed in a single place within the Ares server application. See available [add-ons](https://atlas-sys.atlassian.net/wiki/spaces/ILLiadAddons/pages/3149456/Ares+Addon+Directory).
 
 ## Staff Clients
 Staff clients are part of a Windows image. These are typically updated when Ares has a new release or Atlas releases a security patch for Ares. Staff users have a unique username/password stored in Aeon itself that they use to sign to the client. 
 
 * The "Ares" staff client allows staff to process requests.  
 * "Staff Manager" allows you to create and manage existing staff client users. Including reseting passwords. 
-* "Customization Manager" contains configuration settings for ILLiad as well as configuration settings for server-side add-ons.
+* "Customization Manager" contains configuration settings for Ares as well as configuration settings for server-side add-ons.
 
 
 ### Getting Support 
