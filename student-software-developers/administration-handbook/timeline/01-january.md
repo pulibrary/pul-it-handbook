@@ -1,3 +1,7 @@
+### Determine Roles
+
+- Assign the point of contact, document organization, and resume reviewers
+    [roles](../roles.md)
 
 ### Mid January: Post the position
 
