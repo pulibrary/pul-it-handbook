@@ -7,14 +7,32 @@ Recommendations for the CI pipeline
 We recommend the following tools for integration in CI for PUL projects:
 
 -   CodeQL
-
 -   Semgrep
-
 -   Wapiti
-
 -   Dastardly
-
 -   Bearer
+
+Each tool has its own pros and cons, which are detailed in the report below.
+Each project need not implement all of them, most projects would benefit from
+adding one or two to their CI pipelines.
+
+Most of these tools are general: they search for various classes of
+vulnerabilities.  Adding them to your CI pipeline won't provide comprehensive
+protection from any vulnerability, but they will help to:
+* Educate the team about vulnerabilities and mitigation techniques they aren't yet familiar with
+* Enforce secure code patterns
+* Shift security thinking left, from remediation to prevention
+
+The following table gives a brief roundup of the pros and cons to help
+teams decide which tool(s) to start investigating for a particular project:
+
+| Tool | Category | Use case(s) |
+|----|----|----|
+| CodeQL | SAST | A project in Ruby, Java, Javascript, or Python that is looking for a low-barrier setup |
+| Semgrep | SAST | A project in languages that CodeQL doesn't support (e.g. PHP), a project that want to enforce custom rules related to security or code style, or a project that needs CI to run very fast |
+| Wapiti | DAST | A project that wants to use a DAST to check the running application |
+| Dastardly | DAST | A project that wants to use a DAST to check the running application |
+| Bearer | SAST | A project that includes sensitive user data |
 
 Dynamic
 -------
@@ -96,6 +114,8 @@ Burp Suite serves as a comprehensive platform for undertaking manual vulnerabili
 Addressing the features of Burp, the suite provides users with the ability to send and modify HTTP request headers with the intended outcome of ensuring that a vulnerability is exploited, and that the target web application behavior provides a level of privilege escalation required to provide clients with some pathway to gaining security-sensitive information, or abnormal control over the behavior of the web application.
 
 Burp does provide an API which supports the ability to develop custom extensions using Maven or Gradle, and implementing these using Java 17 releases (or earlier).
+
+- [Example PR adding dastardly to allsearch-frontend](https://github.com/pulibrary/allsearch_frontend/pull/178)
 
 ### [Metasploit Framework](https://www.metasploit.com/)
 
