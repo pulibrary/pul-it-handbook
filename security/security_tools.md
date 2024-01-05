@@ -1,16 +1,31 @@
 Report on Dynamic and Static Analysis Security Tools
 ====================================================
 
+This is a list of security tools that we have evaluated.  Some are
+well-suited for incorporation in CI, and those are listed at the
+top under the heading "Recommendations for the CI pipeline".
+Others are more suited to other types of security projects
+(e.g. security research, dependency audits).
+
+This report covers four types of tools:
+* [Dynamic Application Security Testing (DAST)](#dast): Source code files are interpreted (e. g. Rails application is run) or compiled (and the binary executed) in order to execute the vulnerability scanning suite
+* [Static Application Security Testing (SAST)](#sast): These examine and interpret the source code to identify potential vulnerabilities.
+* [Exploitation Enumeration Solutions](#exploitation-enumeration-solutions): These allow a human user to send requests to a
+  running application to identify potential vulnerabilities.  While some of these (Dastardly and OWASP ZAP) can theoretically be incorporated into CI, they are at
+  their best when a human user uses them interactively to research an application.
+* [Software Composition Analysis (SCA)](#sca): These examine our dependency manifest files to identify vulnerabilities in our dependencies.
+
 Recommendations for the CI pipeline
 -----------------------------------
 
-We recommend the following tools for integration in CI for PUL projects:
+We recommend the following tools for integration in CI for PUL projects,
+with our favorites at the top:
 
--   CodeQL
--   Semgrep
--   Wapiti
--   Dastardly
--   Bearer
+-   [CodeQL](#codeql)
+-   [Semgrep](#semgrep)
+-   [Wapiti](#wapiti)
+-   [Dastardly](#burp-suite-and-dastardly)
+-   [Bearer](#bearer)
 
 Each tool has its own pros and cons, which are detailed in the report below.
 Each project need not implement all of them, most projects would benefit from
@@ -28,16 +43,17 @@ teams decide which tool(s) to start investigating for a particular project:
 
 | Tool | Category | Use case(s) |
 |----|----|----|
-| CodeQL | SAST | A project in Ruby, Java, Javascript, or Python that is looking for a low-barrier setup |
-| Semgrep | SAST | A project in languages that CodeQL doesn't support (e.g. PHP), a project that want to enforce custom rules related to security or code style, or a project that needs CI to run very fast |
-| Wapiti | DAST | A project that wants to use a DAST to check the running application |
-| Dastardly | DAST | A project that wants to use a DAST to check the running application |
-| Bearer | SAST | A project that includes sensitive user data |
+| [CodeQL](#codeql) | SAST | A project in Ruby, Java, Javascript, or Python that is looking for a low-barrier setup |
+| [Semgrep](#semgrep) | SAST | A project in languages that CodeQL doesn't support (e.g. PHP), a project that want to enforce custom rules related to security or code style, or a project that needs CI to run very fast |
+| [Wapiti](#wapiti) | DAST | A project that wants to use a DAST to check the running application |
+| [Dastardly](#burp-suite-and-dastardly) | DAST | A project that wants to use a DAST to check the running application |
+| [Bearer](#bearer) | SAST | A project that includes sensitive user data |
 
-Dynamic
--------
+## DAST
 
-Source code files are interpreted (e. g. Rails application is run) or compiled (and the binary executed) in order to execute the vulnerability scanning suite
+### [Dastardly](https://portswigger.net/burp/dastardly)
+
+See [Burp Suite](#burp-suite-and-dastardly).
 
 ### [Wapiti](https://wapiti-scanner.github.io/)
 
@@ -61,10 +77,7 @@ Wapiti supports both GET and POST HTTP methods for attacks. It also supports mul
 
 It was very straightforward to use. It generates reports in html that you can load and view. If there is an error it provides a link to the documentation.
 
-Static
-------
-
-These examine and interpret the source code to identify potential vulnerabilities.
+## SAST
 
 ### [Bearer](https://github.com/bearer/bearer) 
 
@@ -102,12 +115,9 @@ Semgrep supports [many languages](https://semgrep.dev/docs/supported-languages/)
 
 Semgrep is very fast, and makes it easy to create custom rules.  Its VSCode integration works well.
 
-Exploitation Enumeration Solutions
-----------------------------------
+## Exploitation Enumeration Solutions
 
-These allow a human user to send requests to a running application to identify potential vulnerabilities.
-
-### [Burp Suite](https://portswigger.net/burp/documentation/desktop)
+### [Burp Suite](https://portswigger.net/burp/documentation/desktop) and [Dastardly](https://portswigger.net/burp/dastardly)
 
 Burp Suite serves as a comprehensive platform for undertaking manual vulnerability testing and discovery for web applications. Burp is available to users as a Community Edition, which is released under an open source license, and offers a graphical user interface within supported operating system environments (Burp itself is implemented using Java and distributed as a JAR). Further, there also exists a distribution of Burp, Dastardly, which provides a release of the suite which is optimized for continuous integration (CI) workflows. As a JAR, support for the Burp Suite is provided for Windows, macOS, and all major distributions of the Linux operating system.
 
@@ -131,8 +141,7 @@ Zed Attack Proxy provides a series of utilities designed to exploit web applicat
 
 While ZAP itself does contain a command-line interface for conducting vulnerability scans against any web application, most instructional resources and documentation assumes that end-users are utilizing the graphical interface in order to select, specify, and capture the output from the various scans provided by default within all major releases of the ZAP. Further, there also exist a number of extended modes for the ZAP which may be utilized for specific web application features, including (but not limited to) WebSocket vulnerability scanning, AJAX vulnerability scanning, an API (for local automation of ZAP scans), as well as a community-maintained addons within the [ZAP Marketplace](https://www.zaproxy.org/addons/).
 
-Software Composition Analysis tools
------------------------------------
+## SCA
 
 These examine our dependency manifest files to identify vulnerabilities in our dependencies.  Adding them to our CI pipeline gives us a warning when we open a PR that includes an insecure dependency, rather than us needing to wait for it to show up on a dependabot check.  Many of these tools look for various types of risks involved in a dependency, such as low use, code quality, or license imcompatibilities.
 
@@ -161,17 +170,11 @@ I could not find any examples of Vet being used with CircleCI in Github.  I was
 To run locally:
 
 ```
-
 brew tap safedep/tap
-
 brew install safedep/tap/vet
-
 vet auth configure --community
-
 vet auth verify
-
 vet scan
-
 ```
 
 It has a [powerful filtering/query syntax](https://docs.safedep.io/advanced/filtering), which allows you to find, say, all the javascript projects with vulnerabilities but no maintainers.  I like that it includes [OSSF scorecard data](https://securityscorecards.dev/), as well as whether or not a dependency is maintained.  In practice, almost any project with any js dependencies fails these checks, and it is not granular enough to ignore certain dependencies.
