@@ -9,7 +9,7 @@ If possible the two roles should be separate folks.
  * Resume Reviewer
 
 ### Initial point of contact
-The Initial point of contact is the person that gathers resumes from the students.  
+The Initial point of contact is the person that gathers work samples from the students.
 The Initial point of contact: 
    1. Has their email on the job posting
    1. Reaches out to the student if the information is not complete.
