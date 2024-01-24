@@ -27,7 +27,7 @@
         -   code sample
         -   text from their online application (optional)
         -   a copy of the interview agenda for adding candidate-specific questions
-        -   Create a notes folder and document in [Notes](https://drive.google.com/drive/u/2/folders/1qBVzjAp7eaxBUVnehC3YX2wEqmjJdMh0).
+        -   Create a notes document in [Notes](https://drive.google.com/drive/u/2/folders/1qBVzjAp7eaxBUVnehC3YX2wEqmjJdMh0).
 -   Add links to the new folder, new drive, and this documentation at the top of the notes document.
 
 #### Plan interviews
