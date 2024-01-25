@@ -3,6 +3,8 @@
 #### Advertising the position
 
 * Ask [Colleen Kenny](https://www.cs.princeton.edu/people/profile/ckenny) to send out the position to any student who has taken a CS course.
+    * JobX does not have a way to share links to a job posting.  So, instead, send Colleen the position title / number and a link to the jobx site.
+    * You can find position numbers/IDs in TimesheetX.  Go to TimesheetX --> Manage TimesheetX jobs.  Click the Manage Jobs button for the relevant job.  The ID will be in the page's URL, as the JobId param.
 
 #### (Optional) 1st week of February: Host a table at the Student Employment Office’s Spring Job Fair
 
