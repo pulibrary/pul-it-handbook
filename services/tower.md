@@ -73,3 +73,10 @@ All templates must include the Princeton Ansible Vault credential. Most template
 The VM for Tower is 'ansible-tower1'.
 The service is called 'automation-controller'.
 The working directories are in '/var/lib/awx/'.
+
+## Deploy Rails Template
+  To add a project to the deploy rails project login into ansible tower and [then update the survey](https://ansible-tower.princeton.edu/#/templates/job_template/13/survey)
+  * Click on the `Edit Survey` pencil to the right of `What codebase do you want to deploy?`
+  * Click into the last choice and hit `Enter` to add another choice
+  * Add you choice to the list maintain alphabetical order.  You may have to move other choices down
+  * Click `Save`
