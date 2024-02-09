@@ -1,8 +1,8 @@
 ## Before you begin
 
-If one doesn’t exist yet create a Google Service Account and Google Bucket. 
+If one doesn’t exist yet create a [Google Service Account](gce_service_account.md) and Google Bucket. 
 
-Create an Object Storage bucket to hold your backup repository. Follow the Create a Bucket guide if you do not already have one.
+Create an Object Storage bucket to hold your backup repository. Follow the [Create a Bucket guide](gce_bucket.md) if you do not already have one.
 
 
 ## Install Restic
@@ -21,10 +21,36 @@ restic version
 
 ## Create the Restic Repository
 
-Configure Restic to use Google Cloud Bucket access file  and to use the bucket you created in the Before You Begin section of this guide. and gs:postgres-version-backup:yourpath with your own values.
+1. Configure Restic to use Google Cloud Bucket access file (Step 6 in [Service Account Keys Creation](gce_service_account.md) and to use the bucket you created in the Before You Begin section of this guide. and substitute `gs:postgres-version-backup:yourpath` below with your own values.
 
-```bash
-export GOOGLE_PROJECT_ID=pul-gcdc
-export GOOGLE_APPLICATION_CREDENTIALS=~/.restic/pul-gcdc-filename.json
-restic -r gs:postgres-version-backup:yourpath init
-```
+    ```bash
+    export GOOGLE_PROJECT_ID=pul-gcdc
+    export GOOGLE_APPLICATION_CREDENTIALS=~/.restic/pul-gcdc-filename.json
+    restic -r gs:postgres-version-backup:yourpath init
+    ```
+2. Following the prompt, set a password to encrypt your repository’s data. Enter your desired password twice. (Save this to lastpass and ansible-vault)
+3. Losing this password will make our backup inaccessible
+
+## Store the file and password
+
+The access keyfile, and password are required every time Restic communicates with your repository. To make it easier to work with your repository, create a shell script containing your credentials.
+
+  1. To keep your credentials secure, using a text editor, create the example script in the user’s who will run the backup's home directory, and run all your Restic scripts as this user. The example uses the `postgres` user and the vim text editor.
+       ```bash
+       sudo su - postgres
+       mkdir -p .restic
+       vim .env.restic
+       ```
+       
+     Copy and paste the json keyfile’s content and replace and with your own Object Storage account’s keyfile.
+
+     ```file
+     ### repository on google cloud
+     export GOOGLE_APPLICATION_CREDENTIALS='/var/lib/postgresql/.restic/pul-gcdc-07a5b5a58963.json'
+
+     export RESTIC_ARCHIVE_REPOSITORY='gs:postgres-15-backup:daily'
+
+     export RESTIC_REPOSITORY=$RESTIC_ARCHIVE_REPOSITORY
+     export RESTIC_PASSWORD_FILE='/var/lib/postgresql/.restic.pwd'
+     ```
+  2. 
