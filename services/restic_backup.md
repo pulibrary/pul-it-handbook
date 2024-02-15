@@ -53,4 +53,27 @@ The access keyfile, and password are required every time Restic communicates wit
      export RESTIC_REPOSITORY=$RESTIC_ARCHIVE_REPOSITORY
      export RESTIC_PASSWORD_FILE='/var/lib/postgresql/.restic.pwd'
      ```
-  2. 
+  2. Create a password file to hold your Restic password:
+     ```bash
+     sudo su - postgres
+     vim ~/.restic.pwd
+     ```
+     Enter your Rustic password and save the file/
+     ```file
+     ~/.restic.pwd
+     secretpassword # goes into lastpass and ansible vault
+     ```
+## Backup All Databases
+
+For postgresql use the [postgresql](postgresql) scripts as a cronjob. 
+
+  1. Copy all files above in your ~/.restic directory:
+     ```bash
+     sudo su - postgres
+     mkdir ~/.restic/log
+     ```
+  2. Make all the scripts executable by the user:
+     ```bash
+     chmod u+x ~/.restic/{common.sh,full_pg_backup.sh,pg_backup.sh,prune.sh}
+     ```
+     
