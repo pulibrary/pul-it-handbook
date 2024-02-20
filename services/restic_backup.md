@@ -53,6 +53,9 @@ The access keyfile, and password are required every time Restic communicates wit
      export RESTIC_REPOSITORY=$RESTIC_ARCHIVE_REPOSITORY
      export RESTIC_PASSWORD_FILE='/var/lib/postgresql/.restic.pwd'
      ```
+
+     The `/var/lib/postgresql` path above will be `/home/pulsys` for mariadb
+    
   2. Create a password file to hold your Restic password:
      ```bash
      sudo su - postgres
@@ -63,6 +66,7 @@ The access keyfile, and password are required every time Restic communicates wit
      ~/.restic.pwd
      secretpassword # goes into lastpass and ansible vault
      ```
+     
 ## Backup All Databases
 
 For postgresql use the [postgresql](postgresql) scripts as a cronjob. 
@@ -70,9 +74,9 @@ For postgresql use the [postgresql](postgresql) scripts as a cronjob.
   1. Copy all files above in your ~/.restic directory:
      ```bash
      sudo su - postgres
-     mkdir ~/.restic/log
+     mkdir -p ~/.restic/log
      ```
-  2. Make all the scripts executable by the user:
+  2. Make all the scripts executable by the `postgres` user:
      ```bash
      chmod u+x ~/.restic/{common.sh,full_pg_backup.sh,pg_backup.sh,prune.sh}
      ```
@@ -87,10 +91,30 @@ For postgresql use the [postgresql](postgresql) scripts as a cronjob.
     ```file
     0 5 * * * /var/lib/postgresql/.restic/full_pg_backup.sh
     ```
+    
+For mariadb do the following:
+
+  1. Copy all the files under the [mariadb](mariadb) to the `pulsys` user
+     ```bash
+     mkdir -p ~/.restic/log
+     ```
+  2. Make all the scripts executable by the `pulsys` user:
+     ```bash
+     chmod u+x ~/.restic/maria_backup.sh
+     ```
+  3. Set Up automated backups by creating a cron job for the `pulsys` user with the following:
+     ```bash
+      crontab -e
+      ```
+     Add a line that points to the `full_pg_backup.sh` script
+
+    ```file
+    0 5 * * * /home/pulsys/.restic/maria_backup.sh
+    ```
 
 ## Restore a backup
 
-To restore the latest usable backup from Restic, run the restore latest command:
+To restore the latest usable postgresql backup from restic, run the following commands:
 
   1. As the postgresql user run the following steps:
      ```bash
@@ -103,12 +127,16 @@ To restore the latest usable backup from Restic, run the restore latest command:
      restic -r gs:postgres-version-backup:yourpath -p /var/lib/postgresql/.restic.pwd restore 4f155a5e -t /tmp
      ```
      This will restore your database at `/tmp/postgresql`
-    
-    
 
-  
-    
-    
+To restore the latest usable mariadb backup from restic, run the following commands:
 
-
-  
+  1. As the `pulsys` user run the following steps:
+     ```bash
+      source .env.restic
+      restic -r gs:mariadb-version-backup:yourpath -p /home/pulsys/.restic.pwd snapshots
+      ```
+  2. Find the hash key of the database you want to restore from and dump it with the following commands. In our example the hash will be `4f155a5e`
+     ```bash
+     restic -r gs:mariadb-version-backup:yourpath -p /home/pulsys/.restic.pwd restore 4f155a5e -t /tmp
+     ```
+     This will restore your database at `/tmp/mariadb`
