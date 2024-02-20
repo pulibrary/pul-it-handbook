@@ -46,9 +46,9 @@ The access keyfile, and password are required every time Restic communicates wit
 
      ```file
      ### repository on google cloud
-     export GOOGLE_APPLICATION_CREDENTIALS='/var/lib/postgresql/.restic/pul-gcdc-07a5b5a58963.json'
+     export GOOGLE_APPLICATION_CREDENTIALS='/var/lib/postgresql/.restic/pul-gcdc-filename.json'
 
-     export RESTIC_ARCHIVE_REPOSITORY='gs:postgres-15-backup:daily'
+     export RESTIC_ARCHIVE_REPOSITORY='gs:postgres-version-backup:yourpath'
 
      export RESTIC_REPOSITORY=$RESTIC_ARCHIVE_REPOSITORY
      export RESTIC_PASSWORD_FILE='/var/lib/postgresql/.restic.pwd'
@@ -76,4 +76,39 @@ For postgresql use the [postgresql](postgresql) scripts as a cronjob.
      ```bash
      chmod u+x ~/.restic/{common.sh,full_pg_backup.sh,pg_backup.sh,prune.sh}
      ```
-     
+
+  3. Set Up automated backups by creating a cron job for the `postgres` user with the following:
+     ```bash
+      sudo su - postgres
+      crontab -e
+      ```
+     Add a line that points to the `full_pg_backup.sh` script
+
+    ```file
+    0 5 * * * /var/lib/postgresql/.restic/full_pg_backup.sh
+    ```
+
+## Restore a backup
+
+To restore the latest usable backup from Restic, run the restore latest command:
+
+  1. As the postgresql user run the following steps:
+     ```bash
+      sudo su - postgres
+      source .env.restic
+      restic -r gs:postgres-version-backup:yourpath -p /var/lib/postgresql/.restic.pwd snapshots
+      ```
+  2. Find the hash key of the database you want to restore from and dump it with the following commands. In our example the hash will be `4f155a5e`
+     ```bash
+     restic -r gs:postgres-version-backup:yourpath -p /var/lib/postgresql/.restic.pwd restore 4f155a5e -t /tmp
+     ```
+     This will restore your database at `/tmp/postgresql`
+    
+    
+
+  
+    
+    
+
+
+  
