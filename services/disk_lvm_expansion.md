@@ -55,19 +55,24 @@ df -h
 
 The disk size should change between the first time you run `df -h` and the last time you run it. If the disk size has not changed, or if something goes wrong, try these diagnostic tools to troubleshoot:
 
+To view all disks and devices on the VM:
+```bash
+sudo fdisk -l
+```
+
 To view the name of the Volume Group (VG):
 ```bash
-vgdisplay
+sudo vgdisplay
 ```
 
 To list the Physical Volumes (PVs):
 ```bash
-pvscan
+sudo pvscan
 ```
 
 To view the name of the Logical Volume (LV):
 ```bash
-lvdisplay
+sudo lvdisplay
 ```
 
 To view disk size and usage:
