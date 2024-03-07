@@ -22,7 +22,7 @@ When integrating CAS via these instructions the general workflow of the applicat
    ```
    # Single sign on
    gem "devise"
-   gem "omniauth-cas"
+   gem "omniauth-cas", "~> 2.0.0" # Note that as of March 2024, omniauth-cas 3.x will not work with these instructions
    ```
 
 1. Run the devise generators
