@@ -56,7 +56,7 @@ To update the Prancible inventory:
 5. Click on the 'Start Sync Process' button (a circular pair of arrows) on the right under 'Actions'. This kicks off an Inventory Sync job.
 6.  Select Jobs from the left navigation and make sure the job succeeds.
 
-## Adding templates to tower
+## Adding templates to Tower
 
 You cannot build a template off a playbook until that playbook exists in the main branch. In other words, you cannot test a playbook in a Tower Template while it only exists in a PR or on a branch. If you want to test a playbook from Tower:
 1. Merge a minimal version of the playbook into the main branch.
@@ -68,19 +68,38 @@ You cannot build a template off a playbook until that playbook exists in the mai
 
 All templates must include the Prancible Vault credential. Most templates also need the Tower's Own ed25519 credential. When you add credentials to a template, select the credential TYPE (Vault for the Vault cred, Machine for the SSH cred) first, then the specific credential. You can add more than one credential at once if you want to.
 
-## Managing the Ansible Tower VM/service:
-
-Tower runs on 2 VMs: 'ansible-tower1' and 'ansible-tower2'.
-The service is called 'automation-controller'.
-The working directories are in '/var/lib/awx/'.
-
-## Deploy Rails Template
-  To add a project to the deploy rails project login into ansible tower and [then update the survey](https://ansible-tower.princeton.edu/#/templates/job_template/13/survey)
+## Adding repos to the Deploy Rails template
+To add a new code repository to the Deploy Rails template, login into ansible tower and [then update the survey](https://ansible-tower.princeton.edu/#/templates/job_template/13/survey)
   * Click on the `Edit Survey` pencil to the right of `What codebase do you want to deploy?`
   * Click into the last choice and hit `Enter` to add another choice
   * Add your choice to the list maintain alphabetical order.  You may have to move other choices down.
   * Entries are case-sensitive and must match the GitHub repository name exactly.
   * Click `Save`
+
+## Execution environments (EEs) in Tower
+
+Jobs in Tower run inside containers called execution environments, or EEs. In our old Tower environment, we ran everything on the default EE and installed the Ansible collections we needed into the EE at runtime. Now we can build custom EEs, building in the collections and other tools we need for each template ahead of time.
+
+### Building a new EE
+
+Our custom EEs are built from the YAML files in the ``tower_ees`` directory of the princeton_ansible repo. To build or rebuild an EE:
+
+  * Log into an x86-architected machine (NOT a Mac laptop with an M-series chip) or have a solution for building x86-architected containers on your M-series Mac. If you build on an M-series chip without a solution, the resulting image will fail to load on Tower with the error ``image platform (linux/arm64) does not match the expected platform (linux/amd64)``.
+  * Open the princeton_ansible repo and change into the tower_ees directory: ``cd tower_ees``
+  * Create or Edit an EE definition file as needed: ``vim my-execution-environment.yml``
+  * Run podman.
+  * Run [ansible-builder](https://ansible.readthedocs.io/projects/builder/en/stable/index.html): ``ansible-builder build -v3 -f my-execution-environment.yml -t <TagOrNameOfEE> --squash all``
+  * Note the hash of the built image in the output of the ansible-builder command.
+  * Authenticate to quay.io. For easy authN, create a ~/.config/containers/auth.json file with the top level items ‘auths’ and an entry for each container registry you want to use. Each entry contains a key/value pair: the key is “auth” and the value is the output of “echo -n ‘username:password’ | openssl base64”. See [this PR](https://github.com/containers/image/pull/821/files) and [this superuser post](https://superuser.com/questions/120796/how-to-encode-base64-via-command-line) for more details. To authenticate from the command line: ``podman login quay.io``
+  * Push the new image to quay.io: podman push <hash-of-image-ID> quay.io/pulibrary/<name-of-image>:<image-tag>
+  * Update the EE on Tower to point to the new tag. Test the Templates that use this EE. If anything fails, reset the EE to pull the previous tag.
+
+## Managing the Ansible Tower VM/service:
+
+Tower's GUI runs on 2 VMs: 'ansible-tower1' and 'ansible-tower2'.
+The service is called 'automation-controller'.
+The working directories are in '/var/lib/awx/'.
+Tower jobs run on 2 additional VMs: 'ansible-exec1' and 'ansible-exec2'.
 
 # How We Installed Tower 2.4
 
