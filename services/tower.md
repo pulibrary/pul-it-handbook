@@ -69,7 +69,7 @@ You cannot build a template off a playbook until that playbook exists in the mai
 All templates must include the Prancible Vault credential. Most templates also need the Tower's Own ed25519 credential. When you add credentials to a template, select the credential TYPE (Vault for the Vault cred, Machine for the SSH cred) first, then the specific credential. You can add more than one credential at once if you want to.
 
 ## Adding repos to the Deploy Rails template
-To add a new code repository to the Deploy Rails template, login into ansible tower and [then update the survey](https://ansible-tower.princeton.edu/#/templates/job_template/13/survey)
+To add a new code repository to the Deploy Rails template, log into ansible tower and [then update the survey](https://ansible-tower.princeton.edu/#/templates/job_template/13/survey)
   * Click on the `Edit Survey` pencil to the right of `What codebase do you want to deploy?`
   * Click into the last choice and hit `Enter` to add another choice
   * Add your choice to the list maintain alphabetical order.  You may have to move other choices down.
@@ -91,8 +91,8 @@ Our custom EEs are built from the YAML files in the ``tower_ees`` directory of t
   * Run [ansible-builder](https://ansible.readthedocs.io/projects/builder/en/stable/index.html): ``ansible-builder build -v3 -f my-execution-environment.yml -t <TagOrNameOfEE> --squash all``
   * Note the hash of the built image in the output of the ansible-builder command.
   * Authenticate to quay.io. For easy authN, create a ~/.config/containers/auth.json file with the top level items ‘auths’ and an entry for each container registry you want to use. Each entry contains a key/value pair: the key is “auth” and the value is the output of “echo -n ‘username:password’ | openssl base64”. See [this PR](https://github.com/containers/image/pull/821/files) and [this superuser post](https://superuser.com/questions/120796/how-to-encode-base64-via-command-line) for more details. To authenticate from the command line: ``podman login quay.io``
-  * Push the new image to quay.io: podman push <hash-of-image-ID> quay.io/pulibrary/<name-of-image>:<image-tag>
-  * Update the EE on Tower to point to the new tag. Test the Templates that use this EE. If anything fails, reset the EE to pull the previous tag.
+  * Push the new image to quay.io: ``podman push <hash-of-image-ID> quay.io/pulibrary/<name-of-image>:<image-tag>``
+  * Create an EE in Tower, or update the existing EE to point to the new tag. For changes to existing EEs, test the Templates that use the EE. If anything fails, reset the EE to pull the previous tag.
 
 ## Managing the Ansible Tower VM/service:
 
