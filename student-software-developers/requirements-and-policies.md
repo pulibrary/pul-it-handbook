@@ -17,6 +17,10 @@ student employment site](http://finaid.princeton.edu/student-employment/informat
 ### During the school year
 
 * Students must work at least 6 hours/week.
+* Students are expected to work whenever classes are in session, and are not
+    expected to work during exams, reading week, wintersession, or breaks /
+    holidays. Students may work during times when classes are not in session if
+    desired.
 * Students have the option to work from Firestone.
 * Similar to during the summer, student developers can't live outside the US more than
 30 days within a given term, due to [this policy listed at the
