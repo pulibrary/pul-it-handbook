@@ -1,0 +1,3 @@
+## Programming Languages
+
+Consider this as your benefit. A good DevOps engineer knows at least one popular programming language. At PUL we have experienced programmers who work with Ruby. We believe the best way to learn programming is by pairing with a more experienced programmer. To begin we encourage using whatever platform you want to familiarize yourself with a programming language. We have licenses to [Treehouse](https://treehouse.com) that you should consider as your first step. We also have Rust Programming experience amongst the Operations Team which can be leaned on as your start out.

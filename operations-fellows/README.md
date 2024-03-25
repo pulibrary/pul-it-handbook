@@ -24,5 +24,8 @@ We define it as a set of practices that combines software development and IT ope
   * [Step 2: Configuration Management](step_2.md)
   * [Step 3: CI/CD (Continuous Integration and Continuous Delivery)](step_3.md)
   * [Step 4: Monitoring and Logging](step_4.md)
+    * CheckMK
   * [Step 5: Public Clouds](step_5.md)
+    * AWS
+    * Google Cloud
   * [Step 6: Getting familiar with Agile software development](step_6.md)
