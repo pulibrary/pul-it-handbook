@@ -1,7 +1,7 @@
 # ILLiad 
 
 ## Purpose 
-ILLiad is the software that supports our Interlibrary Loan and Article Express services. Our resource sharing and branch library staff that support these services use a Widnows client to process patrons requests. Patrons place requests directly in the Illiad web interface the service provides. The Library Catalog also places InterLibrary Loan and Article Express requests via ILLiad's API. Review recent [releases](https://support.atlas-sys.com/hc/en-us/sections/360002485474-Release-Notes). Releases are infrequent. Only two in the last four years. 
+ILLiad is the software that supports our Interlibrary Loan and Article Express services. Our resource sharing and branch library staff that support these services use a Windows client to process patrons requests. Patrons place requests directly in the Illiad web interface the service provides. The Library Catalog also places InterLibrary Loan and Article Express requests via ILLiad's API. Review recent [releases](https://support.atlas-sys.com/hc/en-us/sections/360002485474-Release-Notes). Releases are infrequent. Only two in the last four years. 
 
 ## Web Interface
 Web interface [landing page](https://lib-illiad.princeton.edu/illiad/). The login is currently authenticated via LDAP. The web interface code is stored on [Github](https://github.com/pulibrary/illiad). Please note it's still possible edit these templates directly on the server so the code in the running application may diverge. 
@@ -10,11 +10,11 @@ Web interface [landing page](https://lib-illiad.princeton.edu/illiad/). The logi
 ILLiad has SQL Server database and application server installation that includes the web application and server Windows services that run on the server that support the application's processing of requests. The database, ILLiad web application and the Illiad server-side application both live on the server lib-illsql.princeton.edu. There is an alias "lib-illiad.princeton.edu" that is attached to that server and used for the web application. 
 
 ### Troubleshooting the server. 
-When things go wrong on the server you usually need to do to do one of two things after connecting with an account with administration rights on the lib-illsql.princeton.edu server. 
+When things go wrong on the server you must connect to lib-illsql.princeton.edu with an account with administrative rights. You then usually need to do one of two things: either restart the IIS Manager or restart the ILLiad System Manager Service.
 
 #### Restart the IIS Manager
 
-1. Connect to lib-illsql.princeton.edu with an PRINCETON domain account that has admin rights on the server
+1. Connect to lib-illsql.princeton.edu with a PRINCETON domain account that has admin rights on the server.
 2. Click on the Windows icon and select the search icon.
 3. Search for Internet Information Services (IIS) Manager. 
 4. Right-click the IIS Manager and select "run as administrator".
@@ -23,7 +23,7 @@ When things go wrong on the server you usually need to do to do one of two thing
 
 
 ##### Restart the ILLiad System Manager Service
-1. Connect to lib-illsql.princeton.edu with an PRINCETON domain account that has admin rights on the server
+1. Connect to lib-illsql.princeton.edu with a PRINCETON domain account that has admin rights on the server.
 2. Click on the Windows icon and select the search icon.
 3. Search for Services. 
 4. Right-click on Services and select "run as administrator".
