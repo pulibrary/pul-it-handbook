@@ -15,7 +15,6 @@ We define it as a set of practices that combines software development and IT ope
     * Learn Rust
   * [Step 0: Basic Requirements](step_0.md)
     * Bash
-    * Docker
     * Git
     * Linux
   * [Step 1: Infrastructure](step_1.md)
@@ -28,4 +27,5 @@ We define it as a set of practices that combines software development and IT ope
   * [Step 5: Public Clouds](step_5.md)
     * AWS
     * Google Cloud
+  * [Step 5.5: Containers](step_5_5.md)
   * [Step 6: Getting familiar with Agile software development](step_6.md)
