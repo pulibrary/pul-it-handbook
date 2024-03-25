@@ -49,7 +49,7 @@ ILLiad has an add-on architecture implemented in [LUA](https://www.lua.org/). Ad
 * [Alma NCIP](https://github.com/pulibrary/alma-ncip) - facilitates circulations transactions with Alma for both ILL borrowing and lending requests. 
 
 ### Using the client for troubleshooting/account management
-We have several desktop machines that are available for remote desktop connection that will allow IT staff who don't use windows to utilize. Once connected you need actual illiad staff credentials to login into the various clients. 
+We have several desktop machines that are available for remote desktop connection that will allow IT staff who don't use windows to utilize. Once connected you need actual illiad staff credentials to login into the various clients. For historical reasons these machine names reference Ares only though all three Atlas systems products (Ares, Aeon, and ILLiad) have clients installed on them. 
 
 * lib-ares-cli1
 * lib-ares-cli2

@@ -52,7 +52,7 @@ Aeon has an add-on architecture implemented in [LUA](https://www.lua.org/). Add-
 General documentation is available on the [Atlas website](https://support.atlas-sys.com/hc/en-us/categories/360000720853-Aeon). Support can be requested through the [Atlas Web Portal](https://support.atlas-sys.com/hc/en-us/requests/new)
 
 ## Using the client for troubleshooting/account management
-The Aeon client can only be reached from PUL Windows machines. IT staff who do not regularly work on Windows machines must use Windows Remote Desktop to connect to one of the desktop Windows machines listed below. Once connected, staff must use actual Aeon client staff credentials to login into the various clients. 
+The Aeon client can only be reached from PUL Windows machines. IT staff who do not regularly work on Windows machines must use Windows Remote Desktop to connect to one of the desktop Windows machines listed below. Once connected, staff must use actual Aeon client staff credentials to login into the various clients. For historical reasons these machine names reference Ares only though all three Atlas systems products (Ares, Aeon, and ILLiad) have clients installed on them. 
 
 * lib-ares-cli1
 * lib-ares-cli2
@@ -87,7 +87,7 @@ Staff clients are part of a Windows image. These are typically updated when Ares
 General documentation is available on the [Atlas website](https://support.atlas-sys.com/hc/en-us/categories/360000716834-Ares). Support can be requested through the [Atlas Web Portal](https://support.atlas-sys.com/hc/en-us/requests/new)
 
 ## Using the client for troubleshooting/account management
-The Ares client can only be reached from PUL Windows machines. IT staff who do not regularly work on Windows machines must use Windows Remote Desktop to connect to one of the desktop Windows machines listed below. Once connected, staff must use actual Ares client staff credentials to login into the various clients. 
+The Ares client can only be reached from PUL Windows machines. IT staff who do not regularly work on Windows machines must use Windows Remote Desktop to connect to one of the desktop Windows machines listed below. Once connected, staff must use actual Ares client staff credentials to login into the various clients. For historical reasons these machine names reference Ares only though all three Atlas systems products (Ares, Aeon, and ILLiad) have clients installed on them. 
 
 
 * lib-ares-cli1
