@@ -1,15 +1,94 @@
-## Expanding a logical volume with an additional disk
+# Managing disk size on VMs
 
-You can add storage space to an existing virtual machine without shutting it down by adding a new disk to the VM, then expanding the existing logical volume to include the new space. 
+We generally build new VMs with a 30GB main drive. However, we generally "thin provision" all disks, so we need to manage the disk size on new VMs and any time we add a disk to an existing VM.
 
-### Expand Inital Disk Size
+If a box needs more than the standard 30GB of storage, either when it's first built or later, we attach an additional disk or disks. You can incorporate this additional storage space on an existing virtual machine without shutting it down by expanding the existing logical volume to include the new space.
+
+When building a new VM, you need to expand the size of the main disk and also expand the logical volume to incorporate any secondary disks you added to the VM.
+
+## Expand the size of the main disk
+
+On the main disk, you just need to make the logical volume (LV) take up all the space it has available. 
 
 ```bash 
 sudo lvextend -l +100%FREE /dev/ubuntu-vg/ubuntu-lv
 sudo resize2fs /dev/ubuntu-vg/ubuntu-lv
 ```
+Note that ``/dev/ubuntu-vg/ubuntu-lv`` is the correct name for the LV on our Jammy Jellyfish VMs, but different VMs may use a different name for the LV. See the `Diagnostics and confirmation` section for details on finding the correct name.
 
-### Confirm that a logical volume exists
+## Expand a logical volume with an additional disk
+
+When you add a second (or third, etc.) disk to a VM, you must incorporate it into the logical volume so that all available space is accessible. This process involves 6 steps:
+
+1. Discover the new disk
+2. Partition the new disk - this involves an interactive script, where you must supply responses
+3. Create the physical volume
+4. Extend the volume group
+5. Extend the logical volume
+6. Resize the disk space
+
+Confirm the available space both before and after these six steps.
+
+### Cheatsheet
+
+These commands match the steps above, using the current default values for the disk, physical volume, volume group, and logical volume:
+
+```bash
+df -h
+for host in /sys/class/scsi_host/*; do echo "- - -" | sudo tee $host/scan; ls /dev/sd* ; done
+sudo fdisk /dev/sdb
+```
+
+This is where the interactive script kicks off. Responses to the `fdisk` interactive script in order (press <Enter> to accept the default response):
+`n, p, <accept_default>, <accept_default>, <accept_default>, t, 8e, w`
+When the interactive script is done, complete the expansion with these commands:
+
+```bash
+sudo pvcreate /dev/sdb1
+sudo vgextend ubuntu-vg /dev/sdb1
+sudo lvextend /dev/ubuntu-vg/ubuntu-lv /dev/sdb1
+sudo resize2fs /dev/ubuntu-vg/ubuntu-lv
+df -h
+```
+
+### Diagnostics and confirmation
+
+The disk size should change between the first time you run `df -h` and the last time you run it. If the disk size has not changed, or if something goes wrong, try these diagnostic tools to troubleshoot:
+
+To view all disks and devices on the VM:
+```bash
+sudo fdisk -l
+```
+
+To view the name of the Volume Group (VG):
+```bash
+sudo vgdisplay
+```
+
+To list the Physical Volumes (PVs):
+```bash
+sudo pvscan
+```
+
+To view the name of the Logical Volume (LV):
+```bash
+sudo lvdisplay
+```
+
+To view disk size and usage:
+```bash
+df -h
+```
+
+## Expanding the logical volume, the hard way
+
+This section covers the same steps as the Cheatsheet, but with a lot more detail.
+
+### Create a new disk in vSphere
+
+Before you can expand the logical volume, the VM must have one or more additional disks attached in vSphere. In the vSphere UI, select the VM and use `Edit settings` to confirm the number of disks and the amount of storage available. If necessary, add a new disk of the desired size.
+
+###Confirm that a logical volume exists
 
 The existing partition must be a logical volume (LVM) for these steps to work. Identify the partition type with `sudo fdisk -l` (or run the command as the root user). Notice that each attached disk has both a `Disk` entry and a `Device` entry. You should see a device with the ID (hex code) `8e` and the Type `Linux LVM`, which denotes a logical volume.
 
@@ -63,19 +142,17 @@ I/O size (minimum/optimal): 512 bytes / 512 bytes
 
 In the example output above, `/dev/sda1` is a Linux logical volume. Once you confirm that you are working with a logical volume, you can continue.
 
-### Create a new disk in vSphere
-
-In the vSphere UI, select the VM and add a new disk of the desired size.
-
 ### Connect to the VM and become the root user
 
 SSH into the VM and do `sudo su root` to change users to the root user. You cannot execute the commands in this procedure just using `sudo`.
 
 ### Detect and connect the new disk
 
-The steps here are not needed if you have power cycled the VM. Once the physical disk has been added at the hardware level, you must connect the new disk to the operating system and create a new partition that makes use of this additional space.
+Once the physical disk has been added at the hardware level, you must connect the new disk to the operating system and create a new partition that makes use of this additional space. The operating system does this for you if you power cycle the VM.
 
-First, check that the new unallocated disk space is detected by the server. Run `df -h` to view the available disk space. You will most likely see that the disk space is still showing as the original size. Re-run `sudo fdisk -l` to list all the disks. The new disk will be the last in the alphabetical list (for example, if the machine has `/dev/sda` through `/dev/sdd`, the new disk is `/dev/sdd`. Likewise, in `/sys/class/scsi_host/` the new disk will be the host with the largest number. To connect the new disk with the operating system on the VM without rebooting the VM, you must rescan all devices by running the command below as root. **Use the largest available `host#` on your specific VM.**
+First, check that the new unallocated disk space is detected by the server. Run `df -h` to view the available disk space. You will most likely see that the disk space is still showing as the original size. Re-run `sudo fdisk -l` to list all the disks. The new disk will be the last in the alphabetical list (for example, if the machine has `/dev/sda` through `/dev/sdd`, the new disk is `/dev/sdd`. Likewise, in `/sys/class/scsi_host/` the new disk will be the host with the largest number.
+  
+If the new disk is not listed, you must rescan all devices to connect the new disk with the operating system on the VM without rebooting the VM. Rescan all devices by running the command below as root. **Use the largest available `host#` on your specific VM.**
 
 ```bash
 for host in /sys/class/scsi_host/*; do echo "- - -" | sudo tee $host/scan; ls /dev/sd* ; done
@@ -103,11 +180,7 @@ The `fdisk` command kicks off an interactive script that creates a partition on 
  - select **`8e`** for a Linux logical volume, so you can join the new disk space to the original `/dev/sda1` Linux LVM.
  - select **`w`** to write the new partition table and get you out of this shell.
 
- ```bash
- fdisk /dev/sdb
- ```
- 
- You will see output like this: 
+Here's what the interactive script looks like: 
 
  ```bash
  Welcome to fdisk (util-linux 2.31.1).
@@ -192,7 +265,7 @@ You will see output like this:
 
 ```bash
   --- Volume group ---
-  VG Name               lib-vg
+  VG Name               ubuntu-vg
   System ID             
   Format                lvm2
   Metadata Areas        3
@@ -213,15 +286,15 @@ You will see output like this:
   VG UUID               hbeBYx-treH-UAUZ-0MZE-vBxN-FvFv-3zqHjx
 ```
 
-Next, extend the volume group by adding in the physical volume `/dev/sdb1` which you created using the `pvcreate` command earlier. Pass the VG Name from the output above (in this example, `lib-vg`) to the `vgextend` command:
+Next, extend the volume group by adding in the physical volume `/dev/sdb1` which you created using the `pvcreate` command earlier. Pass the VG Name from the output above (in this example, `ubuntu-vg`) to the `vgextend` command:
 
 ```bash
-vgextend lib-vg /dev/sdb1
+vgextend ubuntu-vg /dev/sdb1
 ```
 You will see output like this:
 
 ```bash
-  Volume group "lib-vg" successfully extended
+  Volume group "ubuntu-vg" successfully extended
 ```
 
 Confirm these changes using the `pvscan` command to scan all disks for physical volumes. The output should confirm the original `/dev/sdb1` partition and the newly created physical volume `/dev/sdb1`:
@@ -233,10 +306,10 @@ pvscan
 You will see output like this:
 
 ```bash
-  PV /dev/sda1   VG lib-vg          lvm2 [<40.00 GiB / 0    free]
-  PV /dev/sdb1   VG lib-vg          lvm2 [<200.00 GiB / 0    free]
-  PV /dev/sdc1   VG lib-vg          lvm2 [<100.00 GiB / 0    free]
-  PV /dev/sdd1   VG lib-vg          lvm2 [<100.00 GiB / <100.00 GiB free]
+  PV /dev/sda1   VG ubuntu-vg          lvm2 [<40.00 GiB / 0    free]
+  PV /dev/sdb1   VG ubuntu-vg          lvm2 [<200.00 GiB / 0    free]
+  PV /dev/sdc1   VG ubuntu-vg          lvm2 [<100.00 GiB / 0    free]
+  PV /dev/sdd1   VG ubuntu-vg          lvm2 [<100.00 GiB / <100.00 GiB free]
   Total: 4 [439.98 GiB] / in use: 4 [439.98 GiB] / in no VG: 0 [0   ]
 ```
 
@@ -251,68 +324,51 @@ lvdisplay
 You will see output like this:
 
 ```bash
-  --- Logical volume ---
-  LV Path                /dev/lib-vg/root
-  LV Name                root
-  VG Name                lib-vg
-  LV UUID                kccyDY-a9GB-VoV4-MwUi-SHcO-ScwJ-eVIrPR
-  LV Write Access        read/write
-  LV Creation host, time lib, 2018-11-19 16:58:25 +0000
-  LV Status              available
-  # open                 1
-  LV Size                339.03 GiB
-  Current LE             86792
-  Segments               3
-  Allocation             inherit
-  Read ahead sectors     auto
-  - currently set to     256
-  Block device           253:0
-   
-  --- Logical volume ---
-  LV Path                /dev/lib-vg/swap_1
-  LV Name                swap_1
-  VG Name                lib-vg
-  LV UUID                c8RAPC-TCbR-lQff-tPIN-DxZN-XQZa-Nn4fgv
-  LV Write Access        read/write
-  LV Creation host, time lib, 2018-11-19 16:58:25 +0000
-  LV Status              available
-  # open                 2
-  LV Size                980.00 MiB
-  Current LE             245
-  Segments               1
-  Allocation             inherit
-  Read ahead sectors     auto
-  - currently set to     256
-  Block device           253:1
+--- Logical volume ---
+LV Path                /dev/ubuntu-vg/ubuntu-lv
+LV Name                ubuntu-lv
+VG Name                ubuntu-vg
+LV UUID                A47cH0-Nktb-0fi3-4vdM-2N1K-uxBV-zq3G2Q
+LV Write Access        read/write
+LV Creation host, time ubuntu-server, 2023-11-09 12:53:44 +0000
+LV Status              available
+# open                 1
+LV Size                <28.00 GiB
+Current LE             7167
+Segments               1
+Allocation             inherit
+Read ahead sectors     auto
+- currently set to     256
+Block device           253:0
 ```
 
 Extend the logical volume using the `lvextend` command:
 
 ```bash
-lvextend /dev/lib-vg/root /dev/sdb1
+lvextend /dev/ubuntu-vg/ubuntu-lv /dev/sdb1
 ```
 
 You will see output like this:
 
 
 ```bash
-  Size of logical volume lib-vg/root changed from 339.03 GiB (86792 extents) to <439.03 GiB (112391 extents).
-  Logical volume lib-vg/root successfully resized.
+Size of logical volume ubuntu-vg/ubuntu-lv changed from <28.00 GiB (7167 extents) to 87.99 GiB (22526 extents).
+Logical volume ubuntu-vg/ubuntu-lv successfully resized.
 ```
 
 Finally, resize the overall `ext` based file system using the `resize2fs` command:
 
 ```bash
-resize2fs /dev/lib-vg/root
+resize2fs /dev/ubuntu-vg/ubuntu-lv
 ```
 
 You will see output like this:
 
 ```bash
-resize2fs 1.44.1 (24-Mar-2018)
-Filesystem at /dev/lib-vg/root is mounted on /; on-line resizing required
-old_desc_blocks = 43, new_desc_blocks = 55
-The filesystem on /dev/lib-vg/root is now 115088384 (4k) blocks long.
+resize2fs 1.46.5 (30-Dec-2021)
+Filesystem at /dev/ubuntu-vg/ubuntu-lv is mounted on /; on-line resizing required
+old_desc_blocks = 4, new_desc_blocks = 11
+The filesystem on /dev/ubuntu-vg/ubuntu-lv is now 23066624 (4k) blocks long.
 ```
 
 Confirm that the VM can now access the additional disk space using the `df` (disk free) command:
