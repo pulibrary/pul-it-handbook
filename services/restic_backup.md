@@ -13,7 +13,7 @@ As the `pulsys` user install restic with the following command:
 sudo apt -y install restic
 ```
 
-Run the following command to ensure it is installed correctly
+Run the following command to confirm it is installed correctly:
 
 ```bash
 restic version
@@ -28,14 +28,14 @@ restic version
     export GOOGLE_APPLICATION_CREDENTIALS=~/.restic/pul-gcdc-filename.json
     restic -r gs:postgres-version-backup:yourpath init
     ```
-2. Following the prompt, set a password to encrypt your repository’s data. Enter your desired password twice. (Save this to lastpass and ansible-vault)
-3. Losing this password will make our backup inaccessible
+2. Following the prompt, set a password to encrypt your repository’s data. Enter your desired password twice, and be sure to save it! 
+3. Add the encryption password to Lastpass and add it as a vaulted variable in princeton_ansible. **Losing this password will make our backups inaccessible!**
 
 ## Store the file and password
 
 The access keyfile, and password are required every time Restic communicates with your repository. To make it easier to work with your repository, create a shell script containing your credentials.
 
-  1. To keep your credentials secure, using a text editor, create the example script in the user’s who will run the backup's home directory, and run all your Restic scripts as this user. The example uses the `postgres` user and the vim text editor.
+  1. To keep your credentials secure, using a text editor, copy and adapt the example script in the home directory of the user who will run the backup's home directory. Run all your Restic scripts as this user. The example uses the `postgres` user and the vim text editor.
        ```bash
        sudo su - postgres
        mkdir -p .restic
@@ -54,7 +54,8 @@ The access keyfile, and password are required every time Restic communicates wit
      export RESTIC_PASSWORD_FILE='/var/lib/postgresql/.restic.pwd'
      ```
 
-     The `/var/lib/postgresql` path above will be `/home/pulsys` for mariadb
+     If you are backing up postgreSQL, use the path `/var/lib/postgresql`.
+     If you are backing up mariadb, use the path `/home/pulsys`.
     
   2. Create a password file to hold your Restic password:
      ```bash
@@ -94,7 +95,7 @@ For postgresql use the [postgresql](postgresql) scripts as a cronjob.
     
 For mariadb do the following:
 
-  1. Copy all the files under the [mariadb](mariadb) to the `pulsys` user
+  1. Copy all the files under the [mariadb](mariadb) to the `pulsys` user:
      ```bash
      mkdir -p ~/.restic/log
      ```
@@ -106,13 +107,13 @@ For mariadb do the following:
      ```bash
       crontab -e
       ```
-     Add a line that points to the `full_pg_backup.sh` script
+     Add a line that points to the `full_pg_backup.sh` script:
 
     ```file
     0 5 * * * /home/pulsys/.restic/maria_backup.sh
     ```
 
-## Restore a backup
+## Restore from a backup
 
 To restore the latest usable postgresql backup from restic, run the following commands:
 
