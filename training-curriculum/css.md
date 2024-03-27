@@ -3,7 +3,6 @@
 ## Desired Learning Outcomes
 * Embedded vs. external styles
 * Selectors
-* SASS
 * Layout
 * Responsive design
 * [Color Contrast checker tool](https://www.tpgi.com/cca-download/)
