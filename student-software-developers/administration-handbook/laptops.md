@@ -5,7 +5,7 @@ machines, purchsed on the following dates:
 
 - 2019 - 3 machines (retired)
 - May of 2023 (2 new machines)
-- September 2023 (4 new machines)
+- September 2023 (3 new machines -- we ordered 4 but didn't use one of them and it may have been given to someone else)
 
 There’s not an official equipment replacement cycle as far as I know, but we agreed to replace them every 4 years. Ask for new machines to be ordered as soon as we know we need them; Desktop support appreciates lead time.
 
