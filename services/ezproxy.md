@@ -18,8 +18,9 @@ The certificates will automatically renew every year and will need to be added i
     lrwxrwxrwx 1 root root   34 Mar 27 18:58 privkey.pem -> ../../archive/ezproxy/privkey1.pem
     ```
   * Login into the ezproxy [URL](https://login.ezproxy.princeton.edu/admin)
+  * Select Manage SSL Certificates
   * Import Existing SSL Certificate
   * Copy the contents of `cert.pem` above into the certificate
   * Copy the contents of `privkey.pem` above into the key and Import Certificate
-  * Copy the contents of `fullchain.pem` above into the next page and Save Certificate Authority Chain
-  * 
+  * To make the new certificate active type *ACTIVE* in the check box and press `activate`
+  * Then return to the Administation home page and find the *Restart EzProxy* Link to restart the EzProxy application
