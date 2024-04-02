@@ -2,6 +2,12 @@
 
 Email lsupport and ask for new machines to be ordered, if needed.
 
+### Early April: Prepare Tiny Workshops schedule
+- Create a spreadsheet in the [Tiny workshops google drive folder](https://drive.google.com/drive/folders/10_hdO4JVu3cVxgUo1gQqFSm5_JH2bEzY) (copy last year's if you like)
+    - Update the topics and dates
+- Review the [Instruction sheet](https://docs.google.com/document/d/1yD6np5ME8zHg-90FuBERUbqiVTC5UAbrMFVJFlysNsM/edit) and update if needed
+- Post the instructions in the #it-general slack channel when it's ready
+
 ### Late April: prepare for first day
 
 
