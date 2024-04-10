@@ -21,13 +21,16 @@ Once the server is decommissioned, remove all traces of it:
 1. Remove Host database entry.
   * [https://princeton.service-now.com/service?id=sc_category&sys_id=0c0591f14f9d270c18ddd48e5210c79c](https://princeton.service-now.com/service?id=sc_category&sys_id=0c0591f14f9d270c18ddd48e5210c79c)
   * Select "Network Record - Delete"
-2. Remove from any monitoring services(IE: Nagios, Datadog, etc).
-3. Revoke any TLS certificates (if applicable)
-4. Remove from firewall rules.
+2. Remove from any monitoring services (IE: Nagios, Datadog, etc).
+3. Revoke any TLS certificates (if applicable*)
+4. Remove all references from load balancers, inventory, and variables (if applicable). 
+5. Remove from firewall rules.
   * Send a note to lsupport@ 
   * Subject: Hardware Firewall Change - oldvm.princeton.edu
   * Body: Please delete all rules for
-5. Remove from BigFix.
-6. Remove from inventory spreadsheet.
-7. Remove from backup solutions (Cohesity, Veeam).
-8. Remove computer account from domain (if joined).
+6. Remove from BigFix.
+7. Remove from inventory spreadsheet.
+8. Remove from backup solutions (Cohesity, Veeam).
+9. Remove computer account from domain (if joined).
+
+*The "if applicable" note means that these steps should only be taken if the application is being permenantly deleted, not if we are inserting a new/different VM in its place.
