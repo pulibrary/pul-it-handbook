@@ -24,7 +24,7 @@ Once the server is decommissioned, remove all traces of it:
 2. Remove from any monitoring services (IE: Nagios, Datadog, etc).
 3. Revoke any TLS certificates (if applicable*)
 4. Remove all references from load balancers, inventory, and variables (if applicable). 
-5. Remove from firewall rules.
+5. Remove from firewall rules (if applicable).
   * Send a note to lsupport@ 
   * Subject: Hardware Firewall Change - oldvm.princeton.edu
   * Body: Please delete all rules for
@@ -33,4 +33,4 @@ Once the server is decommissioned, remove all traces of it:
 8. Remove from backup solutions (Cohesity, Veeam).
 9. Remove computer account from domain (if joined).
 
-*The "if applicable" note means that these steps should only be taken if the application is being permenantly deleted, not if we are inserting a new/different VM in its place.
+*The "if applicable" note means that these steps should only be taken if the application is being permenantly retired/deleted, not if we are inserting a new/different VM in its place.
