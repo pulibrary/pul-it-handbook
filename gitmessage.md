@@ -1,5 +1,10 @@
 In the event you are pairing and need a `.gitmessage`
 
+To configure git to automatically show this message
+when you run `git commit`, run `./setup-or-update-gitmessage.sh`.  This script can also
+update your local copy with any changes that have
+been made to this file.
+
 ```bash
 # 50-character subject line
 #
