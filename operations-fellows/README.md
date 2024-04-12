@@ -1,6 +1,6 @@
 ## Operations Fellow Training Curriculum
 
-When we began hiring Early Career Engineers, we developed a training program that focused on partnerships with the fellow and a Senior Engineers. This placed too much burden on the fellow to navigate a sometimes unfamiliar territory without clear guidance. We have changed this approach to one that is modular and encourages pairing to close tickets with a junior developer.
+The Early Career Engineer training program is a modular system of topics and pairing suggestions that guides newcomers to our profession. The program includes traditional training resources, but it prioritizes learning by doing. We encourage new engineers to focus on closing tickets while pairing with everyone from senior engineers to junior developers. 
 
 These components can be used in any combination and order to focus on closing tickets.
 
