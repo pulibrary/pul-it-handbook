@@ -9,6 +9,16 @@ Comfort in the bash shell (similar to Linux above) will make simple automation e
 - [Powershell Documentation](https://learn.microsoft.com/en-us/powershell/) - Microsoft Windows new(ish) shell
 - [Shell Scripting](https://www.shellscript.sh/) - making your scripts portable to other shells will require you to spend some time with this introduction
 
+### Git
+
+Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency. Expect to work with this extensively, so spend your time here to be a better teammate
+
+- [Git Command Explorer](https://gitexplorer.com/)
+- [Git Cheatsheet](https://cs.fyi/guide/git-cheatsheet)
+- [Git Immersion](https://gitimmersion.com/index.html)
+- [Learn Git](https://www.atlassian.com/git)
+- [Learn Git Branching](https://learngitbranching.js.org/)
+
 ### Linux
 
 Our developers (and therefore we :wink:) primarily use [Ubuntu Linux](https://www.ubuntu.com) You will be provided with a machine that you should aim to convert into your Daily Driver
