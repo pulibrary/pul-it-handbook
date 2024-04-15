@@ -27,5 +27,5 @@ Our developers (and therefore we :wink:) primarily use [Ubuntu Linux](https://ww
 - [Commandline Curriculum](https://github.com/pulibrary/command_line_curriculum) - we welcome your feedback on the command line curriculum via Pull Requests
 - [Learn the Ways of Linux](https://linuxjourney.com/)
 - [Linux Commands Handbook](https://www.freecodecamp.org/news/the-linux-commands-handbook/)
-- [LPIC-1: Linux Administrator (101-500 and 102-500)](https://app.pluralsight.com/paths/certificate/lpic-one) (You need to have pluralsight subscribtion to see this courses. This course is around 30 hours)
+- [LPIC-1: Linux Administrator (101-500 and 102-500)](https://app.pluralsight.com/paths/certificate/lpic-one) (You need to have a Pluralsight subscription to see this course. This course is around 30 hours)
   - [Similar LPIC-1 Learning with Jadi (Recording)](https://www.youtube.com/watch?v=AKkNUvEHXhk&list=PLFOYXCPEqdNUU55Xvgst8wGTWnz_sd-cj)
