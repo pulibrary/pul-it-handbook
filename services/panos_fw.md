@@ -258,3 +258,33 @@ Shared: Yes
 Description: URL to page describing the block list.
 Source: URL to text file containing list of IPs
 Frequency: Weekly on Monday at 00:00
+
+#### Denying IP Addresses
+
+1. Open a ticket to lsupport@princeton.edu with the subject line: “Hardware Firewall Change - DenyList.” In the body, write: 
+	“The IP address xxxxxx is brute forcing SSH on Library servers. This IP and associated range should be blocked.”
+
+2. Log into Panorama. Go to the Objects tab and search for “deny.” This should bring up a list of all the deny rules, sorted numerically. 
+
+3. Scroll down to the last numbered rule and click the Add button. Create a new rule with the next number (e.g. if the last one is Deny069, create “Deny070”).
+
+4. Click the box for Shared. In the Description field, add “See Ticket #[Service Portal ticket # from step 1].”
+
+5. Fill in the IP address of the offending address (include /32 at the end if needed). Hit Ok. 
+
+6. Click on Address Groups in the left-hand navigation menu and search for “Deny.” 
+
+7. Open the "DenyList" address group and scroll down to the latest rule you’ve added. Check the box next to it and click Add. Do this step for each rule. 
+
+8. Commit/push the changes to Panorama.
+
+9. To close the Service Portal ticket, add the following to the internal notes and then close the ticket: 
+
+  Address "Deny[xxx]" created:
+  Name: Deny[xxx]
+  Shared: Yes
+  Description: See Ticket# [current ticket #]
+  IP Address: xxxxx/32
+
+  Address Group "DenyList" edited:
+  Added address: Deny[xxx]
