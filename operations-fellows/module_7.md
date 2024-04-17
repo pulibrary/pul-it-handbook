@@ -38,3 +38,27 @@ While most changes to Springshare's "look & feel" can be managed from the UI, we
 #### Getting Support
 
 The Operations team currently supports LibApps. Users can get help by emailing lsupport@princeton.edu and someone from Operations will get back to you. Users can also submit a Support ticket to Springshare directly from the documentation site; however, usually these requests are brought to lsupport's attention first, and then Springshare admins escalate to Springshare Support. 
+
+### Confluence 
+
+#### Purpose
+
+Confluence is a wiki and web-based collaboration and content management tool and, as such, a virtual space to create, organize, and discuss work as a team. Confluence is organized into Spaces, or project areas, and at PUL, we have Spaces for things like committee work, department-specific spaces, and cross-library projects. Spaces consist of pages, where content lives and can be edited. By default, Confluence spaces are publicly available to anyone who has the link to our Confluence site; however, we have the ability to make spaces private so that only PUL users can view them when signed in or, more restrictive, only certain users within PUL can view them when signed in. Confluence authenticates with SSO through an integration with Atlassian Access, which OIT manages for all Atlassian products across campus. 
+
+#### Documentation
+
+PUL-specific documentation on Confluence can be found in the [Princeton University Library](https://pul-confluence.atlassian.net/wiki/spaces/PUL/overview) space as well as in the [Best Practices](https://pul-confluence.atlassian.net/wiki/spaces/BP/overview) space. We have previously recorded workshops and materials, such as slides or exercise files, linked from within the PUL space on a [Trainings](https://pul-confluence.atlassian.net/wiki/spaces/PUL/pages/1769716/Training+Sessions) page.
+
+Atlassian has robust Confluence documentation on their site, including video tutorials and training. Confluence is often a training topic on various learning platforms, such as LinkedIn Learning and Pluralsight. 
+
+#### Getting Support
+
+The Operations team currently supports Confluence. Users can get help by emailing lsupport@princeton.edu and someone from Operations will get back to you. Only those admins dedicated from Operations can submit tickets directly through Atlassian's interface using admin account sign in. 
+
+### Atlas Systems Applications
+
+The following applcations are hosted by Atlas Systems. These services are described in more detail in the [hosted services](https://github.com/pulibrary/pul-it-handbook/blob/main/services/hosted_services.md) section of this handbook: 
+- Aeon: Used to manage requests from users to utilize our Special Collections materials in our restricted access reading rooms.
+- Ares: Used to manage course-related reading lists of Library materials through an integration with the campus learning management system (LMS), Canvas.
+- ILLiad: Software that supports our Interlibrary Loan and Article Express services (resource sharing).
+
