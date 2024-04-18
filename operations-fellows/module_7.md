@@ -49,16 +49,30 @@ Confluence is a wiki and web-based collaboration and content management tool and
 
 PUL-specific documentation on Confluence can be found in the [Princeton University Library](https://pul-confluence.atlassian.net/wiki/spaces/PUL/overview) space as well as in the [Best Practices](https://pul-confluence.atlassian.net/wiki/spaces/BP/overview) space. We have previously recorded workshops and materials, such as slides or exercise files, linked from within the PUL space on a [Trainings](https://pul-confluence.atlassian.net/wiki/spaces/PUL/pages/1769716/Training+Sessions) page.
 
-Atlassian has robust Confluence documentation on their site, including video tutorials and training. Confluence is often a training topic on various learning platforms, such as LinkedIn Learning and Pluralsight. 
+Atlassian provides robust [Confluence documentation](https://support.atlassian.com/confluence-cloud/resources/), including video tutorials and training. Confluence is often a training topic on various learning platforms, such as LinkedIn Learning and Pluralsight. 
 
 #### Getting Support
 
 The Operations team currently supports Confluence. Users can get help by emailing lsupport@princeton.edu and someone from Operations will get back to you. Only those admins dedicated from Operations can submit tickets directly through Atlassian's interface using admin account sign in. 
 
+### Drupal
+
+#### Purpose
+
+The Library website is hosted on Drupal, an open-source platform for building digital sites. We are moving from a Drupal 7 site, which the library currently self-hosts, to a Drupal 10 site through the campus Drupal instance, called Site Builder, that will be hosted by OIT's Web Development Services (WDS) unit. WDS is responsible for site maintenance and security patching, and library staff in Operations, AUX, and DACS will have administrative access through the UI to manage content and user accounts. 
+
+#### Documentation
+
+WDS has prepared documentation that is both general to the Site Builder platform and that is specific to the Library's instance of Site Builder. The Drupal community at large is a robust one and many questions can be answered by exploring their own documentation and community forums. 
+
+#### Support
+
+Folks across Library IT teams are equipped to proved Drupal support; however, the best course of action is to email lsupport@princeton.edu, and your ticket will be triaged to the approrpiate person. Like other hosted systems we manage, the Drupal site admins have the ability to escalate a question or issue to WDS to receive support from their team. 
+
 ### Atlas Systems Applications
 
 The following applcations are hosted by Atlas Systems. These services are described in more detail in the [hosted services](https://github.com/pulibrary/pul-it-handbook/blob/main/services/hosted_services.md) section of this handbook: 
-- Aeon: Used to manage requests from users to utilize our Special Collections materials in our restricted access reading rooms.
-- Ares: Used to manage course-related reading lists of Library materials through an integration with the campus learning management system (LMS), Canvas.
-- ILLiad: Software that supports our Interlibrary Loan and Article Express services (resource sharing).
 
+- [Aeon](https://github.com/pulibrary/pul-it-handbook/blob/main/services/hosted_services.md#aeon): Used to manage requests from users to utilize our Special Collections materials in our restricted access reading rooms.
+- [Ares](https://github.com/pulibrary/pul-it-handbook/blob/main/services/hosted_services.md#ares): Used to manage course-related reading lists of Library materials through an integration with the campus learning management system (LMS), Canvas.
+- [ILLiad](https://github.com/pulibrary/pul-it-handbook/blob/main/services/illiad.md): Software that supports our Interlibrary Loan and Article Express services (resource sharing). Note that currently, ILLiad is still hosted on-prem through a Windows VM managed by the Operations team. We are actively pursuing moving this to an Atlas-hosted cloud solution.  
