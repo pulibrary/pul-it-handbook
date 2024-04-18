@@ -62,11 +62,11 @@ The Operations team currently supports Confluence. Users can get help by emailin
 
 #### Purpose
 
-The [Library website](https://library.princeton.edu/) is hosted on Drupal, an open-source platform for building digital sites. We are moving from a Drupal 7 site, which the library currently hosts on-prem, to a Drupal 10 site through the campus Drupal instance, called Site Builder, that will be hosted by OIT's Web Development Services (WDS) unit. WDS is responsible for site maintenance and security patching; library staff in Operations, AUX, and DACS will have administrative access through the UI to manage content and user accounts. 
+The [Library website](https://library.princeton.edu/) is hosted on [Drupal](https://www.drupal.org/), an open-source platform for building digital sites. We are moving from a Drupal 7 site, which the library currently hosts on-prem, to a Drupal 10 site through the campus Drupal instance, called Site Builder, that will be hosted by OIT's [Web Development Services (WDS)](https://wds.princeton.edu/) unit. WDS is responsible for site maintenance and security patching; library staff in Operations, AUX, and DACS will have administrative access through the UI to manage content and user accounts. 
 
 #### Documentation
 
-WDS has prepared documentation that is both general to the Site Builder platform and that is specific to the Library's instance of Site Builder. The Drupal community at large is a robust one and many questions can be answered by exploring their own documentation and community forums. 
+WDS has publicly available [documentation](https://sitebuilder.princeton.edu/) that is general to the Site Builder platform; we also have internal documentation specific to the Library's instance of Site Builder. The [Drupal community](https://www.drupal.org/support) at large is a robust one and many questions can be answered by exploring their own documentation and community forums. 
 
 #### Support
 
