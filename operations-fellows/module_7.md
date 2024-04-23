@@ -74,8 +74,8 @@ Folks across Library IT teams are equipped to proved Drupal support; however, th
 
 ### Atlas Systems Applications
 
-The following applcations are hosted by Atlas Systems. These services are described in more detail in the [hosted services](https://github.com/pulibrary/pul-it-handbook/blob/main/services/hosted_services.md) section of this handbook: 
+The following applications are hosted by Atlas Systems. These services are described in more detail elsewhere in this handbook: 
 
-- [Aeon](https://github.com/pulibrary/pul-it-handbook/blob/main/services/hosted_services.md#aeon): Used to manage requests from users to utilize our Special Collections materials in our restricted access reading rooms.
-- [Ares](https://github.com/pulibrary/pul-it-handbook/blob/main/services/hosted_services.md#ares): Used to manage course-related reading lists of Library materials through an integration with the campus learning management system (LMS), Canvas.
-- [ILLiad](https://github.com/pulibrary/pul-it-handbook/blob/main/services/illiad.md): Software that supports our Interlibrary Loan and Article Express services (resource sharing). Note that currently, ILLiad is still hosted on-prem through a Windows VM managed by the Operations team. We are actively pursuing moving this to an Atlas-hosted cloud solution.  
+- [Aeon](https://github.com/pulibrary/pul-it-handbook/blob/main/services/atlas-apps/hosted_services.md#aeon): Used to manage requests from users to utilize our Special Collections materials in our restricted access reading rooms.
+- [Ares](https://github.com/pulibrary/pul-it-handbook/blob/main/services/atlas-apps/hosted_services.md#ares): Used to manage course-related reading lists of Library materials through an integration with the campus learning management system (LMS), Canvas.
+- [ILLiad](https://github.com/pulibrary/pul-it-handbook/blob/main/services/atlas-apps/illiad.md): Software that supports our Interlibrary Loan and Article Express services (resource sharing). Note that currently, ILLiad is still hosted on-prem through a Windows VM managed by the Operations team. We are actively pursuing moving this to an Atlas-hosted cloud solution.  
