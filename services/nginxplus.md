@@ -68,3 +68,14 @@ Sometimes you need to update nginx configuration manually on the load balancers.
   - If the problem isn't fixed, check that the load balancer you updated is still active.
 - Once the site is working correctly on the active load balancer, SSH into the inactive load balancer and repeat the edit and syntax check there. You don't need to reload or restart on this machine. The config files should be identical on both load balancers when you are done.
 - When everything is working correctly, update the `princeton_ansible` repo with the changes you made manually, so the next time we run the nginx playbook, your changes will be retained on the load balancers.
+
+## Initial HA Setup
+
+### Configuring High Availability 
+
+These steps are needed when setting up an active-passive pair of nginxplus load balancers the first time. We will need to run the `nginx-ha-setup` script on both nodes as the root user. The script configures a highly available NGINX Plus environment with an active-passive pair of nodes acting as primary and backup. It prompts for the following data:
+
+- IP address of the local and remote nodes (one of which will be configured and the primary (active), the other as the backup (passive))
+- One additional free IP address to be used as the cluster endpoint's (floating) VIP
+
+The configuration of the keepalived daemon is recorded in /etc/keepalived/keepalived.conf. The configuration blocks in the file control notification settings, the VIPs to manage, and the health checks to use to test the services that rely on VIPs. Our floating IP for the production environment is `128.112.203.146` and `172.20.80.19` for our dev environment.
