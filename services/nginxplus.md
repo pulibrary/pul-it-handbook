@@ -73,7 +73,7 @@ Sometimes you need to update nginx configuration manually on the load balancers.
 
 ### Configuring High Availability 
 
-These steps are needed when setting up an active-passive pair of nginxplus load balancers the first time. We will need to run the `nginx-ha-setup` script on both nodes as the root user. The script configures a highly available NGINX Plus environment with an active-passive pair of nodes acting as primary and backup. It prompts for the following data:
+These steps are needed when setting up an active-passive pair of nginxplus load balancers the first time. We will need to run the `/usr/bin/nginx-ha-setup` script on both nodes as the root user. The script configures a highly available NGINX Plus environment with an active-passive pair of nodes acting as primary and backup. It prompts for the following data:
 
 - IP address of the local and remote nodes (one of which will be configured and the primary (active), the other as the backup (passive))
 - One additional free IP address to be used as the cluster endpoint's (floating) VIP
