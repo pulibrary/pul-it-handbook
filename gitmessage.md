@@ -6,7 +6,13 @@ update your local copy with any changes that have
 been made to this file.
 
 ```bash
-# 50-character subject line
+# 50-character subject line in this format:
+# [issue number, project, or component] Short description in present tense and imperative mood
+#
+# For example:
+# [#3365] Correct type in documentation 
+# [#2431 bibdata] Update node version to 20.4.1
+# [#130 LuxDatePicker] Show holidays in green
 #
 # 72-character wrapped longer description. This should answer:
 #
