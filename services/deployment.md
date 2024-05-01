@@ -1,5 +1,9 @@
 # Deployment
 
+Once a pull request is merged that change is now part of the main codebase. However, it isn't running live on the actual application until it's deployed. Most PUL projects use [Capistrano](https://capistranorb.com/) for deployment. Capistrano uses SSH to pull the latest code onto an application server, prep a fresh version of the application (by, for example, building a new javascript deliverable, and clearing the cache), and then restarting the application web server (usually passenger) and any other services running the application, like sidekiq workers or queue-subscribing processes.
+
+Capistrano can be run on a command line from within a project on your local machine. But we prefer to run it via ansible-tower to ensure greater visibility of deploys (via standardized slack integrations) and easier pairing to troubleshoot when deploys fail.
+
 ## Sequence of deployment events
 * ask ansible-tower to deploy your code
 * ansible-tower runs the deployment appdeploy.princeton.edu
