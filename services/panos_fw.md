@@ -289,7 +289,7 @@ Frequency: Weekly on Monday at 00:00
   Address Group "DenyList" edited:
   Added address: Deny[xxx]
 
-#### Moving Entries from PanOS DenyList to AWS through princeton_ansible
+#### Moving Entries from PanOS DenyList to AWS DenyList through princeton_ansible
 
 1. Log into Panorama. Go to the Objects tab and search for “deny.” This should bring up a list of all the deny rules, sorted numerically (e.g. Deny0xx). 
 
@@ -302,7 +302,8 @@ Frequency: Weekly on Monday at 00:00
 4. Check out a new branch in princeton_ansible to modify the main.yml file located in /roles/denyhost/vars (file here: https://github.com/pulibrary/princeton_ansible/blob/main/roles/denyhost/vars/main.yml).
 
 5. The file will tell you how to add an entry; you will need the name of the organization that you noted above and the IP address (and now the range, if there is a range). An example would look like: 
-  name: Francis test
+
+    name: Francis test
     ip_range:
     38.49.xx.xx/32
 
@@ -312,5 +313,5 @@ Frequency: Weekly on Monday at 00:00
 
       and the body should read something like this: 
 
-      "From the DenyList address group in Panorama, we have added Denyxxx through Denyxxx to the new denylist on AWS via this PR on princeton_ansible: (link to PR). Please remove Denyxxx-Denyxxx from Panorama." 
+      "From the DenyList address group in Panorama, we have added Denyxxx through Denyxxx to the new denylist on AWS via this PR on princeton_ansible: (link to your PR). Please remove Denyxxx-Denyxxx from Panorama." 
 
