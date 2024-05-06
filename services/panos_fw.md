@@ -303,9 +303,8 @@ Frequency: Weekly on Monday at 00:00
 
 5. The file will tell you how to add an entry; you will need the name of the organization that you noted above and the IP address (and now the range, if there is a range). An example would look like: 
 
-    name: Francis test
-    ip_range:
-    38.49.xx.xx/32
+  - name: Test Organization
+  - ip_range: 38.49.xx.xx/32
 
 6. Once you have pushed your PR, run the [denyhost playbook](https://github.com/pulibrary/princeton_ansible/blob/main/playbooks/denyhost.yml) for these changes to take effect. 
 
