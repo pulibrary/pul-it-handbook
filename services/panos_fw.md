@@ -291,7 +291,7 @@ Frequency: Weekly on Monday at 00:00
 
 #### Moving Entries from PanOS DenyList to AWS DenyList through princeton_ansible
 
-1. Log into Panorama. Go to the Objects tab and search for “deny.” This should bring up a list of all the deny rules, sorted numerically (e.g. Deny0xx). 
+1. Log into Panorama. Go to the Objects tab and search for “deny.” This should bring up a list of all the deny rules, sorted numerically (e.g. Deny0xx). If you don't have access to Panorama, you can view the deny rules from the exported [Google Sheet](https://docs.google.com/spreadsheets/d/1K3kZ2_tbynl62S7StJKjIIAmus9xBWXmYbDEHYDsRaA/edit?usp=sharing).
 
 2. Open a rule to note and/or copy its IP address* (note: if the IP is has a [CIDR range](https://www.ipaddressguide.com/cidr), don't copy the range at this point; you will need the range later).
 
