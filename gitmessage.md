@@ -6,14 +6,24 @@ update your local copy with any changes that have
 been made to this file.
 
 ```bash
-# 50-character subject line
+# 50-character subject line in this format:
+# [optional project, or component] Short description in present tense and imperative mood
 #
-# 72-character wrapped longer description. This should answer:
+# For example:
+# Correct typo in documentation
+# [bibdata] Update node version to 20.4.1
+# [LuxDatePicker] Show holidays in green
 #
+#
+# 72-character wrapped longer description. This should include:
+#
+# * Issue number reference (e.g. "advances #2431" or "closes pulibrary/figgy#6767")
 # * Why was this change necessary?
 # * How does it address the problem?
 # * Are there any side effects?
-# * PUL Co-authored-by:
+#
+#
+# Uncomment the relevant lines to add co-authors:
 #
 # Co-authored-by: Alicia Cozine <acozine@users.noreply.github.com>
 # Co-authored-by: Anna Headley <hackartisan@users.noreply.github.com>
