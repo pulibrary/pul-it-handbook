@@ -7,7 +7,7 @@ Most solr configs are kept in the [pul_solr](https://github.com/pulibrary/pul_so
 ## Diagnosing Solr issues
 
 ### Accessing the Solr admin interface
-To view the Solr admin UI, open an SSH tunnel to any VM in the Solr cloud (for example, `ssh -L 9000:localhost:8983 lib-solr-prod4`) then point a browser at the localhost port you defined for the tunnel: [localhost:9000](localhost:9000).
+To view the Solr admin UI, open an SSH tunnel to any VM in the Solr cloud (for example, `ssh -L 9000:localhost:8983 lib-solr-prod7`) then point a browser at the localhost port you defined for the tunnel: [localhost:9000](localhost:9000).
 
 If you have the `pul_solr` code and gems available, you can also use the shortcut cap task in pul_solr to open the solr admin console: `bundle exec cap solr-production solr:console` or `bundle exec cap solr8-production solr:console`.
 
