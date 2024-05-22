@@ -293,7 +293,7 @@ Frequency: Weekly on Monday at 00:00
 
 1. Log into Panorama. Go to the Objects tab and search for “deny.” This should bring up a list of all the deny rules, sorted numerically (e.g. Deny0xx). If you don't have access to Panorama, you can view the deny rules from the exported [Google Sheet](https://docs.google.com/spreadsheets/d/1K3kZ2_tbynl62S7StJKjIIAmus9xBWXmYbDEHYDsRaA/edit?usp=sharing).
 
-2. Open a rule to note and/or copy its IP address* (note: if the IP is has a [CIDR range](https://www.ipaddressguide.com/cidr), don't copy the range at this point; you will need the range later). 
+2. Open a rule to note and/or copy its IP address* (note: if the IP has a [CIDR range](https://www.ipaddressguide.com/cidr), don't copy the range at this point; you will need the range later). 
 
     *Before proceeding, double-check the contents of the [vars file](https://github.com/pulibrary/princeton_ansible/blob/main/roles/denyhost/vars/main.yml) to make sure that the IP address you're adding doesn't already exist in there. If it does, you can skip from this step to step 7 to remove the rule(s) from PanOS. 
 
@@ -301,9 +301,9 @@ Frequency: Weekly on Monday at 00:00
 
 4. Check out a new branch in princeton_ansible to modify the main.yml file located in /roles/denyhost/vars (file here: https://github.com/pulibrary/princeton_ansible/blob/main/roles/denyhost/vars/main.yml).
 
-5. The file will tell you how to add an entry; you will need the name of the organization that you noted above and the IP address (and now the range, if there is a range). An example would look like: 
+5. The file will tell you how to add an entry; you will need the name of the organization that you noted above and the IP address (and now the range, if there is a range). An example would look like (make sure to follow YAML formatting!): 
 
-  - name: Test Organization
+  - name: Test Organization | (Description [comments from PanOS])
   - ip_range: 38.49.xx.xx/32
 
 6. Once you have pushed your PR, run the [denyhost playbook](https://github.com/pulibrary/princeton_ansible/blob/main/playbooks/denyhost.yml) for these changes to take effect. See the [README.md](https://github.com/pulibrary/princeton_ansible/blob/main/README.md) for configuring your environment to run Ansible playbooks from the CLI. 
