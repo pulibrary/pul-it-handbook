@@ -314,3 +314,26 @@ Frequency: Weekly on Monday at 00:00
 
       "From the DenyList address group in Panorama, we have added Denyxxx through Denyxxx to the new denylist on AWS via this PR on princeton_ansible: (link to your PR). Please remove Denyxxx-Denyxxx from Panorama." 
 
+8. If you are the Ops person to whom the ServiceNow ticket gets assigned, add work/internal notes to the ticket to document which rule(s) you are removing. For example: 
+
+      Address Group "DenyList" edited:
+      Removed addresses: Denyxxx, Denyxyz
+
+      Address “Denyxxx” deleted:
+      Reason for deletion: Moved to external dynamic list.
+      Was configured as:
+      Name: Denyxxx
+      Shared: Yes
+      Description: Aliases
+      IP Address: x.x.xx.xx/32
+
+      Address “Denyxyz” deleted:
+      Reason for deletion: Moved to external dynamic list.
+      Was configured as:
+      Name: Denyxyz
+      Shared: Yes
+      Description: Aliases
+      IP Address: x.x.xx.xx/32
+
+When finished, update and close the ticket. 
+
