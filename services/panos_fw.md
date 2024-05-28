@@ -306,7 +306,7 @@ Frequency: Weekly on Monday at 00:00
   - name: Test Organization | (Description [comments from PanOS])
   - ip_range: 38.49.xx.xx/32
 
-6. Once you have pushed your PR, run the [denyhost playbook](https://github.com/pulibrary/princeton_ansible/blob/main/playbooks/denyhost.yml) for these changes to take effect. See the [README.md](https://github.com/pulibrary/princeton_ansible/blob/main/README.md) for configuring your environment to run Ansible playbooks from the CLI. 
+6. Once you have pushed your PR, run the [denyhost playbook](https://github.com/pulibrary/princeton_ansible/blob/main/playbooks/denyhost.yml) for these changes to take effect. See the [README.md](https://github.com/pulibrary/princeton_ansible/blob/main/README.md#usage) for configuring your environment to run Ansible playbooks from the CLI. 
 
 7. Open a ServiceNow ticket by emailing lsupport@princeton.edu. The subject should read: "Hardware Firewall Change - Remove Denyxxx through Denyxxx" 
 
