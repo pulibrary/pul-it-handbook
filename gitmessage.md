@@ -61,6 +61,7 @@ been made to this file.
 # Co-authored-by: Trey Pendragon <tpendragon@users.noreply.github.com>
 # Co-authored-by: Tyler Wade <twade968@users.noreply.github.com>
 # Co-authored-by: Vickie Karasic <vickiekarasic@users.noreply.github.com>
+# Co-authored-by: Winsice Ng <winsice-ng@users.noreply.github.com>
 #
 # Include a link to the ticket, if any.
 ```
