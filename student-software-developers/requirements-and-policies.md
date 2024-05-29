@@ -4,6 +4,7 @@
 
 * The position is remote during the summer, with an option to work from the IT suite in Firestone.
 * The Library does not provide housing during the summer, the student developer must make their own arrangements.
+* During the summer, the position is 35 hours/week, or 7 hours/day with an unpaid lunch.
 * The Library generally does not pay for overtime, so we should make sure the student knows they can not charge Princeton more than 40 hours per week.
   * Check with the student to see if they have another job
   * They will need to make sure both of the job's hours total 40 or less hours 
