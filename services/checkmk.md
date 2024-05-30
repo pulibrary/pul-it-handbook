@@ -22,3 +22,16 @@ On the host:
 
 On the CheckMK server:
 * The server logs to `/opt/omd/sites/pulmonitor/var/log/` and to `/opt/omd/sites/pulmonitor/var/nagios/`. The `/opt/omd/sites/pulmonitor/var/log/notify.log` includes records of Slack (and presumably other) notifications; `/opt/omd/sites/pulmonitor/var/nagios/nagios.log` logs host and service state messages. All logs are owned by the 'pulmonitor' user, but it's probably easier to view them with `sudo less /path/to/log` as the 'pulsys' user.
+
+## Changing the Timezone for CheckMK
+
+We wanted to be able to update the CheckMK timezone to be 'America/NY' so that the times can better coordinate between Slack and CheckMK 
+
+The steps to complete this is the following: 
+* Edited `/opt/omd/sites/pulmonitor/etc/environment`, added ‘TZ=America/New_York’
+
+* Restarted the service with `sudo omd restart pulmonitor`
+
+## Checking the CheckMK server status
+
+*  You are able to check the server status with `sudo omd status pulmonitor`
