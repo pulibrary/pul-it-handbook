@@ -1,8 +1,8 @@
 # SMTP Mail Server
 
-We have an smtp server at `lib-ponyexpr.princeton.edu` which can be used to send mail to princeton email addresses. If you need to send mail to other email addresses, the procedures are not clear; talk to operations to figure this out.
+We have an smtp server at `lib-ponyexpr-prod.princeton.edu` which can be used to send mail
 
-You'll need the box using this mail server added to an allow list. To do so create a SN@P ticket or send a message to lsupport.
+Instructions to [Add your VM are in the postfix role](https://github.com/pulibrary/princeton_ansible/tree/main/roles/postfix)
 
 For a ruby app you'll need the following configuration in `config/environments/production.rb`:
 
