@@ -1,6 +1,6 @@
 # SMTP Mail Server
 
-We have an smtp server at `lib-ponyexpr-prod.princeton.edu` which can be used to send mail to princeton email addresses.
+We have an smtp server at `lib-ponyexpr-prod.princeton.edu` which can be used to send mail
 
 Instructions to [Add your VM are in the postfix role](https://github.com/pulibrary/princeton_ansible/tree/main/roles/postfix)
 
