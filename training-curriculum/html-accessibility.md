@@ -14,7 +14,7 @@
 * Be able to use a [Color Contrast checker tool](https://www.tpgi.com/color-contrast-checker/) 
 
 ## Videos
-* [Introduction to HTML and CSS](https://teamtreehouse.com/library/introduction-to-html-and-css)
+* [Introduction to HTML and CSS](https://teamtreehouse.com/library/introduction-to-html-and-css-2)
 * [HTML basics](https://teamtreehouse.com/library/html-basics-2)
 * [HTML forms](https://teamtreehouse.com/library/html-forms)
 * [HTML tables](https://teamtreehouse.com/library/html-tables)
@@ -26,8 +26,8 @@
   * [WebAIM: Contrast and Color Accessibility - Understanding WCAG 2 Contrast and Color Requirements](https://webaim.org/articles/contrast/)
 * Evaluating accessibility
   * [Basic VoiceOver Testing (DACS
-      handbook)](https://github.com/pulibrary/dacs_handbook/blob/main/Accessibility/voiceover_basic_testing.md)
-  * [Accessibility tools](https://github.com/pulibrary/dacs_handbook/blob/main/Accessibility/accessibility_tools.md)
+      handbook)](https://pulibrary.github.io/dacs_handbook/Accessibility/voiceover_basic_testing.html)
+  * [Accessibility tools](https://pulibrary.github.io/dacs_handbook/Accessibility/accessibility_tools.html)
 * Creating accessible components
   * [WebAIM: Creating Accessible Tables - Layout Tables](https://webaim.org/techniques/tables/)
   * [WebAIM: Creating Accessible Forms - General Form Accessibility](https://webaim.org/techniques/forms/)
