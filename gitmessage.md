@@ -33,6 +33,7 @@ been made to this file.
 # Co-authored-by: Christina Chortaria <christinach@users.noreply.github.com>
 # Co-authored-by: Chun Ly <astrochun@users.noreply.github.com>
 # Co-authored-by: Claudia Lee <claudiawulee@users.noreply.github.com>
+# Co-authored-by: Denzil Phillips <dphillips-39@users.noreply.github.com>
 # Co-authored-by: Eliot Jordan <eliotjordan@users.noreply.github.com>
 # Co-authored-by: Esmé Cowles <escowles@users.noreply.github.com>
 # Co-authored-by: Francis Kayiwa <kayiwa@users.noreply.github.com>
