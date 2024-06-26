@@ -1,5 +1,10 @@
 ### JobX and TimesheetX
 
+#### Make sure you are receiving and monitoring emails from JobX
+
+* These emails come from admin@ngwebsolutions.com, rather than an official Princeton email.  Make sure to watch out for those emails.
+* Make sure that in JobX that there is at least one secondary supervisor for each student.  If the secondary supervisor notices that a timesheet hasn't been approved by Tuesday, they should either check with the primary supervisor or approve it themselves.
+
 #### To create an account
 
 1. Go to the [student employment web site](https://princeton.edu/se)
