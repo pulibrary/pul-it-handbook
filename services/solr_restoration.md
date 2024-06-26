@@ -1,2 +1,3 @@
-## Information about how to restore solr by moving apps from solr3 to solr2 in a Google Doc:
-[Solr - moving applications](https://docs.google.com/document/d/19GFTVlaNgebxhTxwVXDSjJSOoyIjAVKLzGR3fiDX1o8/edit)
+## Restoring Solr collections
+
+We document how to restore a Solr collection from a backup in the [README.md file of the pul_solr repository](https://github.com/pulibrary/pul_solr/blob/main/README.md).
