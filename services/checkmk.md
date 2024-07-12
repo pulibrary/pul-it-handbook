@@ -20,6 +20,17 @@ On the CheckMK server:
 
 *  You can check the server status with `sudo omd status pulmonitor`
 
+## Source control for CheckMK with git
+
+Our CheckMK servers are set to record all changes as git commits.
+
+* The setting is in Settings . . . General . . . Global Settings in the CheckMK UI.
+* The git repo is in the `/omd/sites/pulmonitor/etc/check_mk` directory on the server. Note that `/omd/sites/pulmonitor` is the home directory of the `pulmonitor` user.
+* To check the git history on the server and see what changes have been made:
+  - `sudo su pulmonitor`
+  - `cd /omd/sites/pulmonitor/etc/check_mk`
+  - `git log`
+
 ## Logs
 On the host:
 * The agent seems to log to `/var/log/syslog`.
