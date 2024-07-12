@@ -16,6 +16,10 @@ On the CheckMK server:
 * As the 'pulsys' user, do `sudo nc -vz hostname.princeton.edu 6556` to confirm that the agent port is accessible on that host.
 * As the 'pulmonitor' user, run `cmk -R` to restart the checkmk service.
 
+## Checking the CheckMK server status
+
+*  You can check the server status with `sudo omd status pulmonitor`
+
 ## Logs
 On the host:
 * The agent seems to log to `/var/log/syslog`.
@@ -64,6 +68,3 @@ To set up AuthN and AuthZ on a new CheckMK server:
     - For both roles, set 'Search in' to 'This connection'
 * In the 'Other' section, set the 'Sync interval' to '1 days 0 hours 0 mins'
   
-## Checking the CheckMK server status
-
-*  You are able to check the server status with `sudo omd status pulmonitor`
