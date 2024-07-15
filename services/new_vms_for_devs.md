@@ -1,7 +1,7 @@
 This documentation is for developers to understand the lifecycle of requesting and using a new Virtual Machine (VM).
 
 ### Requesting a new VM for an existing application
-- Create a ticket on [Prancible](https://github.com/pulibrary/princeton_ansible). This ticket should include:
+- Create a ticket on [Prancible](https://github.com/pulibrary/princeton_ansible/issues/new?assignees=&labels=&projects=&template=new_vm.md&title=). This ticket should include:
   - The fully qualified domain name (FQDN) of any hosts (e.g. `static-tables-staging1.princeton.edu`). In order to facilitate blue-green deployments, these should be new, unused names.
   - Resources needed - Memory, Storage, CPUs
   - Ports for firewall rules - What connections does the application need to be able to make? Examples include
