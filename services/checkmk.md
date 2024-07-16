@@ -92,3 +92,4 @@ To set up AuthN and AuthZ on a new CheckMK server:
     - set 'Search in' to 'This connection'
 * In the 'Other' section, at the very bottom, set the 'Sync interval' to '1 days 0 hours 0 mins'
 * Click 'Save and test' at the top
+* Note that new users logging in for the first time must log in twice, and it may take some time before new users who should be admins will get the correct permissions. Once the permissions are assigned, the new admin user can (and someone must) activate the User change that made them an admin.
