@@ -51,13 +51,15 @@ To set the timezone for CheckMK:
 Authentication for CheckMK is connected to the Princeton single sign-on. Authorization is controlled by two Grouper groups in Active Directory.
 
 To set up AuthN and AuthZ on a new CheckMK server: 
-* In the CheckMK UI, go to Setup > Users (use the search if Users does not appear as an option under Setup). In the Related menu, select LDAP & ActiveDirectory.
-* Click on 'Add a connection'
+* Log in as the 'cmkadmin' user
+* In the CheckMK UI, go to Setup > Users (use the search if Users does not appear as an option under Setup).
+* In the Related menu, select LDAP & ActiveDirectory.
+* Click on 'Add connection'
 * In the 'General Properties' section:
   * Add an 'ID' and 'Description' (in staging we used the name 'pu_ldap' and the Description Princeton LDAP)
 * In the 'LDAP Connection' section, set:
     - 'Directory type' to 'Active Directory'
-    - 'Connect' to to 'Manually specify list of LDAP servers'
+    - 'Connect to' to 'Manually specify list of LDAP servers'
     - 'LDAP Server' to 'ldapproxy.princeton.edu'
   * Check the 'Bind credentials' box and enter the Bind DN, which is stored in our password manager (pattern is CN=name,OU=department,OU=People,DC=pu,DC=win,DC=princeton,DC=edu)
   * Set 'Bind password' to 'Explicit' and enter the password (also stored in our password manager) in the box - this is a read-only password for LDAP
@@ -65,6 +67,12 @@ To set up AuthN and AuthZ on a new CheckMK server:
   * Check 'Use SSL'
   * Check 'Response timeout' and set the value to 5 seconds
 * In the 'Users' section: 
+  * For the 'User Base DN', enter 'dc=pu,dc=win,dc=princeton,dc=edu'
+  * For the 'Search scope', select 'Search whole subtree below the base DN'
+  * Check 'Search filter' and enter '(&(objectCategory=Person)(sAMAccountName=*))'
+  * Check 'UserID-attribute' and enter 'sAMAccountName'
+  * Check 'Create users only on login'
+* In the 'Groups' section: 
   * For the 'Group Base DN', enter 'ou=grouper,dc=pu,dc=win,dc=princeton,dc=edu'
   * For the 'Search scope', select 'Search whole subtree below the base DN'
   * Check 'Search filter' and enter '(objectclass=group)'
@@ -73,9 +81,14 @@ To set up AuthN and AuthZ on a new CheckMK server:
   * Check 'Alias'
   * Check 'Authentication Expiration'
   * Check 'Email address'
-  * Check 'Roles' and add two entries:
-    - Set the 'Normal monitoring user' Group DN to 'cn=pu:lib:devops:users,ou=grouper,dc=pu,dc=win,dc=princeton,dc=edu'
-    - Set the 'Administrator' Group DN to 'cn=pu:lib:devops:admins,ou=grouper,dc=pu,dc=win,dc=princeton,dc=edu'
-    - For both roles, set 'Search in' to 'This connection'
-* In the 'Other' section, set the 'Sync interval' to '1 days 0 hours 0 mins'
-  
+  * Check 'Roles', and in the new section that opens:
+    - check 'Normal monitoring user'
+    - click 'Add new element'
+    - set the Group DN to 'cn=pu:lib:devops:users,ou=grouper,dc=pu,dc=win,dc=princeton,dc=edu'
+    - set 'Search in' to 'This connection'
+    - check 'Administrator'
+    - click 'Add new element'
+    - set the Group DN to 'cn=pu:lib:devops:admins,ou=grouper,dc=pu,dc=win,dc=princeton,dc=edu'
+    - set 'Search in' to 'This connection'
+* In the 'Other' section, at the very bottom, set the 'Sync interval' to '1 days 0 hours 0 mins'
+* Click 'Save and test' at the top
