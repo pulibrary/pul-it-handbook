@@ -93,3 +93,21 @@ To set up AuthN and AuthZ on a new CheckMK server:
 * In the 'Other' section, at the very bottom, set the 'Sync interval' to '1 days 0 hours 0 mins'
 * Click 'Save and test' at the top
 * Note that new users logging in for the first time must log in twice, and it may take some time before new users who should be admins will get the correct permissions. Once the permissions are assigned, the new admin user can (and someone must) activate the User change that made them an admin.
+
+## Setup slack notifications on a particular slack channel
+
+[Documentation from Checkmk](https://docs.checkmk.com/latest/en/notifications_slack.html)
+
+1. Make sure that you are listed as a collaborator on the slack app.
+1. Go to [the slack API page for the app](https://api.slack.com/apps/A062SDE2WA2)
+1. Press Features > Incoming Webhooks
+1. Press the Add New Webhook to Workspace button
+1. Choose the channel that should receive the notifications.
+1. Copy the webhook url.
+1. In the checkmk UI, go to Setup > Events > Notifications
+1. Add a new rule
+1. Notification method should be: Slack or Mattermost
+1. Add the Webhook URL that you got from slack.
+1. Under conditions, select the appropriate criteria:
+   * "Match folder": this should be the folder of VMs that you want alerts for (for example Linux > DACS)
+   * "Match only during time period": this should be Active-Monitoring-2, so you don't get overwhelmed during patch tuesday
