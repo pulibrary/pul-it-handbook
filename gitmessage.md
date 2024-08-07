@@ -28,6 +28,7 @@ been made to this file.
 # Co-authored-by: Alicia Cozine <acozine@users.noreply.github.com>
 # Co-authored-by: Anna Headley <hackartisan@users.noreply.github.com>
 # Co-authored-by: Beck Davis <beck-davis@users.noreply.github.com>
+# Co-authored-by: Brionna Johnson <bj4103@users.noreply.github.com>
 # Co-authored-by: Bess Sadler <bess@users.noreply.github.com>
 # Co-authored-by: Carolyn Cole <carolyncole@users.noreply.github.com>
 # Co-authored-by: Christina Chortaria <christinach@users.noreply.github.com>
