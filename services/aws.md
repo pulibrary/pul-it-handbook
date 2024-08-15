@@ -1,5 +1,9 @@
 # AWS
 
+## Access to the AWS console
+We have SSO configured for the library's AWS account. Access to the AWS console is controlled by membership in a group in Active Directory. The group is called `AWS-###-PUL-ACDC-Admin`. This group cannot be managed in Grouper because the naming convention required for the AWS connection (AWS-<account#>-<UserDetails>) does not match the Grouper name requirements. Steph, Francis, Alicia, and Vickie can manage the members of this group from tools.princeton.edu/ManageGroups/.
+
+### Content in AWS  
 We have some lambdas and stuff up on AWS, including:
 * IIIF serverless
 * Alma Webhook Monitor
