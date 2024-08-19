@@ -27,7 +27,7 @@ On the CheckMK server:
    1. Change the team name, choose one: `cdh`, `dacs`, `dls`, or `rdss` (note the lowercase)
 1. Add CheckMK local rules `ansible-playbook playbooks/utils/checkmk_add_local_checks.yml --ask-vault-pass --limit <host or host group> -e checkmk_folder=linux/<team name>`
    1. Rule group by defailt is `rails` if this is not a rails project `-e rule_group=group_name`
-      1. At the momemt no other local check besides rails have been written 
+      1. At the moment no other local check besides rails have been written 
 
 ## Source control for CheckMK with git
 
