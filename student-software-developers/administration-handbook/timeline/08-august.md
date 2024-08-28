@@ -8,3 +8,12 @@
 -   Once the retro is done, discuss how the curriculum timing went. Determine start / end dates for the next summer. Add important dates to the DLS Student Developers calendar. Our typical start date is the day after memorial day, and typical last day is two weeks before labor day.
 	-   Generally this will be 12 weeks, (note that one of those weeks will be all hands). There are some years where there’s an extra week between memorial day and labor day, not sure what will happen with the school calendar on those years. Next one is in 2026.
 -   If summer and fall students want to all get together for a meal when they return to campus, we can pay them for that time, but we can’t pay for the meal. This would be for them to organize if they want to.
+- Re-hire returning students at the higher classification: "Student Developer II"
+    - Get the student's employee ID from JobX.  You can find it from the old job, by clicking on the Application. 
+    - Go to the [Manage Job for Student Developer II](Student Developer II) in JobX
+    - click "hire an applicant"
+    - Enter the student's first name, last name, and employee ID
+    - Enter the fund code A0000 (IT) and click “search” to get the combo code generated.
+    - Add the Primary Supervisor and Secondary Supervisors
+    - Press the Hire button
+    - The student will now appear under JobX > Hires Requests
