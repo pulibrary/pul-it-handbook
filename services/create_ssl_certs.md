@@ -3,12 +3,14 @@
 ## Creating TLS Certificates
 
 ### For sites on the .princeton.edu domain
+
 1. You can create auto-renewing certificates and keys directly on the load balancers for sites in the .princeton.edu domain. You can create a single certificate and key with [playbooks/incommon_certbot.yml](https://github.com/pulibrary/princeton_ansible/blob/main/playbooks/incommon_certbot.yml) or create a single certificate with multiple names and keys with [playbooks/incommon_certbot_multi.yml](https://github.com/pulibrary/princeton_ansible/blob/main/playbooks/incommon_certbot_multi.yml)
 
    1. You will need to run the above playbook on each load balancer sequentially
    1. If the certificate already exists you will need to revoke it before running your chosen playbook
 
 ### For sites outside the Princeton domain
+
 1. Create the CSR (certificate signing request) - can be automated with [playbooks/cert_renewal.yml](https://github.com/pulibrary/princeton_ansible/blob/main/playbooks/incommon_certbot.yml)
 2. Submit it to gandi via [this form](https://shop.gandi.net/en/certificate/create)
 3. Your TLS/SSL cert will be created and returned to you via a email within 3 hours from gandi.net
@@ -29,12 +31,14 @@ oar-staging.princeton.edu
 
 To generate a CSR manually:
 
-   1. For a site with no Subject Alternative Name (SAN)[1]
+   1. For a site with no Subject Alternative Name [SAN](1)
 
       * Export an environment variable with the host name for later commands
+
         ```
         export NEW_HOST_NAME=<new host name>
         ```
+
       * Create a file named `$NEW_HOST_NAME.cnf` with the following command
 
         ```ini
@@ -62,10 +66,10 @@ To generate a CSR manually:
       The step :point_up_2: above will create `${NEW_HOST_NAME}.csr` and
       `${NEW_HOST_NAME}_priv.key` in your current directory.
 
-
    2. For a site with a Subject Alternative Name (SAN)
 
       * Export an environment variable with the host name for later commands
+
         ```
         export NEW_HOST_NAME=<new host name>
         ```
@@ -92,6 +96,7 @@ To generate a CSR manually:
         DNS.1   = \"${NEW_HOST_NAME}\"
         DNS.2   = \"\"" > ${NEW_HOST_NAME}_san.cnf
         ```
+
       * Edit the file to add your additional Alternative name
 
       * Generate the certificate you will provide to gandi.net
@@ -108,7 +113,7 @@ To generate a CSR manually:
 
 Submit the CSR to gandi.net. Use the following guidance:
 
-   * (SKIP if not SAN) Before submitting it you can check to see if your CSR contains the SAN you
+* (SKIP if not SAN) Before submitting it you can check to see if your CSR contains the SAN you
      specified in the `${NEW_HOST_NAME}_san.cnf` file by doing.
 
       ```bash
@@ -122,12 +127,12 @@ Submit the CSR to gandi.net. Use the following guidance:
       cat ${NEW_HOST_NAME}.csr
       ```
 
-#### 4. Verify the files you get back 
+#### 4. Verify the files you get back
 
-   * Gandi.net provides the certificates in the form of an email. You will want the Certificate and Root/Intermediate files:
+* Gandi.net provides the certificates in the form of an email. You will want the Certificate and Root/Intermediate files:
 
-      * `vi ${NEW_HOST_NAME}_cert.cer` and copy and paste including `-----BEGIN CERTIFICATE-----` to `-----END CERTIFICATE-----`
-      * `vi ${NEW_HOST_NAME}_interm.cer` and copy and paste the rest of the certificates marked as `X.509 Root/Intermediate(s)`.  This should have Multiple begin and end certificates, which should be included.
+  * `vi ${NEW_HOST_NAME}_cert.cer` and copy and paste including `-----BEGIN CERTIFICATE-----` to `-----END CERTIFICATE-----`
+  * `vi ${NEW_HOST_NAME}_interm.cer` and copy and paste the rest of the certificates marked as `X.509 Root/Intermediate(s)`.  This should have Multiple begin and end certificates, which should be included.
 
 1. Create the chained file from the data returned by gandi.net:
 
@@ -164,6 +169,7 @@ Submit the CSR to gandi.net. Use the following guidance:
       cd roles/nginxplus/files/ssl/
       ansible-vault encrypt ${NEW_HOST_NAME}_priv.key
       ```
+
     * add the chained file to `nginxplus/files/ssl/`
 
       ```
@@ -171,4 +177,3 @@ Submit the CSR to gandi.net. Use the following guidance:
       ```
 
 [1] Subject Alternative Names are used when multiple domains share the same certificate as shown ![SAN Example](images/san/san_example.png)
-
