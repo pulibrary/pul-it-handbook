@@ -2,6 +2,22 @@
 ### August: Prep for fall
 
 -   Email the student employment office and ask them to extend the positions through the academic year. They needed the netids of all the students.
+    ```
+    Hello,
+    We would like to continue our student part time in the fall.
+ 
+    Our job is scheduled to end September [DATE FROM JOBX], but we would like the students to continue in the fall.
+ 
+    Would you please update the current job to allow us to hire the students for the Fall and Spring semester?
+ 
+    Our specific job is https://princeton.studentemployment.ngwebsolutions.com/JobX_ManageJob.aspx?JobId=7046
+ 
+    Here are their emails from the system:
+    [ADD LIST OF STUDENT EMAILS HERE]
+
+    Thanks!
+
+    ```
 -   Arrange the students first 1-3 workshifts. Some students are more sure about their schedule than others at this point. Add-drop period is the first 2 weeks of class so expect schedules to shift during that time.
 -   [Get students access to the IT Suite](../it-suite-access.md) for the Fall.
 -   Hold a retro with mentors and students about the training curriculum.    
