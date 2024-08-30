@@ -11,6 +11,7 @@
 ### Bash
 
 * [Bash Scripting](https://www.freecodecamp.org/news/bash-scripting-tutorial-linux-shell-script-and-command-line-for-beginners/)
+  * [Shell Scripting](/operations-fellows/shell_scripts.md)
 * [Command Line Curriculum](https://github.com/pulibrary/command_line_curriculum/)
 * [PowerShell Scripting](https://www.guru99.com/powershell-tutorial.html)
 
