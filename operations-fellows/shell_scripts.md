@@ -52,3 +52,74 @@ Variables are essential for storing data in a Bash script. Here's how to report,
 Variable names are case-sensitive, which means that `foo` and `Foo` are different variables. I recommend that you use the names of variables in lower case to avoid confusion with variables system environment, which are generally capitalized.
 
 #### Type variables, declare constants
+
+Unlike most programming languages, Bash does not have variable. In order to make references to variable one has to use internal commands  to declare a typed variable using `declare` or `typeset` (they are synonyms)
+
+```bash
+declare [OPTION] name=value
+```
+
+The main options:
+
+  * `-r`: Create a read-only variable
+  * `-i`: An Integer
+  * `-a`: A table
+  * `-f`: A function
+  * `-x`: Declares the availability of a variable for export outside the environmental of the script itself.
+
+Example:
+  ```bash
+lldeclare -i x=21*2
+```
+
+#### Declaring of variables
+
+You can declare a variable using the equal sign (`=`) without spaces around the sign, followed by the name of the variable.
+
+**Example of variable declaration:**
+
+```bash
+name="Foo"
+number=42
+```
+
+#### Use of variables
+
+You can access the values stored in a variable by placing the name of the variable preceded by the character `$` and using the function `echo`.
+
+**Example of the use of variables:**
+
+```bash
+echo "My name is $name and my favorite number is $number"
+```
+
+### Environmental variables
+
+Environment variables are system variables used by the operating system and applications for storing information important in the current working environment of the system. They are used for the overall behaviour of the system, programs and processes. Environmental variables may contain information, such as search paths, configuration parameters, location information, identification information, etc.
+
+The environment variables are available for all processes and applications currently being executed on the system.
+
+You can define, modify and delete environment variables by using specific commands in the Shell. For example, in Bash, you can use the export command to define a variable of the environment.
+
+```bash
+#!/usr/bin/env bash
+
+# Access a new USER variable
+export MY_VARIABLE=bar
+
+echo "This user's variable is $MY_VARIABLE."
+```
+
+In order to distinguish between environment variables and other variables, they are met in capital letters.
+
+#### Current environment variables
+
+There are many commonly used environmental variables. Here's some commonly used examples:
+  * PATH: Contains a directory list where the system searches for command executables.
+  * HOME: The user's personal directory.
+  * USER: The name of the current user.
+  * LANG: Language and location configuration.
+  * SHELL: The user's Shell path by default.
+  * PWD: The current directory
+
+
