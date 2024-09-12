@@ -19,9 +19,12 @@
 These certs are for sites we do not serve from the load balancers. These certs must be renewed and deployed manually.
 
 cicognara.org
+dataspace.princeton.edu
 dataspace-staging.princeton.edu
 lib-illsql.princeton.edu
+oar.princeton.edu
 oar-staging.princeton.edu
+tigris.princeton.edu
 
 ### Detailed instructions for sites outside the Princeton domain
 
@@ -169,6 +172,25 @@ Submit the CSR to gandi.net. Use the following guidance:
       ```
       mv ${NEW_HOST_NAME}_chained.pem roles/nginxplus/files/ssl/
       ```
+
+#### Tigris
+
+In July of every year [tigris.princeton.edu](tigris.princeton.edu) will get an automatic renewal. The following steps will be needed to ensure the certificate remains renewed. 
+  * Open a ticket with tigris (aka Gimmal) support at support@gimmal.com and ask who should receive the new chained file.
+  * You will need the [vaulted private key](https://github.com/pulibrary/princeton_ansible/blob/main/keys/tigris_princeton_edu_priv.key) and the certificate and intermediate certificate to generate a pfx file that you will ship to the vendor
+
+  ```bash
+  cat ~/path/to/downloads/tigris_princeton_edu_cert.cer ~/path/to/downloads/tigris_princeton_edu_interm.cer > keys/tigris_princeton_edu_chained.pem
+  ```
+
+This will generate a chained file. You will be prompted for a password in the next step.
+
+```bash
+  openssl pkcs12 -export -out tigris_princeton_edu.pfx -inkey tigris_princeton_edu_priv.key -in tigris_princeton_edu_chained.pem
+```
+
+Send the resulting file to the tigris support folks via [the Secure Send Portal](https://securesend.princeton.edu/#/) along with the password used above
+
 
 [1] Subject Alternative Names are used when multiple domains share the same certificate as shown ![SAN Example](images/san/san_example.png)
 
