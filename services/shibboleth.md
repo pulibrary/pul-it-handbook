@@ -24,7 +24,7 @@ We have [an ansible role for installing the shibboleth SP software (a.k.a shibd)
 Once all of this is in place, you should be able to go to `https://your_fqdn.princeton.edu/Shibboleth.sso/Metadata` and see an XML document containing SP metadata and SSL certs. Check that all of the URLs in the document are fully qualified. If they aren't, go back to the apache2 virtual host definition and double check the settings. 
 
 ## Enabling your new endpoint
-Once the above is working, you can fill out a [Single Sign-on Integration Request Form](https://princeton.service-now.com/nav_to.do?uri=%2Fcom.glideapp.servicecatalog_cat_item_v[…]alog_view%3Dcatalog_default%26sysparm_view%3Dtext_search ). Put your SP metadata URL in the field called "Service Provider Metadata URL".
+Once the above is working, you can fill out a [Single Sign-on Integration Request Form](https://princeton.service-now.com/service?id=sc_cat_item&sys_id=edd831664f2c3340f56c0ad14210c7df). Put your SP metadata URL in the field called "Service Provider Metadata URL".
 
 You also need to tell them what shibboleth attributes you need. For vireo, this is the answer: 
 ```
