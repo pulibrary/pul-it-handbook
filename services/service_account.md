@@ -1,4 +1,6 @@
-#### Creating a Princeton Service Account (Not needed each time)
+#### Creating a Princeton Service Account
+
+A service account is a Princeton single-sign on account that is tied to a service instead of an individual person. "Service Now" is the brand name of some software that OIT uses to track requests. Here is how to use Service Now to request a service account. You might need this if, for example, you need an email address for something your whole team needs to access.
 
 1. Fill in the ticket in [service now](https://princeton.service-now.com/service?id=sc_cat_item&sys_id=f44539ab4ff81640f56c0ad14210c77c)
 
