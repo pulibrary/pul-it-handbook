@@ -1,4 +1,4 @@
-#### Creating a Princeton Service-Now Account (Not needed each time)
+#### Creating a Princeton Service Account (Not needed each time)
 
 1. Fill in the ticket in [service now](https://princeton.service-now.com/service?id=sc_cat_item&sys_id=f44539ab4ff81640f56c0ad14210c77c)
 
