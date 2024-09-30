@@ -81,35 +81,27 @@ Our private network setup consists of the following possible configurations.
 
 ```mermaid
   graph LR;
-      S31[("Production Loadbalancer S3 (production) [configuration file on lib-adc{1,2}]")]-->SG1
-         S32[("Postcuration S3 (private)  [pdc-describe-*-postcuration]")]-->SG2
-      S33[("Deposit S3 (private)  [pdc-describe-deposit]")]-->SG3
-      subgraph project ["Princeton Data Commons * Project for Staging or Production"]
+      S31[/"Production Loadbalancer [configuration file on lib-adc{1,2}]"/]-->SG1
+      S32[/"QA Loadbalancer [configuration file on lib-adc{1,2}]"/]-->SG2
+      S33[/"Staging Loadbalancer [configuration file on adc-dev{1,2}]"/]-->SG3
+      subgraph project [" "]
       subgraph project_space [" "]
       style project fill:#fff,stroke:#000,stroke-width:4px,color:#000,stroke-dasharray: 5 5
       style project_space fill:#fff,stroke:#000,stroke-width:0px
-         subgraph EC2 ["Precuration EC2  [pdc-globus-*-precuration]]"]
-         subgraph ec2_sp [" "]
+
             subgraph "PreCuration Globus Endpoint [pdc precuration]]"
                SG1[[" [pdc s3 storage gateway precuration]"]]-->B(["Pre Curation Collection (private) [Princeton Data Commons * Precuration]"])
             end
-         end
-         end
-         subgraph EC2a ["Postcuration EC2 [pdc-globus-*-postcuration]]"]
-         subgraph ec2a_sp [" "]
+
             subgraph "Postcuration Globus Endpoint [pdc postcuration]]"
                SG2[["Post Curation Storage Gateway [pdc s3 storage gateway postcuration]"]]-->D(["Curation Collection(curator only read/write) [Princeton Data Commons * Postcuration]"]);
-               SG2-->E(["Public Guest Globus Collection (public read) [Princeton Data Commons *]"]);
             end
-         end
-         end
-         subgraph EC2b ["Deposit EC2 [pdc-globus-deposit]]"]
-         subgraph ec2b_sp [" "]
+ 
             subgraph "Deposit Globus Endpoint [pdc deposit]]"
                SG3[["Deposit Storage Gateway [pdc s3 storage gateway deposit]"]]-->DE(["Curation Collection(curator controlled read/write) [Princeton Data Commons Deposit]"]);
             end
-         end
-         end
+         
+         
       end
    end
 
