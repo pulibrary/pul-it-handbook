@@ -1,16 +1,14 @@
-# Don't Panic
+# Private Network Migration
 
-This guide helps us to move a fictional brownfield application from our publicly routed network to our private network. When you complete this your application servers will be on our [RFC 1918](https://www.rfc-editor.org/rfc/rfc1918). 
+Library IT is migrating VMs to new IPs to take advantage of our new private network. Our Application Delivery Controllers (loadbalancers) are multi-homed on both the private and public networks, so they can connect to servers on the private network. In tandem with this IP migration, we are also moving FQDNs for VMs to our new `.lib` domain and moving staging sites to our new staging load balancers.
 
-### Host names
-Our Application Delivery Controllers (loadbalancers) are multihomed on both the private and public networks. We take advantage of this by registering the DNS application to live wherever you want this to live. This is unrelated to guide but is a key point to keep in mind. As a developer you may have `mithril-staging.princeton.edu` (if your users have memorized this name probably not worth bothering to make them learn a new name of `mithril-staging.lib.princeton.edu`) The DNS name of the application can remain.
+## Don't Panic
 
-We will still want to move your DNS application name of `mithril-staging.princeton.edu` to the staging the staging load balancer (more below).
-#### Application Assumptions
-
-  * Two application servers named mithril-staging{1,2}.princeton.edu
-  * DNS name configured on production loadbalancer as mithril-staging.princeton.edu
-    * upstream configuration includes
+This guide describes the migration of a fictional brownfield staging application. When it's done, the application servers will be on our [private network (RFC 1918)](https://www.rfc-editor.org/rfc/rfc1918), the VMs will be on our `.lib` domain, and the site will be on our staging load balancers. The fictional site is called `mithril-staging.princeton.edu`. It's a fairly typcial staging site. Before the migration begins, the site has:
+  * An alias configured on our production loadbalancers as mithril-staging.princeton.edu
+  * Two VMs called `mithril-staging1.princeton.edu` and `mithril-staging2.princeton.edu` 
+  * An nginxplus upstream configuration file in `roles/nginxplus/files/conf/http/mithril_staging.conf`
+  * Pointers in that configuration file to the two VMs:
     ```conf
     upstream mithril-staging {
     zone mithril-staging 128k;
@@ -18,20 +16,68 @@ We will still want to move your DNS application name of `mithril-staging.princet
     server mithril-staging1.princeton.edu resolve;
     server mithril-staging2.princeton.edu resolve;
     ```
-  * Ansible configuration path on production loadbalancers is `roles/nginxplus/files/conf/http/mithril_staging.conf`
 
+### Migrating IPs to the private network
 
-#### Migration Path
+By migrating our VMs to IPs on the private network, we improve our security posture, expand our network throughput (because the private network has 10GB capacity, compared to 1GB on the public network), and release scarce publicly routable IPs back to the University.
 
+To migrate a VM's IP address from a publicly routable IP (usually 128.112.x) to an IP on our private network (usually 10.0.x):
 
-##### Keep the current name
+Use the [Network Record - Modify form](https://princeton.service-now.com/service?id=sc_cat_item&sys_id=b28546e14f09ab4818ddd48e5210c756) to request a new IP address for each VM.
+1. Select the Device - for example, `mithril-staging1.princeton.edu`
+2. Under 'What would you like to modify?' select `Wired static IP`
+3. Select the Host (there will only be one) and check 'Add/Modify/Delete MAC Address or Static IP'
+4. Under 'IPv4 requiring network change' select the IP/MAC address (there will only be one)
+5. Under 'New Network' select `ip4-library-servers`
+6. Click Submit
+This creates a ticket in ServiceNow, and you should receive the usual ServiceNow updates.
+
+### Migrating VM FQDNs to the .lib domain
+
+By migrating VM FQDNs to the .lib domain, we can easily see which VMs are publicly routable and which are not.
+
+We use two kinds of FQDNs in common library tasks: sites and VMs. For example, `mithril-staging.princeton.edu` is a site FQDN; `mithril-staging1.princeton.edu` is a VM FQDN. We can (and probably will) leave all site FQDNs as they are. We do not need to  add `.lib` to site FQDNs - though we can if folks want to!
+
+NOTE: Migrating existing VMs does involve some downtime. If you want to avoid downtime, create new VMs instead. Be sure to give them the `.lib.princeton.edu` extension (in vSphere and in DNS) and to request IPs in the private IP space (the `ip4-library-servers` network).
+
+For example, to migrate `mithril_staging1.princeton.edu` to `mithril_staging1.lib.princeton.edu`:
+
+* Either [Transfer the network registration](https://networkregistration.princeton.edu) for the FQDN of each existing VM, or create new VMs in the `.lib` domain. For example, we must transfer `mithril-staging1.princeton.edu` to `mithril-staging1.lib.princeton.edu`.
+* Change the VM name in vSphere.
+* Update the nginxplus config to point to the new VMs:
+  ```conf
+  upstream mithril-staging {
+    zone mithril-staging 128k;
+    least_conn;
+    server mithril-staging1.lib.princeton.edu resolve;
+    server mithril-staging2.lib.princeton.edu resolve;
+  ```
+* Run the nginxplus playbook to deploy the config changes.
+
+### Migrating staging sites to the staging load balancers
+
+By migrating staging sites to the staging load balancers, we free up capacity on the production load balancers and reduce risk to production sites from experimentation on staging sites.
+
+To migrate a staging site to the new staging load balancers:
+
+* The Operations team can modify the network registration to transfer the site FQDN `mithril-staging.princeton.edu` from the production loadbalancers to the dev loadbalancers
+1. Use the [network record - modify form](https://networkregistration.princeton.edu)
+2. Select lib-adc.princeton.edu for the Device
+3. Select Wired static IP records for 'What would you like to modify'
+4. Select the Host and check 'Add/Modify/Delete alias'
+5. Scroll down to find the 'Transfer Aliases' section, and enter the site under 'Aliases to transfer to another Host' and select `adc-dev.lib.princeton.edu` under 'Transfer Aliases to'
+6. Click Submit.
+* Run the [Incommon Certificates](playbooks/incommon_certbot.yml) on the dev loadbalancers
+  * Run `ansible-playbook -v -e domain_name=mithril-staging --limit adc-dev2.lib.princeton.edu playbooks/incommon_certbot.yml`
+  * Repeat on adc-dev1.lib.princeton.edu
+* Move the site's nginxplus config file from `roles/nginxplus/files/conf/http/mithril_staging.conf` to `roles/nginxplus/files/conf/http/dev/mithril_staging.conf`
+* Run the nginxplus playbook on all four loadbalancers (one at a time), to remove the config from production and add it to staging.
+
+#### Create new VMs
  
-If you have chosen to keep the name `mithril-staging.princeton.edu` these are your steps. (we want to have minimized downtime)
-
-  * Working with the [Ops team](https://networkregistration.princeton.edu) transfer the DNS of `mithril-staging1.staging.princeton.edu` to `mithril-staging1.lib.princeton.edu`
-    * Path with the least surprises is to create two new VMs
-    * Run the playbook on your new application servers to set them up. Where applicable run capistrano to update your new application
-    * Update the configuration file to point to the new VMS
+* Path with the least surprises is to request two new VMs
+* Run the playbook on your new application servers to set them up. Where applicable run capistrano to update your new application
+* Update the configuration file to point to the new VMS
       ```conf
       upstream mithril-staging {
         zone mithril-staging 128k;
@@ -39,7 +85,7 @@ If you have chosen to keep the name `mithril-staging.princeton.edu` these are yo
         server mithril-staging1.lib.princeton.edu resolve;
         server mithril-staging2.lib.princeton.edu resolve;
       ```
-  * Working with the [Ops team](https://networkregistration.princeton.edu) transfer the DNS of `mithril-staging.staging.princeton.edu` to the dev loadbalancers # modify `adc-dev.lib.princeton.edu`
+* Working with the [Ops team](https://networkregistration.princeton.edu) transfer the DNS of `mithril-staging.staging.princeton.edu` to the dev loadbalancers # modify `adc-dev.lib.princeton.edu`
     * Run the [Incommon Certificates](playbooks/incommon_certbot.yml)
       * Run `ansible-playbook -v -e domain_name=mithril-staging --limit adc-dev2.lib.princeton.edu playbooks/incommon_certbot.yml`
     * Transfer `roles/nginxplus/files/conf/http/mithril_staging.conf` to `roles/nginxplus/files/conf/http/dev/mithril_staging.conf`
