@@ -80,7 +80,7 @@ To migrate a staging site to the new staging load balancers:
 * Run the nginxplus playbook on all four loadbalancers (one at a time), to remove the config from production and add it to staging.
 * Revoke the old SSL certificates on the production loadbalancers.
 
-## Princeton Private Network Setup
+## Princeton loadbalancer setup
 
 Our private network setup consists of the following possible configurations.
 
