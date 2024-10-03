@@ -72,6 +72,16 @@ This creates a ticket in ServiceNow, and you should receive the usual ServiceNow
     server mithril-staging2.lib.princeton.edu resolve;
   ```
 * Run the nginxplus playbook to deploy the config changes.
+* Update the server definitions in your project's 'config/deploy/staging.rb' file, from
+  ```conf
+  server "mithril-staging1.princeton.edu", user: "deploy", roles: %w[app db web]
+  server "mithril-staging2.princeton.edu", user: "deploy", roles: %w[app db web]
+  ```
+to
+  ```conf
+  server "mithril-staging1.lib.princeton.edu", user: "deploy", roles: %w[app db web]
+  server "mithril-staging2.lib.princeton.edu", user: "deploy", roles: %w[app db web]
+  ```
 * If you created new VMs, decommission the old VMs with all firewall rules, etc.
 
 ### Migrating staging sites to the staging load balancers
