@@ -41,7 +41,7 @@ Use the [Network Record - Modify form](https://princeton.service-now.com/service
 
 This creates a ticket in ServiceNow, and you should receive the usual ServiceNow updates. Note both the old and the new IP addresses.
 
-* In vSphere, edit the VM's settings and switch the Network Adapter to VM Network - LibNet
+* In vSphere, edit the VM's settings and switch the 'Network Adapter' to `VM Network - LibNet`
 * Reboot the VM.
 * Delete all firewall rules related to the old IP address, since the IP will likely be re-used for another system or service.
 
@@ -49,29 +49,19 @@ This creates a ticket in ServiceNow, and you should receive the usual ServiceNow
 
 We use two kinds of FQDNs in common library tasks: sites and VMs. For example, `mithril-staging.princeton.edu` is a site FQDN; `mithril-staging1.princeton.edu` is a VM FQDN. We can (and probably will) leave all site FQDNs as they are. We do not need to  add `.lib` to site FQDNs - though we can if folks want to!
 
-NOTE: Migrating existing VMs does involve some downtime. If you want to avoid downtime, create new VMs instead. Be sure to give them the `.lib.princeton.edu` extension (in vSphere and in DNS) and to request IPs in the private IP space (the `ip4-library-servers` network).
+NOTE: Migrating existing VMs does involve some downtime. If you want to avoid downtime, create new VMs instead. 
 
-* Either change the DNS record for the FQDN of each existing VM, or create new VMs in the `.lib` domain (make sure they have IPs in the private network if you do!). To transfer `mithril-staging1.princeton.edu` to `mithril-staging1.lib.princeton.edu`:
+* Either change the DNS record for the FQDN of each existing VM, or create new VMs in the `.lib` domain. If you create new VMs, be sure to give them the `.lib.princeton.edu` extension in DNS, set the 'Network Adapter' in vSphere to to `VM Network - LibNet`, and select the `ip4-library-servers` network when registering them with OIT. To transfer `mithril-staging1.princeton.edu` to `mithril-staging1.lib.princeton.edu`:
 
 Use the [Network Record - Modify form](https://princeton.service-now.com/service?id=sc_cat_item&sys_id=b28546e14f09ab4818ddd48e5210c756) to request a new IP address for each VM.
 1. Select the Device - for example, `mithril-staging1.princeton.edu`
 2. Under 'What would you like to modify?' select `Wired static IP`
 3. Select the Host (there will only be one) and check 'Modify Device Name'
-4. Under 'Device record' set 'DNS Domain Zone' to `lib.princeton.edu` and set 'Device Name' to `mithril-staging1` - the combination of these two settings will get you `mithril-staging1.princeton.edu`. 
+4. Under 'Device record' set 'DNS Domain Zone' to `lib.princeton.edu` and set 'Device Name' to `mithril-staging1` - the combination of these two settings will get you `mithril-staging1.lib.princeton.edu`. 
 6. Click Submit.
 
 This creates a ticket in ServiceNow, and you should receive the usual ServiceNow updates.
 
-* If you created new VMs, run the application build playbook and do anything else you need to do (capistrano deploy, etc.) to set them up.
-* Update the nginxplus config to point to the VMs in the .lib domain (transferred or new):
-  ```conf
-  upstream mithril-staging {
-    zone mithril-staging 128k;
-    least_conn;
-    server mithril-staging1.lib.princeton.edu resolve;
-    server mithril-staging2.lib.princeton.edu resolve;
-  ```
-* Run the nginxplus playbook to deploy the config changes.
 * Update the server definitions in your project's 'config/deploy/staging.rb' file, from
   ```conf
   server "mithril-staging1.princeton.edu", user: "deploy", roles: %w[app db web]
@@ -82,6 +72,16 @@ to
   server "mithril-staging1.lib.princeton.edu", user: "deploy", roles: %w[app db web]
   server "mithril-staging2.lib.princeton.edu", user: "deploy", roles: %w[app db web]
   ```
+* If you created new VMs, run the application build playbook and do anything else you need to do (for example, cap deploy to deploy code, etc.) to set them up.
+* Update the nginxplus config to point to the VMs in the .lib domain (transferred or new):
+  ```conf
+  upstream mithril-staging {
+    zone mithril-staging 128k;
+    least_conn;
+    server mithril-staging1.lib.princeton.edu resolve;
+    server mithril-staging2.lib.princeton.edu resolve;
+  ```
+* Run the nginxplus playbook to deploy the config changes.
 * If you created new VMs, decommission the old VMs with all firewall rules, etc.
 
 ### Migrating staging sites to the staging load balancers
