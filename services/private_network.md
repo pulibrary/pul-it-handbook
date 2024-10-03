@@ -1,10 +1,20 @@
 # Private Network Migration
 
-Library IT is migrating VMs to new IPs to take advantage of our new private network. Our Application Delivery Controllers (loadbalancers) are multi-homed on both the private and public networks, so they can connect to servers on the private network. In tandem with this IP migration, we are also moving FQDNs for VMs to our new `.lib` domain and moving staging sites to our new staging load balancers.
+Library IT is migrating VMs to new IPs to take advantage of our private network. Our Application Delivery Controllers (loadbalancers) are multi-homed on both the private and public networks, so they can connect to servers on the private network. In tandem with this IP migration, we are also moving FQDNs for VMs to the `.lib` domain and moving staging sites to our staging load balancers.
+
+By migrating our VMs to IPs on the private network, we improve our security posture, expand our network throughput (because the private network has 10GB capacity, compared to 1GB on the public network), and release scarce publicly routable IPs back to the University.
+
+By migrating VM FQDNs to the .lib domain, we can easily see which VMs have publicly routable IPs and which do not.
+
+By migrating staging sites to the staging load balancers, we free up capacity on the production load balancers and reduce risk to production sites from experimentation on staging sites.
 
 ## Don't Panic
 
-This guide describes the migration of a fictional brownfield staging application. When it's done, the application servers will be on our [private network (RFC 1918)](https://www.rfc-editor.org/rfc/rfc1918), the VMs will be on our `.lib` domain, and the site will be on our staging load balancers. The fictional site is called `mithril-staging.princeton.edu`. It's a fairly typcial staging site. Before the migration begins, the site has:
+This guide describes the migration of a fictional brownfield staging application. When it's done, the application servers will be on our [private network (RFC 1918)](https://www.rfc-editor.org/rfc/rfc1918), the VMs will be on our `.lib` domain, and the site will be on our staging load balancers.
+
+#### Fictional site before the Migration
+
+The fictional site is called `mithril-staging.princeton.edu`. It's a fairly typcial staging site. Before the migration begins, the site has:
   * An alias configured on our production loadbalancers as mithril-staging.princeton.edu
   * Two VMs called `mithril-staging1.princeton.edu` and `mithril-staging2.princeton.edu` 
   * An nginxplus upstream configuration file in `roles/nginxplus/files/conf/http/mithril_staging.conf`
@@ -19,8 +29,6 @@ This guide describes the migration of a fictional brownfield staging application
 
 ### Migrating IPs to the private network
 
-By migrating our VMs to IPs on the private network, we improve our security posture, expand our network throughput (because the private network has 10GB capacity, compared to 1GB on the public network), and release scarce publicly routable IPs back to the University.
-
 To migrate a VM's IP address from a publicly routable IP (usually 128.112.x) to an IP on our private network (usually 10.0.x):
 
 Use the [Network Record - Modify form](https://princeton.service-now.com/service?id=sc_cat_item&sys_id=b28546e14f09ab4818ddd48e5210c756) to request a new IP address for each VM.
@@ -33,8 +41,6 @@ Use the [Network Record - Modify form](https://princeton.service-now.com/service
 This creates a ticket in ServiceNow, and you should receive the usual ServiceNow updates.
 
 ### Migrating VM FQDNs to the .lib domain
-
-By migrating VM FQDNs to the .lib domain, we can easily see which VMs are publicly routable and which are not.
 
 We use two kinds of FQDNs in common library tasks: sites and VMs. For example, `mithril-staging.princeton.edu` is a site FQDN; `mithril-staging1.princeton.edu` is a VM FQDN. We can (and probably will) leave all site FQDNs as they are. We do not need to  add `.lib` to site FQDNs - though we can if folks want to!
 
@@ -55,8 +61,6 @@ For example, to migrate `mithril_staging1.princeton.edu` to `mithril_staging1.li
 * Run the nginxplus playbook to deploy the config changes.
 
 ### Migrating staging sites to the staging load balancers
-
-By migrating staging sites to the staging load balancers, we free up capacity on the production load balancers and reduce risk to production sites from experimentation on staging sites.
 
 To migrate a staging site to the new staging load balancers:
 
