@@ -12,7 +12,7 @@ By migrating staging sites to the staging load balancers, we free up capacity on
 
 This guide describes the migration of a fictional brownfield staging application. When it's done, the application servers will be on our [private network (RFC 1918)](https://www.rfc-editor.org/rfc/rfc1918), the VMs will be on our `.lib` domain, and the site will be on our staging load balancers.
 
-#### Fictional site before the Migration
+### Fictional site before the Migration
 
 The fictional site is called `mithril-staging.princeton.edu`. It's a fairly typcial staging site. Before the migration begins, the site has:
   * An alias configured on our production loadbalancers as mithril-staging.princeton.edu
@@ -48,9 +48,10 @@ NOTE: Migrating existing VMs does involve some downtime. If you want to avoid do
 
 For example, to migrate `mithril_staging1.princeton.edu` to `mithril_staging1.lib.princeton.edu`:
 
-* Either [Transfer the network registration](https://networkregistration.princeton.edu) for the FQDN of each existing VM, or create new VMs in the `.lib` domain. For example, we must transfer `mithril-staging1.princeton.edu` to `mithril-staging1.lib.princeton.edu`.
-* Change the VM name in vSphere.
-* Update the nginxplus config to point to the new VMs:
+* Either [transfer the network registration](https://networkregistration.princeton.edu) for the FQDN of each existing VM, or create new VMs in the `.lib` domain. For example, we must transfer `mithril-staging1.princeton.edu` to `mithril-staging1.lib.princeton.edu`.
+  * If you transferred existing VMs, change the VM names in vSphere.
+  * If you created new VMs, run the application build playbook on your new application servers to set them up. Where applicable run capistrano to update your new application.
+* Update the nginxplus config to point to the VMs in the .lib domain (transferred or new):
   ```conf
   upstream mithril-staging {
     zone mithril-staging 128k;
@@ -59,6 +60,7 @@ For example, to migrate `mithril_staging1.princeton.edu` to `mithril_staging1.li
     server mithril-staging2.lib.princeton.edu resolve;
   ```
 * Run the nginxplus playbook to deploy the config changes.
+* If you created new VMs, decommission the old one VMs.
 
 ### Migrating staging sites to the staging load balancers
 
@@ -71,61 +73,14 @@ To migrate a staging site to the new staging load balancers:
 4. Select the Host and check 'Add/Modify/Delete alias'
 5. Scroll down to find the 'Transfer Aliases' section, and enter the site under 'Aliases to transfer to another Host' and select `adc-dev.lib.princeton.edu` under 'Transfer Aliases to'
 6. Click Submit.
-* Run the [Incommon Certificates](playbooks/incommon_certbot.yml) on the dev loadbalancers
+* Create SSL certificates on the dev loadbalancers by running the [Incommon Certificates](playbooks/incommon_certbot.yml) on the dev loadbalancers
   * Run `ansible-playbook -v -e domain_name=mithril-staging --limit adc-dev2.lib.princeton.edu playbooks/incommon_certbot.yml`
   * Repeat on adc-dev1.lib.princeton.edu
 * Move the site's nginxplus config file from `roles/nginxplus/files/conf/http/mithril_staging.conf` to `roles/nginxplus/files/conf/http/dev/mithril_staging.conf`
 * Run the nginxplus playbook on all four loadbalancers (one at a time), to remove the config from production and add it to staging.
+* Revoke the old SSL certificates on the production loadbalancers.
 
-#### Create new VMs
- 
-* Path with the least surprises is to request two new VMs
-* Run the playbook on your new application servers to set them up. Where applicable run capistrano to update your new application
-* Update the configuration file to point to the new VMS
-      ```conf
-      upstream mithril-staging {
-        zone mithril-staging 128k;
-        least_conn;
-        server mithril-staging1.lib.princeton.edu resolve;
-        server mithril-staging2.lib.princeton.edu resolve;
-      ```
-* Working with the [Ops team](https://networkregistration.princeton.edu) transfer the DNS of `mithril-staging.staging.princeton.edu` to the dev loadbalancers # modify `adc-dev.lib.princeton.edu`
-    * Run the [Incommon Certificates](playbooks/incommon_certbot.yml)
-      * Run `ansible-playbook -v -e domain_name=mithril-staging --limit adc-dev2.lib.princeton.edu playbooks/incommon_certbot.yml`
-    * Transfer `roles/nginxplus/files/conf/http/mithril_staging.conf` to `roles/nginxplus/files/conf/http/dev/mithril_staging.conf`
-
-##### Register a new current name
-If you have chosen to register a new name `mithril-staging.lib.princeton.edu` these are your steps. (you will have 0 downtime)
-
-  * Working with the [Ops team](https://networkregistration.princeton.edu) transfer the DNS of `mithril-staging1.staging.princeton.edu` to `mithril-staging1.lib.princeton.edu`
-    * Path with the least surprises is to create two new VMs
-    * Run the playbook on your new application servers to set them up. Where applicable run capistrano to update your new application
-    * Create a new configuration file to point to the new VMS
-      ```conf
-      upstream mithril-staging {
-        zone mithril-staging 128k;
-        least_conn;
-        server mithril-staging1.lib.princeton.edu resolve;
-        server mithril-staging2.lib.princeton.edu resolve;
-      ```
-      ```
-  * Working with the [Ops team](https://networkregistration.princeton.edu) create a new the DNS of `mithril-staging.lib.staging.princeton.edu` to the dev loadbalancers # modify `adc-dev.lib.princeton.edu`
-    * Create a new configuration file to point to the new VMS
-      ```conf
-      listen 443 ssl;
-        http2 on;
-        server_name mithril-staging.lib.princeton.edu;
-    
-
-        ssl_certificate            /etc/letsencrypt/live/mithril-staging.lib/fullchain.pem;
-        ssl_certificate_key        /etc/letsencrypt/live/mithril-staging.lib/privkey.pem;
-        ssl_session_cache          shared:SSL:1m;
-        ssl_prefer_server_ciphers  on;
-    * Run the [Incommon Certificates](playbooks/incommon_certbot.yml)
-      * Run `ansible-playbook -v -e domain_name=mithril-staging.lib --limit adc-dev2.lib.princeton.edu playbooks/incommon_certbot.yml`
-    * Create a new configuration on the dev loadbalancers `roles/nginxplus/files/conf/http/dev/mithril_staging.conf`
-
-### ## Princeton Private Network Setup
+## Princeton Private Network Setup
 
 Our private network setup consists of the following possible configurations.
 
