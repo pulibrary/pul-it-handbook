@@ -97,6 +97,10 @@ Our loadbalancer setup consists of the following possible configurations:
   graph LR;
       S31[/"Production Sites"/]-->SG1
       S33[/"Staging Sites"/]-->SG3
+      subgraph project [" "]
+      subgraph project_space [" "]
+      style project fill:#fff,stroke:#000,stroke-width:4px,color:#000,stroke-dasharray: 5 5
+      style project_space fill:#fff,stroke:#000,stroke-width:0px
 
             subgraph "Production LBs lib-adc{1,2}.princeton.edu]"
                SG1[["Configuration files in /usr/share/nginx/html"]]-->B(["Production VMs `mithril-prod{1,2}.princeton.edu`"])
