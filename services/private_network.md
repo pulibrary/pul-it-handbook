@@ -44,23 +44,32 @@ To migrate a VM's IP address from a publicly routable IP (usually 128.112.x) to 
 
 We use two kinds of FQDNs in common library tasks: sites and VMs. For example, `mithril-staging.princeton.edu` is a site FQDN; `mithril-staging1.princeton.edu` is a VM FQDN. We can (and probably will) leave all site FQDNs as they are. We do not need to  add `.lib` to site FQDNs - though we can if folks want to!
 
-NOTE: Migrating existing VMs does involve some downtime. If you want to avoid downtime, create new VMs instead. If you create new VMs, start the checklist below at number 7.
+* Either change the DNS record for the FQDN of each existing VM, or create new VMs in the `.lib` domain. 
 
-* Either change the DNS record for the FQDN of each existing VM, or create new VMs in the `.lib` domain. If you create new VMs, be sure to give them the `.lib.princeton.edu` extension in DNS, set the 'Network Adapter' in vSphere to to `VM Network - LibNet`, and select the `ip4-library-servers` network when registering them with OIT. 
+NOTE: Migrating existing VMs does involve some downtime. If you want to avoid downtime, create new VMs instead.
+
+If you choose to create new VMs:
+* Give them the `.lib.princeton.edu` extension in DNS.
+* Set the 'Network Adapter' in vSphere to to `VM Network - LibNet`.
+* Select the `ip4-library-servers` network when registering them with OIT.
+* Run the application build playbook to set up your new VMs.
+Once your VMs are If you create new VMs, start the checklist below at number 6 - updating the project's `config/deploy/staging.rb` file.
+
+
 
 To transfer `mithril-staging1.princeton.edu` to `mithril-staging1.lib.princeton.edu`, the Operations team can use the [Network Record - Modify form](https://princeton.service-now.com/service?id=sc_cat_item&sys_id=b28546e14f09ab4818ddd48e5210c756) to request a new IP address for each VM.
 1. Select the Device - for example, `mithril-staging1.princeton.edu`.
 2. Under 'What would you like to modify?' select `Wired static IP`.
 3. Select the Host (there will only be one) and check 'Modify Device Name'.
 4. Under 'Device record' set 'DNS Domain Zone' to `lib.princeton.edu` and set 'Device Name' to `mithril-staging1` - the combination of these two settings will get you `mithril-staging1.lib.princeton.edu`. 
-6. Click Submit. This creates a ticket in ServiceNow, and you should receive the usual ServiceNow updates.
-7. Update the server definitions in your project's 'config/deploy/staging.rb' file, adding the `.lib` to each entry:
+5. Click Submit. This creates a ticket in ServiceNow, and you should receive the usual ServiceNow updates.
+6. Update the server definitions in your project's 'config/deploy/staging.rb' file, adding the `.lib` to each entry:
   ```conf
   server "mithril-staging1.lib.princeton.edu", user: "deploy", roles: %w[app db web]
   server "mithril-staging2.lib.princeton.edu", user: "deploy", roles: %w[app db web]
   ```
-8. If you created new VMs, run the application build playbook and do anything else you need to do (for example, cap deploy to deploy code, etc.) to set them up.
-9. Update the nginxplus config to point to the VMs in the .lib domain (transferred or new):
+7. If you created new VMs, deploy your code.
+8. Update the nginxplus config to point to the VMs in the .lib domain (transferred or new):
   ```conf
   upstream mithril-staging {
     zone mithril-staging 128k;
@@ -68,9 +77,9 @@ To transfer `mithril-staging1.princeton.edu` to `mithril-staging1.lib.princeton.
     server mithril-staging1.lib.princeton.edu resolve;
     server mithril-staging2.lib.princeton.edu resolve;
   ```
-10. Run the nginxplus playbook to deploy the config changes.
-11. Open a PR to update the princeton_ansible inventory for all migrated VMs.
-12. If you created new VMs, decommission the old VMs with all firewall rules, etc.
+9. Run the nginxplus playbook to deploy the config changes.
+10. Open a PR to update the `princeton_ansible` inventory for all migrated VMs.
+11. If you created new VMs, [decommission](/services/decommissioning.md) the old VMs.
 
 ### Migrating staging sites to the staging load balancers
 
