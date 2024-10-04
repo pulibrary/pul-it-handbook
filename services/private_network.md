@@ -31,19 +31,16 @@ The fictional site is called `mithril-staging.princeton.edu`. It's a fairly typc
 
 To migrate a VM's IP address from a publicly routable IP (usually 128.112.x) to an IP on our private network (usually 172.20.x):
 
-Use the [Network Record - Modify form](https://princeton.service-now.com/service?id=sc_cat_item&sys_id=b28546e14f09ab4818ddd48e5210c756) to request a new IP address for each VM.
+The Operations team can use the [Network Record - Modify form](https://princeton.service-now.com/service?id=sc_cat_item&sys_id=b28546e14f09ab4818ddd48e5210c756) to request a new IP address for each VM.
 1. Select the Device - for example, `mithril-staging1.princeton.edu`
 2. Under 'What would you like to modify?' select `Wired static IP`
 3. Select the Host (there will only be one) and check 'Add/Modify/Delete MAC Address or Static IP'
 4. Under 'IPv4 requiring network change' select the IP/MAC address (there will only be one)
 5. Under 'New Network' select `ip4-library-servers`
-6. Click Submit
-
-This creates a ticket in ServiceNow, and you should receive the usual ServiceNow updates. Note both the old and the new IP addresses.
-
-* In vSphere, edit the VM's settings and switch the 'Network Adapter' to `VM Network - LibNet`
-* Reboot the VM.
-* Delete all firewall rules related to the old IP address, since the IP will likely be re-used for another system or service.
+6. Click Submit. This creates a ticket in ServiceNow, and you should receive the usual ServiceNow updates. Note both the old and the new IP addresses.
+7. In vSphere, edit the VM's settings and switch the 'Network Adapter' to `VM Network - LibNet`
+8. Reboot the VM so it picks up the new IP address.
+9. Delete all firewall rules related to the old IP address, since the IP will likely be re-used for another system or service.
 
 ### Migrating VM FQDNs to the .lib domain
 
@@ -51,29 +48,26 @@ We use two kinds of FQDNs in common library tasks: sites and VMs. For example, `
 
 NOTE: Migrating existing VMs does involve some downtime. If you want to avoid downtime, create new VMs instead. 
 
-* Either change the DNS record for the FQDN of each existing VM, or create new VMs in the `.lib` domain. If you create new VMs, be sure to give them the `.lib.princeton.edu` extension in DNS, set the 'Network Adapter' in vSphere to to `VM Network - LibNet`, and select the `ip4-library-servers` network when registering them with OIT. To transfer `mithril-staging1.princeton.edu` to `mithril-staging1.lib.princeton.edu`:
+* Either change the DNS record for the FQDN of each existing VM, or create new VMs in the `.lib` domain. If you create new VMs, be sure to give them the `.lib.princeton.edu` extension in DNS, set the 'Network Adapter' in vSphere to to `VM Network - LibNet`, and select the `ip4-library-servers` network when registering them with OIT. 
 
-Use the [Network Record - Modify form](https://princeton.service-now.com/service?id=sc_cat_item&sys_id=b28546e14f09ab4818ddd48e5210c756) to request a new IP address for each VM.
+To transfer `mithril-staging1.princeton.edu` to `mithril-staging1.lib.princeton.edu`, the Operations team can use the [Network Record - Modify form](https://princeton.service-now.com/service?id=sc_cat_item&sys_id=b28546e14f09ab4818ddd48e5210c756) to request a new IP address for each VM.
 1. Select the Device - for example, `mithril-staging1.princeton.edu`
 2. Under 'What would you like to modify?' select `Wired static IP`
 3. Select the Host (there will only be one) and check 'Modify Device Name'
 4. Under 'Device record' set 'DNS Domain Zone' to `lib.princeton.edu` and set 'Device Name' to `mithril-staging1` - the combination of these two settings will get you `mithril-staging1.lib.princeton.edu`. 
-6. Click Submit.
-
-This creates a ticket in ServiceNow, and you should receive the usual ServiceNow updates.
-
-* Update the server definitions in your project's 'config/deploy/staging.rb' file, from
+6. Click Submit. This creates a ticket in ServiceNow, and you should receive the usual ServiceNow updates.
+7. Update the server definitions in your project's 'config/deploy/staging.rb' file, from
   ```conf
   server "mithril-staging1.princeton.edu", user: "deploy", roles: %w[app db web]
   server "mithril-staging2.princeton.edu", user: "deploy", roles: %w[app db web]
   ```
-to
+  to
   ```conf
   server "mithril-staging1.lib.princeton.edu", user: "deploy", roles: %w[app db web]
   server "mithril-staging2.lib.princeton.edu", user: "deploy", roles: %w[app db web]
   ```
-* If you created new VMs, run the application build playbook and do anything else you need to do (for example, cap deploy to deploy code, etc.) to set them up.
-* Update the nginxplus config to point to the VMs in the .lib domain (transferred or new):
+8. If you created new VMs, run the application build playbook and do anything else you need to do (for example, cap deploy to deploy code, etc.) to set them up.
+9. Update the nginxplus config to point to the VMs in the .lib domain (transferred or new):
   ```conf
   upstream mithril-staging {
     zone mithril-staging 128k;
@@ -81,27 +75,26 @@ to
     server mithril-staging1.lib.princeton.edu resolve;
     server mithril-staging2.lib.princeton.edu resolve;
   ```
-* Run the nginxplus playbook to deploy the config changes.
-* If you created new VMs, decommission the old VMs with all firewall rules, etc.
+10. Run the nginxplus playbook to deploy the config changes.
+11. Open a PR to update the princeton_ansible inventory for all migrated VMs.
+12. If you created new VMs, decommission the old VMs with all firewall rules, etc.
 
 ### Migrating staging sites to the staging load balancers
 
-To migrate a staging site to the new staging load balancers:
-
-* The Operations team can modify the network registration to transfer the site FQDN `mithril-staging.princeton.edu` from the production loadbalancers to the dev loadbalancers
+To migrate a staging site to the new staging load balancers, the Operations team can modify the network registration to transfer the site FQDN `mithril-staging.princeton.edu` from the production loadbalancers to the dev loadbalancers
 1. Use the [network record - modify form](https://networkregistration.princeton.edu)
 2. Select lib-adc.princeton.edu for the Device
 3. Select Wired static IP records for 'What would you like to modify'
 4. Select the Host and check 'Add/Modify/Delete alias'
 5. Scroll down to find the 'Transfer Aliases' section, and enter the site under 'Aliases to transfer to another Host' and select `adc-dev.lib.princeton.edu` under 'Transfer Aliases to'
 6. Click Submit.
-* Create SSL certificates on the dev loadbalancers by running the [Incommon Certificates](playbooks/incommon_certbot.yml) on the dev loadbalancers
+7. Create SSL certificates on the dev loadbalancers by running the [Incommon Certificates](playbooks/incommon_certbot.yml) on the dev loadbalancers
   * Run `ansible-playbook -v -e domain_name=mithril-staging --limit adc-dev2.lib.princeton.edu playbooks/incommon_certbot.yml`
   * Repeat on adc-dev1.lib.princeton.edu
-* Update the cache definition in the site's nginxplus config to point to `/var/cache/nginx/<site-name>/` (on the prod LBs the caches are in `/data/nginx/<site-name>/NGINX_cache`)
-* Move the site's nginxplus config file from `roles/nginxplus/files/conf/http/mithril-staging.conf` to `roles/nginxplus/files/conf/http/dev/mithril-staging.conf`
-* Run the nginxplus playbook on all four loadbalancers (one at a time), to remove the config from production and add it to staging.
-* Revoke the old SSL certificates on the production loadbalancers.
+8. Update the cache definition in the site's nginxplus config to point to `/var/cache/nginx/<site-name>/` (on the prod LBs the caches are in `/data/nginx/<site-name>/NGINX_cache`)
+9. Move the site's nginxplus config file from `roles/nginxplus/files/conf/http/mithril-staging.conf` to `roles/nginxplus/files/conf/http/dev/mithril-staging.conf`
+10. Run the nginxplus playbook on all four loadbalancers (one at a time), to remove the config from production and add it to staging.
+11. Revoke the old SSL certificates on the production loadbalancers.
 
 ## WIP graph of Princeton loadbalancer setup
 
