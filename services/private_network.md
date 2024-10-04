@@ -108,8 +108,7 @@ Our loadbalancer setup consists of the following possible configurations:
       style project fill:#fff,stroke:#000,stroke-width:4px,color:#000,stroke-dasharray: 5 5
       style project_space fill:#fff,stroke:#000,stroke-width:0px
 
-            subgraph prod [Production LBs lib-adc{1,2}.princeton.edu]
-            subgraph prod subgraph_padding fill:none, stroke:none
+            subgraph "Production LBs lib-adc{1,2}.princeton.edu]"
                SG1[["Configuration files in /usr/share/nginx/html"]]-->B(["Production VMs mithril-prod{1,2}.princeton.edu"])
             end
 
