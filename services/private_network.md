@@ -91,30 +91,24 @@ To migrate a staging site to the new staging load balancers, the Operations team
 
 ## WIP graph of Princeton loadbalancer setup
 
-Our private network setup consists of the following possible configurations.
+Our loadbalancer setup consists of the following possible configurations:
 
 ```mermaid
   graph LR;
-      S31[/"Production Loadbalancer [configuration file on lib-adc{1,2}.princeton.edu]"/]-->SG1
-      S32[/"QA Loadbalancer [configuration file on lib-adc{1,2}]"/]-->SG2
-      S33[/"Staging Loadbalancer [configuration file on adc-dev{1,2}.lib.princeton.edu]"/]-->SG3
+      S31[/"Production Sites"/]-->SG1
+      S33[/"Staging Sites"/]-->SG3
       subgraph project [" "]
       subgraph project_space [" "]
       style project fill:#fff,stroke:#000,stroke-width:4px,color:#000,stroke-dasharray: 5 5
       style project_space fill:#fff,stroke:#000,stroke-width:0px
 
-            subgraph "PreCuration Globus Endpoint [pdc precuration]]"
-               SG1[[" [pdc s3 storage gateway precuration]"]]-->B(["Pre Curation Collection (private) [Princeton Data Commons * Precuration]"])
+            subgraph "Production LBs `lib-adc{1,2}.princeton.edu`]"
+               SG1[["Configuration files in /usr/share/nginx/html"]]-->B(["Production VMs `mithril-prod{1,2}.princeton.edu`"])
             end
 
-            subgraph "Postcuration Globus Endpoint [pdc postcuration]]"
-               SG2[["Post Curation Storage Gateway [pdc s3 storage gateway postcuration]"]]-->D(["Curation Collection(curator only read/write) [Princeton Data Commons * Postcuration]"]);
+            subgraph "Staging LBs `adc-dev{1,2}.lib.princeton.edu`]]"
+               SG3[["Configuration files in /usr/share/nginx/html"]]-->DE(["Staging VMs: mithril-staging{1,2}.lib.princeton.edu"]);
             end
- 
-            subgraph "Staging Sites on Staging Loadbalancers [adc-dev{1,2}]]"
-               SG3[["Configuration files in /usr/share/nginx/html"]]-->DE(["mithril-staging{1,2}.lib.princeton.edu"]);
-            end
-         
          
       end
    end
