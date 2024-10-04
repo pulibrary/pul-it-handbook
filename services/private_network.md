@@ -95,9 +95,9 @@ Our private network setup consists of the following possible configurations.
 
 ```mermaid
   graph LR;
-      S31[/"Production Loadbalancer [configuration file on lib-adc{1,2}]"/]-->SG1
+      S31[/"Production Loadbalancer [configuration file on lib-adc{1,2}.princeton.edu]"/]-->SG1
       S32[/"QA Loadbalancer [configuration file on lib-adc{1,2}]"/]-->SG2
-      S33[/"Staging Loadbalancer [configuration file on adc-dev{1,2}]"/]-->SG3
+      S33[/"Staging Loadbalancer [configuration file on adc-dev{1,2}.lib.princeton.edu]"/]-->SG3
       subgraph project [" "]
       subgraph project_space [" "]
       style project fill:#fff,stroke:#000,stroke-width:4px,color:#000,stroke-dasharray: 5 5
@@ -111,8 +111,8 @@ Our private network setup consists of the following possible configurations.
                SG2[["Post Curation Storage Gateway [pdc s3 storage gateway postcuration]"]]-->D(["Curation Collection(curator only read/write) [Princeton Data Commons * Postcuration]"]);
             end
  
-            subgraph "Deposit Globus Endpoint [pdc deposit]]"
-               SG3[["Deposit Storage Gateway [pdc s3 storage gateway deposit]"]]-->DE(["Curation Collection(curator controlled read/write) [Princeton Data Commons Deposit]"]);
+            subgraph "Staging Sites on Staging Loadbalancers [adc-dev{1,2}]]"
+               SG3[["Configuration files in /usr/share/nginx/html"]]-->DE(["mithril-staging{1,2}.lib.princeton.edu"]);
             end
          
          
