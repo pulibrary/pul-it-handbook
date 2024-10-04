@@ -103,7 +103,7 @@ Our loadbalancer setup consists of the following possible configurations:
       style project_space fill:#fff,stroke:#000,stroke-width:0px
 
             subgraph "Production LBs lib-adc{1,2}.princeton.edu]"
-               SG1[["Configuration files in /usr/share/nginx/html"]]-->B(["Production VMs `mithril-prod{1,2}.princeton.edu`"])
+               SG1[["Configuration files in /usr/share/nginx/html"]]-->B(["Production VMs mithril-prod{1,2}.princeton.edu"])
             end
 
             subgraph "Staging LBs adc-dev{1,2}.lib.princeton.edu]]"
