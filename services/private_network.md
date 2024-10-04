@@ -29,7 +29,7 @@ The fictional site is called `mithril-staging.princeton.edu`. It's a fairly typc
 
 ### Migrating IPs to the private network
 
-To migrate a VM's IP address from a publicly routable IP (usually 128.112.x) to an IP on our private network (usually 172.20.x), the Operations team can use the [Network Record - Modify form](https://princeton.service-now.com/service?id=sc_cat_item&sys_id=b28546e14f09ab4818ddd48e5210c756) to request a new IP address for each VM.
+To migrate a VM's IP address from a publicly routable IP (usually 128.112.x) to an IP on our private network (usually 172.20.x), the Operations team can use the [Network Record - Modify form](https://princeton.service-now.com/service?id=sc_cat_item&sys_id=b28546e14f09ab4818ddd48e5210c756) to request a new IP address for each VM:
 1. Select the Device - for example, `mithril-staging1.princeton.edu`.
 2. Under 'What would you like to modify?' select `Wired static IP`.
 3. Select the Host (there will only be one) and check 'Add/Modify/Delete MAC Address or Static IP'.
@@ -55,9 +55,7 @@ If you choose to create new VMs:
 * Run the application build playbook to set up your new VMs.
 Once your VMs are If you create new VMs, start the checklist below at number 6 - updating the project's `config/deploy/staging.rb` file.
 
-
-
-To transfer `mithril-staging1.princeton.edu` to `mithril-staging1.lib.princeton.edu`, the Operations team can use the [Network Record - Modify form](https://princeton.service-now.com/service?id=sc_cat_item&sys_id=b28546e14f09ab4818ddd48e5210c756) to request a new IP address for each VM.
+To transfer `mithril-staging1.princeton.edu` to `mithril-staging1.lib.princeton.edu`, the Operations team can use the [Network Record - Modify form](https://princeton.service-now.com/service?id=sc_cat_item&sys_id=b28546e14f09ab4818ddd48e5210c756) to request a new IP address for each VM:
 1. Select the Device - for example, `mithril-staging1.princeton.edu`.
 2. Under 'What would you like to modify?' select `Wired static IP`.
 3. Select the Host (there will only be one) and check 'Modify Device Name'.
@@ -83,20 +81,19 @@ To transfer `mithril-staging1.princeton.edu` to `mithril-staging1.lib.princeton.
 
 ### Migrating staging sites to the staging load balancers
 
-To migrate a staging site to the new staging load balancers, the Operations team can modify the network registration to transfer the site FQDN `mithril-staging.princeton.edu` from the production loadbalancers to the dev loadbalancers
-1. Use the [network record - modify form](https://networkregistration.princeton.edu).
-2. Select lib-adc.princeton.edu for the Device.
-3. Select Wired static IP records for 'What would you like to modify'.
-4. Select the Host and check 'Add/Modify/Delete alias'.
-5. Scroll down to find the 'Transfer Aliases' section, and enter the site under 'Aliases to transfer to another Host' and select `adc-dev.lib.princeton.edu` under 'Transfer Aliases to'.
-6. Click Submit.
-7. Create SSL certificates on the dev loadbalancers by running the [Incommon Certificates](playbooks/incommon_certbot.yml) on the dev loadbalancers:
+To migrate a staging site to the new staging load balancers, the Operations team can use the [network record - modify form](https://networkregistration.princeton.edu) to transfer the site FQDN `mithril-staging.princeton.edu` from the production loadbalancers to the dev loadbalancers:
+1. Select `lib-adc.princeton.edu` under Device.
+2. Select Wired static IP records for 'What would you like to modify'.
+3. Select the Host and check 'Add/Modify/Delete alias'.
+4. Scroll down to find the 'Transfer Aliases' section, and enter the site under 'Aliases to transfer to another Host' and select `adc-dev.lib.princeton.edu` under 'Transfer Aliases to'.
+5. Click Submit.
+6. Create SSL certificates on the dev loadbalancers by running the [Incommon Certificates](playbooks/incommon_certbot.yml) on the dev loadbalancers:
   * Run `ansible-playbook -v -e domain_name=mithril-staging --limit adc-dev2.lib.princeton.edu playbooks/incommon_certbot.yml`.
   * Repeat on adc-dev1.lib.princeton.edu.
-8. Update the cache definition in the site's nginxplus config to point to `/var/cache/nginx/<site-name>/` (on the prod LBs the caches are in `/data/nginx/<site-name>/NGINX_cache`).
-9. Move the site's nginxplus config file from `roles/nginxplus/files/conf/http/mithril-staging.conf` to `roles/nginxplus/files/conf/http/dev/mithril-staging.conf`.
-10. Run the nginxplus playbook on all four loadbalancers (one at a time), to remove the config from production and add it to staging.
-11. Revoke the old SSL certificates on the production loadbalancers.
+7. Update the cache definition in the site's nginxplus config to point to `/var/cache/nginx/<site-name>/` (on the prod LBs the caches are in `/data/nginx/<site-name>/NGINX_cache`).
+8. Move the site's nginxplus config file from `roles/nginxplus/files/conf/http/mithril-staging.conf` to `roles/nginxplus/files/conf/http/dev/mithril-staging.conf`.
+9. Run the nginxplus playbook on all four loadbalancers (one at a time), to remove the config from production and add it to staging.
+10. Revoke the old SSL certificates on the production loadbalancers.
 
 ## WIP graph of Princeton loadbalancer setup
 
