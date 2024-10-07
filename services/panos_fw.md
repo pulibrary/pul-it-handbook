@@ -91,58 +91,58 @@ Most firewall-change tickets in the Service Portal have the title `Hardware Fire
 
 Note the new Object and each new Rule. For example:
 
-Address “Lib-ServerName” created:
-Name: Lib-ServerName
-Shared: Yes
-Description: (optional - if the VM has aliases, etc.)
+Address “Lib-ServerName” created:  
+Name: Lib-ServerName  
+Shared: Yes 
+Description: (optional - if the VM has aliases, etc.)  
 IP Address: 128.112.###.###/32
 
-Rule "Forrestal_Lib-ServerName_Rule#" created:
-Source: Any
-Destination: Lib-ServerName
-Application: ssl, web-browsing
-Ports: HTTP (TCP 80), HTTPS (TCP 443)
+Rule "Forrestal_Lib-ServerName_Rule#" created:  
+Source: Any  
+Destination: Lib-ServerName  
+Application: ssl, web-browsing  
+Ports: HTTP (TCP 80), HTTPS (TCP 443)  
 Action: Allow
 
-Rule "Shared_Lib-ServerName_Rule#" edited:
-Removed Source: Princeton Wired
-Added Source: Any
-Removed Application: ssl, web-browsing
+Rule "Shared_Lib-ServerName_Rule#" edited:  
+Removed Source: Princeton Wired  
+Added Source: Any  
+Removed Application: ssl, web-browsing  
 Added Ports: HTTP (TCP 80), HTTPS (TCP 443)
 
 ### Deleting a rule: what to add to the Service Portal ticket
 
-Rule "Shared_Lib-ServerName_Rule#" deleted:
-Reason for deletion: Rule was no longer needed or server has been decommissioned or redundant to rule xyz
-Was configured as:
-Location: Forrestal
-Source: Any
-Destination: Lib-ServerName
-Application: ssl, web-browsing
-Ports: HTTP (TCP 80), HTTPS (TCP 443)
+Rule "Shared_Lib-ServerName_Rule#" deleted:  
+Reason for deletion: Rule was no longer needed or server has been decommissioned or redundant to rule xyz  
+Was configured as:  
+Location: Forrestal  
+Source: Any  
+Destination: Lib-ServerName  
+Application: ssl, web-browsing  
+Ports: HTTP (TCP 80), HTTPS (TCP 443)  
 Action: Allow
 
 ### Changes: what to add to the Service Portal ticket
 
 Renaming a rule:
 
-Rule "Rule ID 250" renamed: "Shared_DSS_Rule6"
+Rule "Rule ID 250" renamed: "Shared_DSS_Rule6"  
 Rule "Rule ID 250" moved to device group: “Shared”
 
 Changing an IP address:
 
-Address “Lib-ServerName” edited:
-Original IP Address: 123.123.123.123
+Address “Lib-ServerName” edited:  
+Original IP Address: 123.123.123.123  
 New IP Address: 789.789.789.789
 
 ### Deleting things: what to add to the Service Portal ticket
 
-Address “Lib-ServerName” deleted:
-Reason for deletion: Ex: The archaic piece of junk finally died. Server has been replaced by lib-ShinyNewServer.
-Was configured as:
-Name: Lib-ServerName
-Shared: Yes
-Description: Aliases
+Address “Lib-ServerName” deleted:  
+Reason for deletion: Ex: The archaic piece of junk finally died. Server has been replaced by lib-ShinyNewServer.  
+Was configured as:  
+Name: Lib-ServerName  
+Shared: Yes  
+Description: Aliases  
 IP Address: 128.112.###.###/32
 
 ## Advanced use cases
@@ -159,84 +159,84 @@ If we need access to a new service (for example, if we changed from Redis to a d
 
 #### Adding a new service: what to add to the Service Portal ticket
 
-Service “ServiceName” created:
-Name: ServiceName
-Description: See Ticket # ABC123456
-Shared: Yes
-Protocol: TCP (or UDP)
-Destination Port: #####
+Service “ServiceName” created:  
+Name: ServiceName  
+Description: See Ticket # ABC123456  
+Shared: Yes  
+Protocol: TCP (or UDP)  
+Destination Port: #####  
 Source Port: 0-65535
 
-Service “ServiceName” deleted:
-Reason for deletion:
-Was configured as:
-Name: ServiceName
-Description: See Ticket # ABC123456
-Shared: Yes
-Protocol: TCP (or UDP)
-Destination Port: #####
-Source Port: 0-65535
+Service “ServiceName” deleted:  
+Reason for deletion:  
+Was configured as:  
+Name: ServiceName  
+Description: See Ticket # ABC123456  
+Shared: Yes  
+Protocol: TCP (or UDP)  
+Destination Port: #####  
+Source Port: 0-65535  
 Service “ServiceName” renamed: “NewServiceName”
 
 #### Adding Security Profiles: what to add to the Service Portal ticket
 
-Anti-Spyware Security Profile "AS-ResetC-AlertHML" created:
-Location: Shared
-DNS Action: alert
-DNS Packet Capture: disable
+Anti-Spyware Security Profile "AS-ResetC-AlertHML" created:  
+Location: Shared  
+DNS Action: alert  
+DNS Packet Capture: disable  
 Rule Name: simple-critical
 - Threat Name : any
 - Severity: critical
 - Action: reset-both
-- Packet Capture: disable
+- Packet Capture: disable  
 Rule Name: simple-high
 - Threat Name : any
 - Severity: high
 - Action: alert
-- Packet Capture: disable
+- Packet Capture: disable  
 Rule Name: simple-medium
 - Threat Name : any
 - Severity: medium
 - Action: alert
-- Packet Capture: disable
+- Packet Capture: disable  
 Rule Name: simple-low
 - Threat Name : any
 - Severity: low
 - Action: alert
 - Packet Capture: disable
 
-Vulnerability Protection Security Profile "Vuln-ResetC-AlertHM" created:
-Location: Shared
+Vulnerability Protection Security Profile "Vuln-ResetC-AlertHM" created:  
+Location: Shared  
 Rule Name: simple-client-critical
 - Threat Name : any
 - Host Type: client
 - Severity: critical
 - Action: reset-both
-- Packet Capture: disable
+- Packet Capture: disable  
 Rule Name: simple-client-high
 - Threat Name : any
 - Host Type: client
 - Severity: high
 - Action: alert
-- Packet Capture: disable
+- Packet Capture: disable  
 Rule Name: simple-client-medium
 - Threat Name : any
 - Host Type: client
 - Severity: medium
 - Action: alert
-- Packet Capture: disable
+- Packet Capture: disable  
 Rule Name: simple-server-critical
 - Threat Name : any
 - Host Type: server
 - Severity: critical
 - Action: reset-both
-- Packet Capture: disable
+- Packet Capture: disable  
 Rule Name: simple-server-high
 - Threat Name : any
 - Host Type: server
 - Severity: high
 - Action: alert
-- Packet Capture: disable
+- Packet Capture: disable  
 Rule Name: simple-server-medium
 - Threat Name : any
 - Host Type: server
@@ -246,17 +246,17 @@ Rule Name: simple-server-medium
 
 Security Profile Group "SP-Alert-Only" renamed "SP-ResetC-AlertHML"
 
-Security Profile Group "SP-Alert-Only" edited:
-Changed Anti-Spyware Profile: AS-ResetC-AlertHML
+Security Profile Group "SP-Alert-Only" edited:  
+Changed Anti-Spyware Profile: AS-ResetC-AlertHML  
 Changed Vuln Protection Profile: Vuln-ResetC-AlertHM
 
 #### Adding External Dynamic Lists: what to add to the Service Portal ticket
 
-External Dynamic List “Some Block List” created:
-Name: Some Block List
-Shared: Yes
-Description: URL to page describing the block list.
-Source: URL to text file containing list of IPs
+External Dynamic List “Some Block List” created:  
+Name: Some Block List  
+Shared: Yes  
+Description: URL to page describing the block list.  
+Source: URL to text file containing list of IPs  
 Frequency: Weekly on Monday at 00:00
 
 #### Denying IP Addresses
@@ -280,13 +280,13 @@ Frequency: Weekly on Monday at 00:00
 
 9. To close the Service Portal ticket, add the following to the internal notes and then close the ticket: 
 
-  Address "Deny[xxx]" created:
-  Name: Deny[xxx]
-  Shared: Yes
-  Description: See Ticket# [current ticket #]
+  Address "Deny[xxx]" created:  
+  Name: Deny[xxx]  
+  Shared: Yes  
+  Description: See Ticket# [current ticket #]  
   IP Address: xxxxx/32
 
-  Address Group "DenyList" edited:
+  Address Group "DenyList" edited:  
   Added address: Deny[xxx]
 
 #### Moving Entries from PanOS DenyList to AWS DenyList through princeton_ansible
@@ -316,24 +316,24 @@ Frequency: Weekly on Monday at 00:00
 
 8. If you are the Ops person to whom the ServiceNow ticket gets assigned, add work/internal notes to the ticket to document which rule(s) you are removing. For example: 
 
-      Address Group "DenyList" edited:
-      Removed addresses: Denyxxx, Denyxyz
+      Address Group "DenyList" edited:  
+      Removed addresses: Denyxxx, Denyxyz  
 
-      Address “Denyxxx” deleted:
-      Reason for deletion: Moved to external dynamic list.
-      Was configured as:
-      Name: Denyxxx
-      Shared: Yes
-      Description: Aliases
-      IP Address: x.x.xx.xx/32
+      Address “Denyxxx” deleted:  
+      Reason for deletion: Moved to external dynamic list.  
+      Was configured as:  
+      Name: Denyxxx  
+      Shared: Yes  
+      Description: Aliases  
+      IP Address: x.x.xx.xx/32  
 
-      Address “Denyxyz” deleted:
-      Reason for deletion: Moved to external dynamic list.
-      Was configured as:
-      Name: Denyxyz
-      Shared: Yes
-      Description: Aliases
-      IP Address: x.x.xx.xx/32
+      Address “Denyxyz” deleted:  
+      Reason for deletion: Moved to external dynamic list.  
+      Was configured as:  
+      Name: Denyxyz  
+      Shared: Yes  
+      Description: Aliases  
+      IP Address: x.x.xx.xx/32  
 
 When finished, update and close the ticket. 
 
