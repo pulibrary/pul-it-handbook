@@ -21,6 +21,9 @@ sudo certbot --standalone --non-interactive --agree-tos --email simonlee@princet
 
 This command checks all certs that certbot knows about on that server.
 
+## Viewing certificates in Sectigo
+Our certificate management system is Sectigo. Operations folks can [log into Sectigo](https://cert-manager.com/customer/InCommon) using their alias email accounts and individual passwords. We can view certificate status there, but we cannot revoke or renew certificates there.
+
 ## Manually managed certs list
 
 These certs are not managed by our usual process. These certs cover:
