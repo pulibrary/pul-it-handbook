@@ -57,6 +57,12 @@ Purpose: allows access to journals by confirming Princeton affiliation
 Managed: on ezproxy-prod1 by letsencrypt
 Deployed: in /etc/letsencrypt/live/ezproxy on the ezproxy-prod1 server
 
+geotaste.pulcloud.io
+Purpose: experimental application for CDH
+Managed: on staging.pulcloud.io by acme-client contacting letsencrypt CA
+Deployed: in /etc/ssl/geotaste.pulcloud.io.fullchain.pem on the staging.pulcloud.io server
+Maintained using `crontab -l` as root
+
 imagecat2.princeton.edu
 Philippe will shut down the server once he has copied whatever we need from it. Once it's gone, we can revoke the cert.
 
@@ -110,6 +116,12 @@ pulmirror.princeton.edu
 Purpose: distributing Ubuntu packages
 Managed: in ServiceNow, private key is in princeton_ansible
 Deployed: on Google cloud at pulmirror.princeton.edu
+
+simrisk.pulcloud.io
+Purpose: experimental application for CDH
+Managed: on staging.pulcloud.io by acme-client contacting letsencrypt CA
+Deployed: in /etc/ssl/simrisk.pulcloud.io.fullchain.pem on the staging.pulcloud.io server
+Maintained using `crontab -l` as root
 
 tigris.princeton.edu
 Purpose: hosted service for University Records management
