@@ -36,7 +36,7 @@ To migrate a VM's IP address from a publicly routable IP (usually 128.112.x) to 
 4. Under 'IPv4 requiring network change' select the IP/MAC address (there will only be one).
 5. Under 'New Network' select `ip4-library-servers`.
 6. Click Submit. This creates a ticket in ServiceNow, and you should receive the usual ServiceNow updates. Note both the old and the new IP addresses.
-7. In vSphere, edit the VM's settings and switch the 'Network Adapter' to `VM Network - LibNet`.
+7. In vSphere, edit the VM's settings and switch the 'Network Adapter' to `VM Network - ip4-library-servers`.
 8. Reboot the VM so it picks up the new IP address.
 9. Delete all firewall rules related to the old IP address, since the IP will likely be re-used for another system or service.
 
@@ -50,7 +50,7 @@ NOTE: Migrating existing VMs does involve some downtime. If you want to avoid do
 
 If you choose to create new VMs:
 * Give them the `.lib.princeton.edu` extension in DNS.
-* Set the 'Network Adapter' in vSphere to to `VM Network - LibNet`.
+* Set the 'Network Adapter' in vSphere to to `VM Network - ip4-library-servers`.
 * Select the `ip4-library-servers` network when registering them with OIT.
 * Run the application build playbook to set up your new VMs.
 Once your VMs are If you create new VMs, start the checklist below at number 6 - updating the project's `config/deploy/staging.rb` file.
