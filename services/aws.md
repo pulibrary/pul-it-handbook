@@ -45,6 +45,8 @@ For those EC2 Instances that cannot lose their fixed IP we can register one with
      * Add Gateway Name to the rule
      * click on `Save rules`
 
+	 If we run out of elastic IP addresses, use this [link](https://us-east-1.console.aws.amazon.com/servicequotas/home/services/ec2/quotas/L-0263D0A3) to request more.
+
 ## Replication
 For replication you need to set up a role that allows access to your buckets. You will then need to configure the destination bucket to receive replicated objects.  And finally a replication rule on the source bucket.
 
