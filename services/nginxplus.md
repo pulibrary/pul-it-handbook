@@ -48,7 +48,7 @@ ssh -L 8080:localhost:8080 pulsys@lib-adc1
 or
 
 ```bash
-ssh -L 8080:localhost:8080 pulsys@adc-dev1
+ssh -L 8080:localhost:8080 pulsys@adc-dev1.lib.princeton.edu
 ```
 
 Make sure it's the active box.
