@@ -1,8 +1,9 @@
 ## Don't Panic
 ### Cert management
-The ezproxy application depends on ACME certificates.
+The ezproxy application depends on ACME certificates. There is no automatic way to add these to the ezproxy application.
 
-The certificates will automatically renew every year and will need to be added into the ezproxy application. The following steps allow one to add the certificate. 
+**The certificates will automatically renew every year and will need to be added into the ezproxy application. The following steps allow one to add the certificate.**
+
 
   * Log into the ezproxy VM with `ssh pulsys@ezproxy`
   * Go to the newly renewed certificate path of
