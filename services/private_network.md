@@ -108,18 +108,22 @@ Our loadbalancer setup consists of the following possible configurations:
       style project fill:#fff,stroke:#000,stroke-width:4px,color:#000,stroke-dasharray: 5 5
       style project_space fill:#fff,stroke:#000,stroke-width:0px
 
-            subgraph "Production LBs lib-adc{1,2}.princeton.edu]"
-               SG1[["Configuration files in /usr/share/nginx/html"]]-->B(["Production VMs mithril-prod{1,2}.princeton.edu"])
+            subgraph "Production LBs lib-adc{1,2}.princeton.edu"
+               subgraph spacer1 [" "]
+               SG1["Configuration files in /usr/share/nginx/html"]-->B(["Production VMs mithril-prod{1,2}.princeton.edu"])
+               end
             end
 
-            subgraph "Staging LBs adc-dev{1,2}.lib.princeton.edu]]"
-               SG3[["Configuration files in /usr/share/nginx/html"]]-->DE(["Staging VMs: mithril-staging{1,2}.lib.princeton.edu"]);
+            subgraph "Staging LBs adc-dev{1,2}.lib.princeton.edu"
+               subgraph spacer2 [" "]
+               SG3["Configuration files in /usr/share/nginx/html"]-->DE(["Staging VMs: mithril-staging{1,2}.lib.princeton.edu"]);
+               end
             end
          
       end
    end
 
-   classDef ecclass fill:#00f,stroke:#00f,stroke-width:0px,color:#fff;
-   class EC2,EC2a,EC2b,ec2_sp,ec2a_sp,ec2b_sp ecclass;
+   classDef fillerclass fill:transparent,stroke:none,color:#fff;
+   class spacer1,spacer2 fillerclass;
 
 ```
