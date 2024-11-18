@@ -2,11 +2,10 @@
 
 A service account is a Princeton single-sign on account that is tied to a service instead of an individual person. "Service Now" is the brand name of some software that OIT uses to track requests. Here is how to use Service Now to request a service account. You might need this if, for example, you need an email address for something your whole team needs to access.
 
-1. Fill in the ticket in [service now](https://princeton.service-now.com/service?id=sc_cat_item&sys_id=f44539ab4ff81640f56c0ad14210c77c)
+1. Fill in the ticket in [service now](https://princeton.service-now.com/service?id=sc_cat_item_guide&table=sc_cat_item&sys_id=e2e6c6501b7ace10b46dc5d96e4bcbd6&searchTerm=service%20account)
 
-   - Duration: Permanent
-   - Type: General
-   - Service Account User(s): Team members should be added here
+   - You will follow a wizard that will depend on your use case
+   - Remember to add at least one other team member (it is restricted to one additional user only)
 
 1. After the account is set up a password must be selected and stored in lastpass
 
