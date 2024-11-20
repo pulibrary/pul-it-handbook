@@ -8,12 +8,13 @@ When building a new VM, you need to expand the size of the main disk and also ex
 
 ## Expand the size of the main disk
 
-On the main disk, you just need to make the logical volume (LV) take up all the space it has available. 
+On the main disk, you just need to make the logical volume (LV) take up all the space it has available.
 
-```bash 
+```bash
 sudo lvextend -l +100%FREE /dev/ubuntu-vg/ubuntu-lv
 sudo resize2fs /dev/ubuntu-vg/ubuntu-lv
 ```
+
 Note that ``/dev/ubuntu-vg/ubuntu-lv`` is the correct name for the LV on our Jammy Jellyfish VMs, but different VMs may use a different name for the LV. See the `Diagnostics and confirmation` section for details on finding the correct name.
 
 ## Expand a logical volume with an additional disk
@@ -51,31 +52,49 @@ sudo resize2fs /dev/ubuntu-vg/ubuntu-lv
 df -h
 ```
 
+When expanding a RHEL based VM you may get the following error.
+
+```bash
+resize2fs: Bad magic number in super-block while trying to open /dev/rl/root
+Couldn't find valid filesystem superblock.
+```
+
+When you encounter this expand the volume using
+
+```bash
+sudo xfs_growfs /dev/rl/root
+```
+
 ### Diagnostics and confirmation
 
 The disk size should change between the first time you run `df -h` and the last time you run it. If the disk size has not changed, or if something goes wrong, try these diagnostic tools to troubleshoot:
 
 To view all disks and devices on the VM:
+
 ```bash
 sudo fdisk -l
 ```
 
 To view the name of the Volume Group (VG):
+
 ```bash
 sudo vgdisplay
 ```
 
 To list the Physical Volumes (PVs):
+
 ```bash
 sudo pvscan
 ```
 
 To view the name of the Logical Volume (LV):
+
 ```bash
 sudo lvdisplay
 ```
 
 To view disk size and usage:
+
 ```bash
 df -h
 ```
@@ -88,7 +107,7 @@ This section covers the same steps as the Cheatsheet, but with a lot more detail
 
 Before you can expand the logical volume, the VM must have one or more additional disks attached in vSphere. In the vSphere UI, select the VM and use `Edit settings` to confirm the number of disks and the amount of storage available. If necessary, add a new disk of the desired size.
 
-###Confirm that a logical volume exists
+### Confirm that a logical volume exists
 
 The existing partition must be a logical volume (LVM) for these steps to work. Identify the partition type with `sudo fdisk -l` (or run the command as the root user). Notice that each attached disk has both a `Disk` entry and a `Device` entry. You should see a device with the ID (hex code) `8e` and the Type `Linux LVM`, which denotes a logical volume.
 
@@ -170,17 +189,17 @@ fdisk /dev/sdb
 
 The `fdisk` command kicks off an interactive script that creates a partition on the new disk. Use the inputs shown below to work through the script. You can press `m` at any time to get a full listing of `fdisk` commands. For a full example, see the output of the interactive script below the list of inputs.
 
- - select **`n`** for a new partition.
- - press enter to accept the default **`p`** for a primary partition.
- - press enter again to accept the **(default)** for the partition number. (YMMV)
- - press enter again to accept the **(default)** for the first sector of the unallocated space. (YMMV)
- - press enter again to select the **(default)** for the last sector of the unallocated space. (YMMV)
- - select **`t`** to set the type.
- - optionally type **`L`** to list all available disk types.
- - select **`8e`** for a Linux logical volume, so you can join the new disk space to the original `/dev/sda1` Linux LVM.
- - select **`w`** to write the new partition table and get you out of this shell.
+- select **`n`** for a new partition.
+- press enter to accept the default **`p`** for a primary partition.
+- press enter again to accept the **(default)** for the partition number. (YMMV)
+- press enter again to accept the **(default)** for the first sector of the unallocated space. (YMMV)
+- press enter again to select the **(default)** for the last sector of the unallocated space. (YMMV)
+- select **`t`** to set the type.
+- optionally type **`L`** to list all available disk types.
+- select **`8e`** for a Linux logical volume, so you can join the new disk space to the original `/dev/sda1` Linux LVM.
+- select **`w`** to write the new partition table and get you out of this shell.
 
-Here's what the interactive script looks like: 
+Here's what the interactive script looks like:
 
  ```bash
  Welcome to fdisk (util-linux 2.31.1).
@@ -246,6 +265,7 @@ The `pvcreate` command creates a physical volume for later use by the logical vo
 ```bash
 pvcreate /dev/sdb1
 ```
+
 You will see output like this:
 
 ```bash
@@ -261,6 +281,7 @@ Next, extend the existing logical volume to include the new device. First, confi
 ```bash
 vgdisplay
 ```
+
 You will see output like this:
 
 ```bash
@@ -291,6 +312,7 @@ Next, extend the volume group by adding in the physical volume `/dev/sdb1` which
 ```bash
 vgextend ubuntu-vg /dev/sdb1
 ```
+
 You will see output like this:
 
 ```bash
@@ -350,7 +372,6 @@ lvextend /dev/ubuntu-vg/ubuntu-lv /dev/sdb1
 
 You will see output like this:
 
-
 ```bash
 Size of logical volume ubuntu-vg/ubuntu-lv changed from <28.00 GiB (7167 extents) to 87.99 GiB (22526 extents).
 Logical volume ubuntu-vg/ubuntu-lv successfully resized.
@@ -392,6 +413,7 @@ diglibdata1.princeton.edu:/ifs/solrbackup  1.5P  874T  549T  62% /mnt/solrbackup
 tmpfs                                      4.0G     0  4.0G   0% /run/user/1001
 tmpfs                                      4.0G     0  4.0G   0% /run/user/1000
 ```
+
 ## Troubleshooting logical volume issues
 
-If you find a machine where `df -h` does not show all available disk space, but the physical and logical volumes both exist, it's possible that a step got skipped. If you try `vgextend` and you get `Physical volume '/dev/sdb1' is already in volume group 'ubuntu-vg'`, and you try `lvextend` and get ` WARNING: No free extents on physical volume "/dev/sdb1"`, then you can format any free space on the logical volume with `sudo lvextend -l +100%FREE /dev/ubuntu-vg/ubuntu-lv`, after which you can do `sudo resize2fs /dev/ubuntu-vg/ubuntu-lv` and you should see the space available in `df -h`.
+If you find a machine where `df -h` does not show all available disk space, but the physical and logical volumes both exist, it's possible that a step got skipped. If you try `vgextend` and you get `Physical volume '/dev/sdb1' is already in volume group 'ubuntu-vg'`, and you try `lvextend` and get `WARNING: No free extents on physical volume "/dev/sdb1"`, then you can format any free space on the logical volume with `sudo lvextend -l +100%FREE /dev/ubuntu-vg/ubuntu-lv`, after which you can do `sudo resize2fs /dev/ubuntu-vg/ubuntu-lv` and you should see the space available in `df -h`.
