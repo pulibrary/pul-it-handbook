@@ -2,7 +2,7 @@
 
 The repository walks you through best practices, culture, and technological corner cases on PU Library. These are the parts that are tricky to fully automate or in some cases not possible to. These are also the shared norms and best practices agreed upon across teams in PUL IT which, because they are shared, do not fit solely into one team's handbook.
 
-Each team at PU Library also has its own team handbook:
+The PU Library developer and operations teams also have their own team handbooks:
 
 - [DACS handbook](https://pulibrary.github.io/dacs_handbook/)
 - [DLS handbook](https://pulibrary.github.io/dls-handbook)
