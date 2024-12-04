@@ -61,7 +61,6 @@ been made to this file.
 # Co-authored-by: Stephanie Ayers <stephayers@users.noreply.github.com>
 # Co-authored-by: Tom Ventimiglia <tventimi@users.noreply.github.com>
 # Co-authored-by: Trey Pendragon <tpendragon@users.noreply.github.com>
-# Co-authored-by: Tyler Wade <twade968@users.noreply.github.com>
 # Co-authored-by: Vickie Karasic <vickiekarasic@users.noreply.github.com>
 # Co-authored-by: Vivian Ha <vh8154@users.noreply.github.com>
 # Co-authored-by: Winsice Ng <winsice-ng@users.noreply.github.com>
