@@ -1,0 +1,5 @@
+## Archival Systems Fellow Training Curriculum
+
+The Archival Systems Training Program is a complementary component to the PUL Early Carreer Fellowship for those interested in learning more about how archival data is created, managed, processed, and served to end users. The program follows a path from learning about how archival description differs from other modes of description (e.g. bibliographic), the intellectual and political standards landscape informing how archival records are created, the archival systems involved in end-to-end workflows, and data flows into and out of systems.
+
+In addition to traditional learning resources, the program focuses on exposing participants to the community of practitioners and the current discussions in the archives and larger GLAM communities. Participants will have the opportunity to conduct informational interviews with Special Collections staff and shadow the Archival Systems Technical Lead at meetings within PUL and in the professional community. 
