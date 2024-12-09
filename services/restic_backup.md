@@ -117,6 +117,25 @@ For mariadb do the following:
 
 ## Retrieve a backup
 
+To restore from a GUI 
+
+  1. Install the restic-browser app with 
+
+    ```bash
+    brew install restic-browser
+    ```
+
+  2. Launch the application
+
+     Create a new Location:
+
+       * In the **Type**: Select Google Cloud Storage
+       * In the **Bucket**: Enter the name and path of your bucket. (e.g., gs:postgres-15-backup:daily)
+       * In the **GOOGLE_PROJECT_ID**: Enter pul-gcdc
+       * In the **GOOGLE_APPLICATION_CREDENTIALS**: Get a copy of the credentials and place them at a know location
+       * In the **Repository Password**: Get the contents from the server
+
+
 To retrieve the latest usable postgresql backup from restic, run the following commands:
 
   1. As the postgresql user run the following steps:
@@ -129,7 +148,7 @@ To retrieve the latest usable postgresql backup from restic, run the following c
       `restic -r gs:postgres-version-backup:yourpath -p /var/lib/postgresql/.restic.pwd snapshots`
       
       
-  3. Find the hash key of the database you want to retrieve a backup from and dump it with the following commands. In our example the hash will be `4f155a5e`
+  2. Find the hash key of the database you want to restore from and dump it with the following commands. In our example the hash will be `4f155a5e`
 
      Results of postgres-version-backup:yourpath below can be seen if you run `env` as a postgres user in the `RESTIC_REPOSITORY` variable
      ```bash
