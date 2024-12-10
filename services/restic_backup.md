@@ -132,7 +132,7 @@ To restore from a GUI
        * In the **Type**: Select Google Cloud Storage
        * In the **Bucket**: Enter the name and path of your bucket. (e.g., gs:postgres-15-backup:daily)
        * In the **GOOGLE_PROJECT_ID**: Enter pul-gcdc
-       * In the **GOOGLE_APPLICATION_CREDENTIALS**: Get a copy of the credentials and place them at a know location
+       * In the **GOOGLE_APPLICATION_CREDENTIALS**: Get a copy of the credentials and place them at a known location
          * Log into `lib-postgres-prod1` and download or copy the credentials with the following
            ```bash
            sudo su - postgres
