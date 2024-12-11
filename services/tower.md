@@ -121,3 +121,7 @@ When we upgrade next time, we may not need to start from scratch, but this docum
 ``ANSIBLE_BECOME=True ./setup.sh``
 When the playbook finishes, the Tower UI should come up at ansible-tower.princeton.edu, and you can log in as ‘admin’ with the admin password.
 9. Configure SSO: Log in as the Admin user and edit the Settings . . . SAML Settings page.
+
+## Troubleshooting
+
+Ansible Tower writes logs at `/var/log/tower/tower.log`
