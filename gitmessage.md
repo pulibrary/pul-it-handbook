@@ -26,6 +26,7 @@ been made to this file.
 # Uncomment the relevant lines to add co-authors:
 #
 # Co-authored-by: Alicia Cozine <acozine@users.noreply.github.com>
+# Co-authored-by: Angel Ruiz <aruiz1789@users.noreply.github.com>
 # Co-authored-by: Anna Headley <hackartisan@users.noreply.github.com>
 # Co-authored-by: Beck Davis <beck-davis@users.noreply.github.com>
 # Co-authored-by: Brionna Johnson <bj4103@users.noreply.github.com>
