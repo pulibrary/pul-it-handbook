@@ -6,7 +6,7 @@ The landscape of archival standards is undergoing some radical changes at the mo
 
 In the United States, archivists have used Describing Archives: A Content Standard (DACS) and Encoded Archival Standards (EAS) in conjunction with controlled vocabularies and authorities to create descriptive records for archives.
 
-DACS is a content standard maintained by the Society of American Archivists (SAA). The role of a content standard is to provide guidance to practitioners on how to construct a descriptive record: what piees of information should the record capture in order to support user functions, from which sources should archivists gather them, and what rules or patterns should they follow when adding them to the record.
+DACS is a content standard maintained by the Society of American Archivists (SAA). The role of a content standard is to provide guidance to practitioners on how to construct a descriptive record: what pieces of information should the record capture in order to support user functions, from which sources should archivists gather them, and what rules or patterns should they follow when adding them to the record.
 
 DACS is the US implementation of the ICA's International Standard on Archival Description--General (ISAD(G)). 
 
