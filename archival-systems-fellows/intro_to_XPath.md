@@ -76,7 +76,8 @@ Time to write some yourself!
 
 Position tests allow you to return the `nth` node of a node set. They can be expressed as 
 ```
-node[position()=n]```
+node[position()=n]
+```
 or 
 ```
 node[n]
