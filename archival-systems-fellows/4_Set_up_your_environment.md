@@ -15,8 +15,10 @@
    - in the Environment Variables window, click on the “New” button under either the ‘User variables’ or ‘System variables’ section
    - enter VARIABLE_NAME and VARIABLE_VALUE for each variable
    - save and close
-5. Test the variable: `echo $VARIABLE_NAME`
-6. Test the connection: `bundle exec ruby test_connection.rb`
+5. Test the variable:
+   On Mac: `echo $VARIABLE_NAME`
+   On Windows: `echo %PATH%`
+7. Test the connection: `bundle exec ruby test_connection.rb`
 
 ### Connecting to ASpace
 5. In your ruby file, add these two lines at the top:
