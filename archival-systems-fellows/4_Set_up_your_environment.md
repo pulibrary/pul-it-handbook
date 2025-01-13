@@ -15,18 +15,18 @@
    - in the Environment Variables window, click on the “New” button under either the ‘User variables’ or ‘System variables’ section
    - enter VARIABLE_NAME and VARIABLE_VALUE for each variable
    - save and close
-5. Test the variable:
+4. Test the variable:
    On Mac: `echo $VARIABLE_NAME`
    On Windows: `echo %PATH%`
-7. Test the connection: `bundle exec ruby test_connection.rb`
+5. Test the connection: `bundle exec ruby test_connection.rb`
 
 ### Connecting to ASpace
-5. In your ruby file, add these two lines at the top:
+6. In your ruby file, add these two lines at the top:
    ```
    require 'archivesspace/client'
    require_relative 'helper_methods.rb'
    ```
-6. Try to get a value out of ASpace, e.g. add to your file:
+7. Try to get a value out of ASpace, e.g. add to your file:
    ```
    @client = aspace_staging_login
    record = @client.get('locations/23648').parsed
