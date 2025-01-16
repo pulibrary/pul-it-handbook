@@ -3,11 +3,13 @@
 2. Navigate into the cloned directory and run `bundle install`
    - if bundler is not installed, run `gem install bundler`
 3. Set up user name and pw as environmental variables
+   
    On Mac:
    - `nano ~/.zshrc`
    - at the end of the file, add `export VARIABLE_NAME=VARIABLE_VALUE` (replace with actual variable name and value)
    - save and close
    - `source ~/.zshrc`
+     
    On Windows:
    - go to Start directory
    - type “Environment Variables” into the search bar and select “Edit the system environment variables” from the results
@@ -15,10 +17,12 @@
    - in the Environment Variables window, click on the “New” button under either the ‘User variables’ or ‘System variables’ section
    - enter VARIABLE_NAME and VARIABLE_VALUE for each variable
    - save and close
-4. Test the variable:
+5. Test the variable:
+   
    On Mac: `echo $VARIABLE_NAME`
+   
    On Windows: `echo %PATH%`
-5. Test the connection: `bundle exec ruby test_connection.rb`
+6. Test the connection: `bundle exec ruby test_connection.rb`
 
 ### Connecting to ASpace
 6. In your ruby file, add these two lines at the top:
