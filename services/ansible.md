@@ -30,5 +30,18 @@ Variables define the values that change from one machine to another (for example
 - Application (Per-Env)
 - Role
 
+## Vault
+
+Some of our vars are stored in files encrypted via ansible vault. The vault password is stored in a shared lastpass location and instructions for its use are on the princeton_ansible readme.
+
+Process to rekey the vault password:
+- copy the old key into the old vault passwords note in lastpass
+- generate a new key, you can use the lastpass generator
+- save the new key in lastpass shared dir
+- Find all the files that need to be rekeyed by grepping for the header that ansible puts at the top of each encrypted file `$ANSIBLE_VAULT;1.1;AES256`
+- rekey the files using `ansible-vault rekey`, passing the list of files
+- update Tower with the new key
+- let everyone know on the #infrastructure channel
+
 # How we use Ansible
 If you need to make a change to how ansible works, you commit changes to the [ansible](https://github.com/pulibrary/princeton_ansible) repo, and after a review it is merged for general use.
