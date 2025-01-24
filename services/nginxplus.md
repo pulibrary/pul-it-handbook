@@ -1,4 +1,4 @@
-We have 4 load balancer machines running nginxplus, `lib-adc1` and `lib-adc2` for our production environment, and `adc-dev1.lib` and `adc-dev2.lib` for our staging environment. At all times, one is active and one is a hot backup.
+We have 4 load balancer machines running nginxplus, `adc-prod1` and `adc-prod2` for our production environment, and `adc-dev1.lib` and `adc-dev2.lib` for our staging environment. At all times, one is active and one is a hot backup.
 
 ## Finding the active load balancer
 
@@ -42,7 +42,7 @@ On the Admin UI you can turn traffic on and off or view the status of any of the
 
 To connect to the Admin UI, create an SSH tunnel from your machine:
 ```
-ssh -L 8080:localhost:8080 pulsys@lib-adc1
+ssh -L 8080:localhost:8080 pulsys@adc-prod1
 ```
 
 or
@@ -62,7 +62,7 @@ or
 ip a | grep 19
 ```
 
-You will see an `inet` line if `lib-adc1` (on production) or `adc-dev1.lib` is the active box. If it's not exit and tunnel to `lib-adc2` (on production) or `adc-dev2.lib` instead.
+You will see an `inet` line if `adc-prod1` (on production) or `adc-dev1.lib` is the active box. If it's not exit and tunnel to `adc-prod2` (on production) or `adc-dev2.lib` instead.
 
 Once you have a tunnel open to the active load balancer, you can open up a web browser to http://localhost:8080 and access the Admin UI dashboard. From there, click on `HTTP Upstreams` to view sites, VMs, health checks, and more.
 
@@ -70,15 +70,15 @@ Once you have a tunnel open to the active load balancer, you can open up a web b
 
 1. Let folks know that you're running the playbook in the #infrastructure channel. Link to the branch or PR if you are running it against a branch.
 1. Check which load balancer is active (see above).
-2. Run the nginx playbook against the non-active load balancer. For example, if `lib-adc1` is active, run the `nginxplus.yml` playbook against `lib-adc2`: `ansible-playbook playbooks/nginxplus.yml --limit lib-adc2.princeton.edu`.
+2. Run the nginx playbook against the non-active load balancer. For example, if `adc-prod1` is active, run the `nginxplus.yml` playbook against `adc-prod2`: `ansible-playbook playbooks/nginxplus.yml --limit adc-prod2.princeton.edu`.
   * Run the nginx playbook against the non-active load balancer. For example, if `adc-dev1.lib` is active, run the `nginxplus_staging.yml` playbook against `adc-dev2.lib`: `ansible-playbook playbooks/nginxplus_staging.yml --limit adc-dev2.lib.princeton.edu`.
 3. If the playbook fails, fix the failures and run it against the non-active load balancer again, until it succeeds. 
 4. Run the nginx playbook against the second load balancer, the one that was active when you started which will now become the inactive load balancer.
 
-### Only upload the new config files
+### Only upload new and changed config files
 1. Let folks know that you're running the playbook in the #infrastructure channel. Link to the branch or PR if you are running it against a branch.
 1. Check which load balancer is active (see above).
-2. Run the nginx playbook against the non-active load balancer. For example, if `lib-adc1` is active, run the `nginxplus.yml` playbook against `lib-adc2`: `ansible-playbook playbooks/nginxplus.yml --limit lib-adc2.princeton.edu -t update_conf`.
+2. Run the nginx playbook against the non-active load balancer. For example, if `adc-prod1` is active, run the `nginxplus.yml` playbook against `adc-prod2`: `ansible-playbook playbooks/nginxplus.yml --limit adc-prod2.princeton.edu -t update_conf`.
   * Run the nginx playbook against the non-active load balancer. For example, if `adc-dev1.lib` is active, run the `nginxplus_staging.yml` playbook against `adc-dev2.lib`: `ansible-playbook playbooks/nginxplus.yml --limit adc-dev2.lib.princeton.edu -t update_conf`.
 3. If the playbook fails, fix the failures and run it against the non-active load balancer again, until it succeeds.
 4. Run the nginx playbook against the second load balancer, the one that was active when you started which will now become the inactive load balancer.
