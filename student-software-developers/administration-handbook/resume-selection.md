@@ -17,6 +17,7 @@ The Initial point of contact:
 ### Resume Acceptor
 The Resume Acceptor is the person who redacts the resumes and set them up for review.  This may or may not be the same person as the Initial point of contact, but likely is the same person.
    1. Redacts Personal Names and Business Names from the Resume and cover letters
+       * You can do this in Preview (Mac) or LibreOffice Draw (cross-platform).  If you use LibreOffice Draw, be sure to "Export redacted PDF" rather than the typical "Export" option. 
    1. Stores the information under the student netid on a google drive accessible to the committee
    1. Creates and maintains a spreadsheet that has the netid, a link to the content and a slot for two reviewers [see template](https://docs.google.com/spreadsheets/d/1rw_kw7psuiWlvJtjbfwyXjWxPsyfNCqSIWafj4Gm5YE/edit#gid=0) 
 
