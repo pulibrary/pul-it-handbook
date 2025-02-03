@@ -1,6 +1,6 @@
 ## Processing Excercise
 
-This exercise is intended to expose you to the process of making sense of a body of archival material. Engaging in the process of archival processing from the vantage point of archives practitioners will give you a first-row perspective of the data that is the end product of this process (and that you'll ultimately be working with).
+This exercise is intended to let you experience making sense of a body of archival material. Engaging in archival processing from the vantage point of archives practitioners will give you a first-row perspective of the data that results from this process (and that you'll ultimately be working with).
 
 NB: While the collection material used in this exercise is real (and part of PUL's holdings), the collection history in the scenario below is fictional.
 
@@ -13,7 +13,7 @@ The painting is the reason the museum acquired the lot; it transferred all other
 
 ### Steps
 
-1. Do Not Panic. Being faced with an archival collection for the first time can be disorienting. That's ok! Remember what you know about Context and take it into account as you go through. Also remember that the collection has passed through a few owners and is very likely at least a bit jumbled. There may not be much Context. That's ok too.
+1. **Do Not Panic.** Being faced with an archival collection for the first time can be disorienting. That's ok! Remember what you know about Context and take it into account as you go through. Also remember that the collection has passed through a few owners and is very likely at least a bit jumbled. There may not be much Context. That's ok too.
 
 2. Quickly leaf through the materials to get a sense of the scope of the collection, without reading every document (contrary to common lore, that is not what archivists do all day! ;-) )
 Take note of the following:
