@@ -9,7 +9,7 @@ Prior to the start of a processing project, a repository usually makes some deci
 For example, there may be faculty or researchers waiting to use the collection, which may prompt an accelerated project timeline.
 
 Part of that planning is a decision about the so-called level of description at which the collection should be processed. 
-It simply means how detailed the resulting record will be. 
+It simply means how detailed the resulting record will be. It may also impact activities such as physical rehousing or arrangement. 
 
 Two kinds of "levels" come into play when we talk about the level of description:
 
