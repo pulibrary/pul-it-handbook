@@ -6,6 +6,9 @@ The library has two systems hosted by Atlas: Aeon and Ares. We maintain three cl
 * lib-ares-cli2
 * lib-ares-cli3
 
+## Emergency Support Requests
+If either Aeon or Ares is down completely please utilize the email address emergency@atlas-sys.com to contact Atlas for the fastest support. A response will come from this contect point quicker than the standard support options described later in this document. 
+
 See below for details on each hosted system.
 
 ## Aeon
