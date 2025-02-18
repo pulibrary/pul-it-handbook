@@ -109,11 +109,12 @@ We should keep metrics about the current and past state of our systems so that w
 
 ## User Interfaces
 
-### WCAG AA Compliance
+### WCAG 2 AA Compliance
 
 #### Reasoning
 
 The University requires us to meet the WCAG AA as a minimum requirement for our applications. In order to support our applications in meeting this requirement, and so that we don’t inadvertently introduce regressions, these requirements should be covered by automated tests when possible and when not, covered by a regular auditing or development practice. An example of tools that do this are Axe Devtools and DubBot.
+Level AA includes all Level A and AA requirements. 
 
 ### Web Analytics
 
