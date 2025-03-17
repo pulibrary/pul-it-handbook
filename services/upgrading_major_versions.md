@@ -11,9 +11,9 @@ In order to update a major version of a dependency with breaking changes, follow
 ```zsh
 ansible-playbook playbooks/orangelight.yml --limit catalog-staging1.princeton.edu
 ```
-3. Using Capistrano, deploy only to that server (may need to comment out the server you are not deploying to in `config/deploy[environment].rb`)
+3. Using Capistrano, deploy only to that server using the `--hosts` flag
 ```zsh
-BRANCH=upgrade_ruby bundle exec cap staging deploy
+BRANCH=upgrade_ruby bundle exec cap --hosts=catalog-staging1 staging deploy
 ```
 4. Tunnel into that server and ensure it is performing as expected (for the example below you would go to http://localhost:1234/)
 ```zsh
