@@ -1,8 +1,10 @@
 ## Before you begin
 
-If one doesn’t exist yet create a [Google Service Account](gce_service_account.md) and Google Bucket. 
+Double-check that you are logged into the correct database server. If the database server is part of a cluster, only one server in the cluster will create backups. Generally that is the machine with `1` in the name.
 
-Create an Object Storage bucket to hold your backup repository. Follow the [Create a Bucket guide](gce_bucket.md) if you do not already have one.
+If you are creating a new backup setup, you will need a [Google Service Account](gce_service_account.md) and a Google Bucket. If they do not exist yet, create them.
+
+The Object Storage bucket will hold your backup repository. Follow the [Create a Bucket guide](gce_bucket.md) if you do not already have one.
 
 
 ## Install Restic
