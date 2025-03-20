@@ -1,8 +1,10 @@
 ## Before you begin
 
-If one doesn’t exist yet create a [Google Service Account](gce_service_account.md) and Google Bucket. 
+Double-check that you are logged into the correct database server. If the database server is part of a cluster, only one server in the cluster will create backups. Generally that is the machine with `1` in the name.
 
-Create an Object Storage bucket to hold your backup repository. Follow the [Create a Bucket guide](gce_bucket.md) if you do not already have one.
+If you are creating a new backup setup, you will need a [Google Service Account](gce_service_account.md) and a Google Bucket. If they do not exist yet, create them.
+
+The Object Storage bucket will hold your backup repository. Follow the [Create a Bucket guide](gce_bucket.md) if you do not already have one.
 
 
 ## Install Restic
@@ -122,7 +124,7 @@ To restore the latest usable postgresql backup from restic, run the following co
       sudo su - postgres
       source .env.restic
      ``` 
-      Results of postgres-version-backup:yourpath below can be seen if you run `env` as a postgres user in the `RESTIC_REPOSITORY` variable
+      To find the value of `postgres-version-backup:yourpath` below, run `env` as a postgres user and look at the `RESTIC_REPOSITORY` variable.
      
       `restic -r gs:postgres-version-backup:yourpath -p /var/lib/postgresql/.restic.pwd snapshots`
       
@@ -133,9 +135,9 @@ To restore the latest usable postgresql backup from restic, run the following co
      ```bash
      restic -r gs:postgres-version-backup:yourpath -p /var/lib/postgresql/.restic.pwd restore 4f155a5e -t /tmp
      ```
-     This will restore your database at `/tmp/postgresql`
+     This will retrieve the database backup and place it into `/tmp/postgresql`
 
-To restore the latest usable mariadb backup from restic, run the following commands:
+To retrieve the latest usable mariadb backup from restic, run the following commands:
 
   1. As the `pulsys` user run the following steps:
      ```bash
@@ -146,4 +148,22 @@ To restore the latest usable mariadb backup from restic, run the following comma
      ```bash
      restic -r gs:mariadb-version-backup:yourpath -p /home/pulsys/.restic.pwd restore 4f155a5e -t /tmp
      ```
-     This will restore your database at `/tmp/mariadb`
+     This will retrieve your database backup and place it into `/tmp/mariadb`
+
+To restore a postgreSQL database from a backup, unzip the database backup file and use the database utility to restore:
+
+  1. Unzip the database backup files:
+     ```bash
+     gzip -d /tmp/postgresql/<your_backup_file>.sql.gz
+     ```
+  1. As the `postgres` user, start the restore process:
+     ```bash
+     psql -d <database_name> -f /tmp/postgresql/<your_backup_file>.sql
+     ```
+     For example:
+     ```bash
+     psql -d bibdata_alma_staging -f /tmp/postgresql/bibdata_alma_staging.sql
+     ```
+     Add `-a` if you want to print the results to STDOUT.
+     
+Note: The `.sql` file includes the name of the database that was backed up - so it is different for production and staging. If you are restoring a production database backup into the staging database cluster, you must edit the `.sql` file and change the database name everywhere it appears.
