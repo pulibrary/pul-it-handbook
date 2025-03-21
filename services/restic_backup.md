@@ -115,7 +115,7 @@ For mariadb do the following:
     0 5 * * * /home/pulsys/.restic/maria_backup.sh
     ```
 
-## Restore from a backup
+## Retrieve a backup
 
 To restore the latest usable postgresql backup from restic, run the following commands:
 
@@ -150,13 +150,15 @@ To retrieve the latest usable mariadb backup from restic, run the following comm
      ```
      This will retrieve your database backup and place it into `/tmp/mariadb`
 
+## Restore a postgreSQL database
 To restore a postgreSQL database from a backup, unzip the database backup file and use the database utility to restore:
 
   1. Unzip the database backup files:
      ```bash
      gzip -d /tmp/postgresql/<your_backup_file>.sql.gz
      ```
-  1. As the `postgres` user, start the restore process:
+  2. The restore will not work if there are open connections to the database. Stop the Nginx service on VMs that connect to the target database and wait for the connections to close.
+  3. As the `postgres` user, start the restore process:
      ```bash
      psql -d <database_name> -f /tmp/postgresql/<your_backup_file>.sql
      ```
