@@ -23,6 +23,14 @@
     chown postgres:postgres <production_backup>.sql.gz
     ```
 6. As the `postgres` user, move the file from `/tmp` to `/tmp/posgressql`
+7. Unzip the backup files.
+    ```bash
+    gzip -d <backup_name>.sql.gz
+    ```
+8. Edit the production backup .sql file to change the database name to match the staging database.
+For Example:
+    Replace `bibdata_alma_production` with `bibdata_alma_staging`.
+There should be three instances of the database name in the file.
 7. Stop the Nginx service on the the staging servers that use the database you want to restore. This will close the connections and allow the database to be recreated.
 8. On the staging leader server, wait for the connections to have closed and [restore the production backup](restic_backup.md#restore-a-postgresql-database).
 9. Restart the Nginx service on the staging servers.
