@@ -31,10 +31,10 @@
 For Example:
     Replace `bibdata_alma_production` with `bibdata_alma_staging`.
 There should be three instances of the database name in the file.
-7. Stop the Nginx service on the the staging servers that use the database you want to restore. This will close the connections and allow the database to be recreated.
-8. On the staging leader server, wait for the connections to have closed and [restore the production backup](restic_backup.md#restore-a-postgresql-database).
-9. Restart the Nginx service on the staging servers.
-10. Verify the data was loaded successfully.
-11. Stop the Nginx service on the staging servers.
-12. Restore the[ staging backup](restic_backup.md#restore-a-postgresql-database) to return the staging servers to their initial state.
-13. Restart the Nginx service to the staging servers.
+9. Stop the Nginx service on the the staging servers that use the database you want to restore. This will close the connections and allow the database to be recreated.
+10. On the staging leader server, wait for the connections to have closed and [restore the production backup](restic_backup.md#restore-a-postgresql-database).
+11. Restart the Nginx service on the staging servers.
+12. Verify the data was loaded successfully.
+13. Stop the Nginx service on the staging servers.
+14. Restore the[ staging backup](restic_backup.md#restore-a-postgresql-database) to return the staging servers to their initial state.
+15. Restart the Nginx service to the staging servers.
