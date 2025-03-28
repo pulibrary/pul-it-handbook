@@ -30,7 +30,7 @@ The ezproxy application depends on ACME certificates. There is no automatic way 
  
 When a new cert is added and made active in the application, there is a manual registration process to ensure that the campus IDP is using the new certificate that has been made active. 
 
-  * Login into the ezproxy [URL](https://login.ezproxy.princeton.edu/admin)
+  * Login into ezproxy [URL](https://login.ezproxy.princeton.edu/admin)
   * Select Manage SSL Certificates
   * View the active certificate by clicking on the number in the left column
   * Click the link to "View Shibboleth metadata for this certificate without Single Logout enabled"
