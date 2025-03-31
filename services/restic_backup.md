@@ -117,7 +117,7 @@ For mariadb do the following:
 
 ## Retrieve a backup
 
-To restore the latest usable postgresql backup from restic, run the following commands:
+To retrieve the latest usable postgresql backup from restic, run the following commands:
 
   1. As the postgresql user run the following steps:
      ```bash
@@ -151,7 +151,7 @@ To retrieve the latest usable mariadb backup from restic, run the following comm
      This will retrieve your database backup and place it into `/tmp/mariadb`
 
 ## Restore a postgreSQL database
-To restore a postgreSQL database from a backup, unzip the database backup file and use the database utility to restore:
+To restore a postgreSQL database from the backup you just retrieved, unzip the database backup file and use the database utility to restore:
 
   1. Unzip the database backup files:
      ```bash
