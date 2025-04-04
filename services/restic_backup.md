@@ -129,7 +129,7 @@ To retrieve the latest usable postgresql backup from restic, run the following c
       `restic -r gs:postgres-version-backup:yourpath -p /var/lib/postgresql/.restic.pwd snapshots`
       
       
-  3. Find the hash key of the database you want to restore from and dump it with the following commands. In our example the hash will be `4f155a5e`
+  3. Find the hash key of the database you want to retrieve a backup from and dump it with the following commands. In our example the hash will be `4f155a5e`
 
      Results of postgres-version-backup:yourpath below can be seen if you run `env` as a postgres user in the `RESTIC_REPOSITORY` variable
      ```bash
@@ -144,7 +144,7 @@ To retrieve the latest usable mariadb backup from restic, run the following comm
       source .env.restic
       restic -r gs:mariadb-version-backup:yourpath -p /home/pulsys/.restic.pwd snapshots
       ```
-  2. Find the hash key of the database you want to restore from and dump it with the following commands. In our example the hash will be `4f155a5e`
+  2. Find the hash key of the database you want to retrieve a backup from and dump it with the following commands. In our example the hash will be `4f155a5e`
      ```bash
      restic -r gs:mariadb-version-backup:yourpath -p /home/pulsys/.restic.pwd restore 4f155a5e -t /tmp
      ```
