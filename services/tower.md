@@ -93,7 +93,7 @@ Our custom EEs are built from the YAML files in the ``tower_ees`` directory of t
   * Create or Edit an EE definition file as needed: ``vim my-execution-environment.yml``
   * Run podman-desktop.
   * Run [ansible-builder](https://ansible.readthedocs.io/projects/builder/en/stable/index.html): ``ansible-builder build -v3 -f my-execution-environment.yml -t <TagOrNameOfEE> --squash all``
-      * On an ARM machine, you may instead `cd context && podman manifest create execution-environment-manifest && cd .. && podman build --platform linux/amd64,linux/arm64  --manifest execution-environment-manifest -f context/Containerfile -t core2dot15:1.3`
+      * On an M-series (ARM) machine, you may instead `cd context && podman manifest create execution-environment-manifest && cd .. && podman build --platform linux/amd64  --manifest execution-environment-manifest -f context/Containerfile -t core2dot15:1.3`
   * Note the hash of the built image in the output of the ansible-builder command.
   * Push the new image to quay.io: ``podman push <hash-of-image-ID> quay.io/pulibrary/<name-of-image>:<image-tag>``. This command also creates a new repository on quay.io if needed.
   * If the repository is new, log into quay.io and grant the pulibrary+ansibletower robot user `Read` permissions to it.
