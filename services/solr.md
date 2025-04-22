@@ -24,3 +24,20 @@ The solr admin interface shows (among other things):
 
 ### Monitoring Solr health in Datadog
 Datadog also has a [solr health dashboard](https://app.datadoghq.com/dashboard/ce3-krc-gid/solr-health-dashboard).
+
+### Updating replication factor for a collection
+
+1. Open a Solr console in [pul_solr](https://github.com/pulibrary/pul_solr)
+1. Under Collections
+    1. Look at the collection alias and see which one is currently in service
+
+    2. Click on Add Collection
+        1. Give it a recognizable, but different name. If the current one is `dss-staging1`, use `dss-staging2`, for example.
+        2. Choose the appropriate config set for the application
+        3. Choose replication factor of 3
+
+    3. Delete the alias
+    4. Recreate the alias dss-* (staging/prod) and point it to the new collection you just created
+
+2. Re-index the collection
+3. Delete the old collection
