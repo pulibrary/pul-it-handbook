@@ -125,21 +125,21 @@ To restore from a GUI
     brew install restic-browser
     ```
 
-  2. Launch the application
+  2. In the 'Applications' directory find and launch 'Restic-Browser'.
 
-     Create a new Location:
+     Create a new Location (this may take some time):
 
        * In the **Type**: Select Google Cloud Storage
-       * In the **Bucket**: Enter the name and path of your bucket. (e.g., gs:postgres-15-backup:daily)
+       * In the **Bucket**: Enter the name and path of your bucket in all lower case. (e.g., gs:postgres-15-backup:daily) - you can see a list of all [our PUL buckets](https://console.cloud.google.com/storage/browser)
        * In the **GOOGLE_PROJECT_ID**: Enter pul-gcdc
        * In the **GOOGLE_APPLICATION_CREDENTIALS**: Get a copy of the credentials and place them at a known location
-         * Log into `lib-postgres-prod1` and download or copy the credentials with the following
+         * Log into `lib-postgres-prod1` (`ssh pulsys@lib-postgres-prod1`) and download or copy the credentials with the following
            ```bash
            sudo su - postgres
            cat ~/.restic/pul-gcdc-UUIDnumber.json
            ```
        * In the **Repository Password**: Get the contents from the server
-         * Log into `lib-postgres-prod1` and get the password with the following
+         * Log into `lib-postgres-prod1` (`ssh pulsys@lib-postgres-prod1`) and get the password with the following
            ```bash
            sudo su - postgres
            cat ~/.restic.pwd
