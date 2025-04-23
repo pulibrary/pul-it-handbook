@@ -115,9 +115,9 @@ For mariadb do the following:
     0 5 * * * /home/pulsys/.restic/maria_backup.sh
     ```
 
-## Restore from a backup
+## Retrieve a backup
 
-To restore the latest usable postgresql backup from restic, run the following commands:
+To retrieve the latest usable postgresql backup from restic, run the following commands:
 
   1. As the postgresql user run the following steps:
      ```bash
@@ -129,7 +129,7 @@ To restore the latest usable postgresql backup from restic, run the following co
       `restic -r gs:postgres-version-backup:yourpath -p /var/lib/postgresql/.restic.pwd snapshots`
       
       
-  3. Find the hash key of the database you want to restore from and dump it with the following commands. In our example the hash will be `4f155a5e`
+  3. Find the hash key of the database you want to retrieve a backup from and dump it with the following commands. In our example the hash will be `4f155a5e`
 
      Results of postgres-version-backup:yourpath below can be seen if you run `env` as a postgres user in the `RESTIC_REPOSITORY` variable
      ```bash
@@ -144,19 +144,21 @@ To retrieve the latest usable mariadb backup from restic, run the following comm
       source .env.restic
       restic -r gs:mariadb-version-backup:yourpath -p /home/pulsys/.restic.pwd snapshots
       ```
-  2. Find the hash key of the database you want to restore from and dump it with the following commands. In our example the hash will be `4f155a5e`
+  2. Find the hash key of the database you want to retrieve a backup from and dump it with the following commands. In our example the hash will be `4f155a5e`
      ```bash
      restic -r gs:mariadb-version-backup:yourpath -p /home/pulsys/.restic.pwd restore 4f155a5e -t /tmp
      ```
      This will retrieve your database backup and place it into `/tmp/mariadb`
 
-To restore a postgreSQL database from a backup, unzip the database backup file and use the database utility to restore:
+## Restore a postgreSQL database
+To restore a postgreSQL database from the backup you just retrieved, unzip the database backup file and use the database utility to restore:
 
   1. Unzip the database backup files:
      ```bash
      gzip -d /tmp/postgresql/<your_backup_file>.sql.gz
      ```
-  1. As the `postgres` user, start the restore process:
+  2. The restore will not work if there are open connections to the database. Stop the Nginx service on VMs that connect to the target database and wait for the connections to close.
+  3. As the `postgres` user, start the restore process:
      ```bash
      psql -d <database_name> -f /tmp/postgresql/<your_backup_file>.sql
      ```
