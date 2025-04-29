@@ -29,21 +29,7 @@ Datadog also has a [solr health dashboard](https://app.datadoghq.com/dashboard/c
 
 1. Open a Solr console in [pul_solr](https://github.com/pulibrary/pul_solr)
 1. Under Collections
-    1. Look at the collection alias and see which one is currently in service
-
-    2. Click on Add Collection
-        1. Give it a recognizable, but different name. If the current one is `dss-staging1`, use `dss-staging2`, for example.
-        2. Choose the appropriate config set for the application
-        3. Choose a replication factor of 3
-
-    3. Create an alias dss-rebuild (staging/prod) and point it to the new collection you just created
-
-2. Index the application into the new collection
-3. Deploy the application to point to the new alias
-4. Delete the original alias
-5. Recreate the original alias to point to the new collection
-6. Delete the old collection
-7. Deploy the application to point to the original alias
-8. Delete the new alias
-
-You can skip the steps involving creating a rebuild alias for non-production deployments and just re-create the alias to point to the new collection
+    1. Select the collection you want to adjust the number of replicas for
+    2. Click on the shard on the right side of the UI to show its details
+    3. Add or remove replicas until you have the desired number
+    4. Repeat for all shards in the collection
