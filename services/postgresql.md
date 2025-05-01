@@ -30,7 +30,7 @@ Both steps are set in the `postgres` user's crontab. To view them:
 
 Our postgres 15 servers (including Figgy and Geoserver) have warm standby capability configured. We maintain two servers for each cluster - a leader and a follower. Add more details on the postgresql cluster and replication here.
 
-## Allowing database access from a new VM
+## Allowing postgresql database access from a new VM
 
 When you create a new application or add a new machine for an existing application, you must configure the postgresql cluster to allow database access from the new VM(s). This task is now automated! If you see the error below you need to update your group vars. The example below assumes postgres version 13 and staging machine. After updating your group vars, rerun your playbook.
 ```
