@@ -16,7 +16,7 @@ Navigate to the correct folder for the application you are seeking. By default, 
 
 ### How our backups work
 
-The postgres 15 backups (including Figgy and Geoserver) are run using [restic](https://restic.readthedocs.io/en/latest/010_introduction.html), see their docs for more information.
+The postgres 15 backups (including Figgy and Geoserver) are run using [restic](https://restic.readthedocs.io/en/latest/010_introduction.html), see their docs and the [database_backups.md file](database_backups.md) for more information.
 
 The postgres 13 backups are run using postgres tools. These backups run in two stages:
 1. We run the postgresql script (`/var/lib/postgresql/backup/autopgsqlbackup.sh`) first. The script creates backup files in the `/var/lib/postgresql/postgres_backup/13/daily/` directory.

@@ -204,8 +204,8 @@ Note: The `.sql` file includes the name of the database that was backed up - so 
 
 ## Testing production database backups by restoring them to the staging postgres
 
-1. On the staging leader, retrieve the [Restic backup](restic_backup.md#retrieve-a-backup).
-2. On the production leader, retrieve the [Restic backup](restic_backup.md#retrieve-a-backup).
+1. On the staging leader, retrieve the [Restic backup](#retrieve-a-backup).
+2. On the production leader, retrieve the [Restic backup](#retrieve-a-backup).
 3. Use scp to transfer the production backup to your local machine.
     ```bash
     scp pulsys@<server_host>.princeton.edu:/tmp/postgresql/<backup_name>.sql.gz ./
@@ -236,9 +236,9 @@ For Example:
     Replace `bibdata_alma_production` with `bibdata_alma_staging`.
 There should be three instances of the database name in the file.
 9. Stop the Nginx service on the the staging servers that use the database you want to restore. This will close the connections and allow the database to be recreated.
-10. On the staging leader server, wait until the connections have closed, then [restore the production backup](restic_backup.md#restore-a-postgresql-database).
+10. On the staging leader server, wait until the connections have closed, then [restore the production backup](#restore-a-postgresql-database).
 11. Restart the Nginx service on the staging servers.
 12. Verify the data was loaded successfully.
 13. Stop the Nginx service on the staging servers.
-14. Restore the[ staging backup](restic_backup.md#restore-a-postgresql-database) to return the staging servers to their initial state.
+14. Restore the[ staging backup](#restore-a-postgresql-database) to return the staging servers to their initial state.
 15. Restart the Nginx service to the staging servers.
