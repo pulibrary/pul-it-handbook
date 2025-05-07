@@ -197,3 +197,21 @@ To restore a postgreSQL database from the backup you just retrieved, unzip the d
      Add `-a` if you want to print the results to STDOUT.
      
 Note: The `.sql` file includes the name of the database that was backed up - so it is different for production and staging. If you are restoring a production database backup into the staging database cluster, you must edit the `.sql` file and change the database name everywhere it appears.
+
+## The above instructions did not work as expected
+To restore from a restic backup the following steps had to be done:
+
+For example:
+
+1. Drop the database that needs to be restored.
+   ```bash
+   postgres@lib-postgres-staging1:~$ dropdb approvals_staging
+   ```
+2. Recreate the database that needs to be restored.
+   ```bash
+   postgres@lib-postgres-staging1:~$ createdb -O approvals_staging approvals_staging
+   ```
+3. scp over the backup file to a client host and run the restore.  This will set ownership of the tables to the restore user.
+   ```bash
+   pulsys@lib-approvals-staging1:~$ psql -h lib-postgres-staging1.princeton.edu -U approvals_staging -d approvals_staging -f /tmp/approvals_staging.sql
+   ```
