@@ -6,13 +6,29 @@ Note: these instructions were tested on a staging system in May, 2025. We hope t
 
 If you are dealing with a database failure of some kind and need to restore a database from a backup, take a deep breath and follow these instructions:
 
-1. On the leader of the database cluster, retrieve the [Restic backup](#retrieve-a-backup).
-1. If necessary, as the `postgres` user, move the file from `/tmp` to `/tmp/posgressql`
+1. On the leader of the database cluster, retrieve the [Restic backup](#Retrieve-from-the-CLI).
+1. Use scp to transfer the backup to your local machine.
+    ```bash
+    scp pulsys@<server_host>.princeton.edu:/tmp/postgresql/<backup_name>.sql.gz ./
+    ```
+    For Example:
+    ```bash
+    scp pulsys@lib-postgres-prod1.princeton.edu:/tmp/postgresql/bibdata_alma_production.sql.gz ./
+    ```
+1. Use scp to transfer the backup from your local machine to the web server.
+    ```bash
+    scp <backup_name.sql.gz pulsys@<web_server_host>:/tmp
+    ```
+    For Example:
+    ```bash
+    scp bibdata_alma_production.sql.gz pulsys@bibdata-prod1:/tmp
+    ```
+1. ???? On the web server, `chown` the file (which user should own this file? `pulsys`? or the rails user? there won't be a `postgres` user . . . )
 1. Unzip the backup files.
     ```bash
     gzip -d <backup_name>.sql.gz
     ```
-1. View the backup .sql file to confirm that it references the correct database name.
+1. View the backup `.sql` file to confirm that it references the correct database name.
 1. Stop the Nginx service on all web servers that use the database you want to restore. This will close the connections and allow the database to be recreated.
 1. On the database server, wait until the connections have closed. You can check for active connections with `ps aux | grep postgres | grep <database-name>`
 1. The restore process is designed to drop the original database and recreate it before restoring the tables from the backup, but right now those tasks fail, so we need to do them manually.
@@ -173,7 +189,7 @@ For mariadb do the following:
 
 # Retrieving a database backup
 
-To restore from a GUI
+## Retrieve from the GUI
 
   1. Install the restic-browser app with
 
@@ -200,6 +216,8 @@ To restore from a GUI
            sudo su - postgres
            cat ~/.restic.pwd
            ```
+
+## Retrieve from the CLI
 
 To retrieve the latest usable postgresql backup from restic, run the following commands:
 
