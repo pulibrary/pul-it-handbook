@@ -241,8 +241,25 @@ To restore a postgreSQL database from the backup you just retrieved, unzip the d
      ```bash
      gzip -d /tmp/postgresql/<your_backup_file>.sql.gz
      ```
-  2. The restore will not work if there are open connections to the database. Stop the Nginx service on VMs that connect to the target database and wait for the connections to close.
-  3. As the `postgres` user, start the restore process:
+  1. The restore will not work if there are open connections to the database. Stop the Nginx service on VMs that connect to the target database and wait for the connections to close.
+  1. The restore process is designed to drop the original database and recreate it before restoring the tables from the backup, but right now those tasks fail, so we need to do them manually.
+      1. On the database server, as the postgres user, manually drop the existing/old/corrupted database:
+         ```bash
+         dropdb <database-name>
+         ```
+      1. On the database server, as the postgres user, manually recreate an empty database to restore to:
+         ```bash
+         createdb -0 <database-name> <database-owner>
+         ```
+1. On the WEB SERVER, restore the tables from the backup file - this allows you to pass the correct database owner:
+     ```bash
+     psql -h <FQDN-of-database-server> -U <database-owner> -d <database-name> -f </path/to/backup-file.sql>
+     ```
+     For example:
+     ```bash
+    psql -h lib-postgres-prod1.princeton.edu -U approvals_prod -d approvals_prod -f /tmp/approvals_prod.sql
+     ```
+  1. Alternatively, you can start the restore process as the `postgres` user on the database server:
      ```bash
      psql -d <database_name> -f /tmp/postgresql/<your_backup_file>.sql
      ```
@@ -251,7 +268,24 @@ To restore a postgreSQL database from the backup you just retrieved, unzip the d
      psql -d bibdata_alma_staging -f /tmp/postgresql/bibdata_alma_staging.sql
      ```
      Add `-a` if you want to print the results to STDOUT.
-
+  1. On the database server, log into postgres (as the postgres user, do `psql`). Confirm that the database exists and has tables that are owned by the correct user.
+     ```bash
+     postgres=# \c <database-name>
+     You are now connected to database "<database-name>" as user "postgres".
+     <database-name> =# \dt
+     (output omitted)
+     <database-name> =# \q
+     ```
+     If the tables are owned by the `postgres` user, you did the restore from the database server. To fix table ownership, run this as the postgres user:
+     ```bash
+     for tbl in `psql -qAt -c "select tablename from pg_tables where schemaname = 'public';" <database-name>` ; do  psql -c "alter table \"$tbl\" owner to <database-owner>" app ; done
+     ```
+     For example:
+     ```bash
+     for tbl in `psql -qAt -c "select tablename from pg_tables where schemaname = 'public';" approvals_staging` ; do  psql -c "alter table \"$tbl\" owner to approvals_staging" app ; done
+     ```
+  1. Restart the Nginx service on the web servers.
+  1. Log into the service and verify the data was loaded successfully.
 Note: The `.sql` file includes the name of the database that was backed up - so it is different for production and staging. If you are restoring a production database backup into the staging database cluster, you must edit the `.sql` file and change the database name everywhere it appears.
 
 ## Testing production database backups by restoring them to the staging postgres
