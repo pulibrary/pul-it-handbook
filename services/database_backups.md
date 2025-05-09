@@ -1,5 +1,57 @@
 # Database backup documentation
 
+## Emergency restore instructions
+
+Note: these instructions were tested on a staging system in May, 2025. We hope to refine the process soon.
+
+If you are dealing with a database failure of some kind and need to restore a database from a backup, take a deep breath and follow these instructions:
+
+1. On the leader of the database cluster, retrieve the [Restic backup](#retrieve-a-backup).
+1. If necessary, as the `postgres` user, move the file from `/tmp` to `/tmp/posgressql`
+1. Unzip the backup files.
+    ```bash
+    gzip -d <backup_name>.sql.gz
+    ```
+1. View the backup .sql file to confirm that it references the correct database name.
+1. Stop the Nginx service on all web servers that use the database you want to restore. This will close the connections and allow the database to be recreated.
+1. On the database server, wait until the connections have closed. You can check for active connections with `ps aux | grep postgres | grep <database-name>`
+1. The restore process is designed to drop the original database and recreate it before restoring the tables from the backup, but right now those tasks fail, so we need to do them manually.
+1. On the database server, as the postgres user, manually drop the existing/old/corrupted database:
+     ```bash
+     dropdb <database-name>
+     ```
+1. On the database server, as the postgres user, manually recreate an empty database to restore to:
+     ```bash
+     createdb -0 <database-name> <database-owner>
+     ```
+1. On the WEB SERVER, restore the tables from the backup file - this allows you to pass the correct database owner:
+     ```bash
+     psql -h <FQDN-of-database-server> -U <database-owner> -d <database-name> -f </path/to/backup-file.sql>
+     ```
+     For example:
+     ```bash
+    psql -h lib-postgres-prod1.princeton.edu -U approvals_prod -d approvals_prod -f /tmp/approvals_prod.sql
+     ```
+1. On the database server, log into postgres (as the postgres user, do `psql`). Confirm that the database exists and has tables that are owned by the correct user.
+     ```bash
+    postgres=# \c <database-name>
+    You are now connected to database "<database-name>" as user "postgres".
+    <database-name> =# \dt
+    (output omitted)
+    <database-name> =# \q
+     ```
+    If the tables are owned by the `postgres` user, you did the restore from the database server. To fix table ownership, run this as the postgres user:
+     ```bash
+    for tbl in `psql -qAt -c "select tablename from pg_tables where schemaname = 'public';" <database-name>` ; do  psql -c "alter table \"$tbl\" owner to <database-owner>" app ; done
+     ```
+     For example:
+     ```bash
+     for tbl in `psql -qAt -c "select tablename from pg_tables where schemaname = 'public';" approvals_staging` ; do  psql -c "alter table \"$tbl\" owner to approvals_staging" app ; done
+     ```
+1. Restart the Nginx service on the web servers.
+1. Log into the service and verify the data was loaded successfully.
+1. Do whatever else is appropriate to end the incident, then take another deep breath.
+
 ## Setting up automated database backups with restic
 
 ### Before you begin
