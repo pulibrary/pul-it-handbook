@@ -16,14 +16,14 @@ If you are dealing with a database failure of some kind and need to restore a da
 1. Stop the Nginx service on all web servers that use the database you want to restore. This will close the connections and allow the database to be recreated.
 1. On the database server, wait until the connections have closed. You can check for active connections with `ps aux | grep postgres | grep <database-name>`
 1. The restore process is designed to drop the original database and recreate it before restoring the tables from the backup, but right now those tasks fail, so we need to do them manually.
-1. On the database server, as the postgres user, manually drop the existing/old/corrupted database:
-     ```bash
-     dropdb <database-name>
-     ```
-1. On the database server, as the postgres user, manually recreate an empty database to restore to:
-     ```bash
-     createdb -0 <database-name> <database-owner>
-     ```
+    1. On the database server, as the postgres user, manually drop the existing/old/corrupted database:
+         ```bash
+         dropdb <database-name>
+         ```
+    1. On the database server, as the postgres user, manually recreate an empty database to restore to:
+         ```bash
+         createdb -0 <database-name> <database-owner>
+         ```
 1. On the WEB SERVER, restore the tables from the backup file - this allows you to pass the correct database owner:
      ```bash
      psql -h <FQDN-of-database-server> -U <database-owner> -d <database-name> -f </path/to/backup-file.sql>
