@@ -23,8 +23,7 @@ If you are dealing with a database failure of some kind and need to restore a da
     ```bash
     scp bibdata_alma_production.sql.gz pulsys@bibdata-prod1:/tmp
     ```
-1. ???? On the web server, `chown` the file (which user should own this file? `pulsys`? or the rails user? there won't be a `postgres` user . . . )
-1. Unzip the backup files.
+1. On the web server, as the pulsys user, unzip the backup files.
     ```bash
     gzip -d <backup_name>.sql.gz
     ```
@@ -40,7 +39,7 @@ If you are dealing with a database failure of some kind and need to restore a da
          ```bash
          createdb -0 <database-name> <database-owner>
          ```
-1. On the WEB SERVER, restore the tables from the backup file - this allows you to pass the correct database owner:
+1. On the web server, run the command to restore the tables from the backup file - the command passes the correct database owner:
      ```bash
      psql -h <FQDN-of-database-server> -U <database-owner> -d <database-name> -f </path/to/backup-file.sql>
      ```
