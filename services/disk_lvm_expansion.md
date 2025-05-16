@@ -8,6 +8,8 @@ When building a new VM, you need to expand the size of the main disk and also ex
 
 ## Expand the size of the main disk
 
+This step does not need to be performed on a new Rock VM as they are created with the full 30GB readily available.
+
 On the main disk, you just need to make the logical volume (LV) take up all the space it has available. 
 
 ```bash 
@@ -29,7 +31,7 @@ When you add a second (or third, etc.) disk to a VM, you must incorporate it int
 
 Confirm the available space both before and after these six steps.
 
-### Cheatsheet
+### Steps for Ubuntu VMs
 
 These commands match the steps above, using the current default values for the disk, physical volume, volume group, and logical volume:
 
@@ -48,6 +50,28 @@ sudo pvcreate /dev/sdb1
 sudo vgextend ubuntu-vg /dev/sdb1
 sudo lvextend /dev/ubuntu-vg/ubuntu-lv /dev/sdb1
 sudo resize2fs /dev/ubuntu-vg/ubuntu-lv
+df -h
+```
+
+### Steps for Rocky VMs
+
+These commands match the steps above, using the current default values for the disk, physical volume, volume group, and logical volume:
+
+```bash
+df -h
+for host in /sys/class/scsi_host/*; do echo "- - -" | sudo tee $host/scan; ls /dev/sd* ; done
+sudo fdisk /dev/sda
+```
+
+This is where the interactive script kicks off. Responses to the `fdisk` interactive script in order (press <Enter> to accept the default response):
+`n, p, <accept_default>, <accept_default>, <accept_default>, t, 8e, w`
+When the interactive script is done, complete the expansion with these commands:
+
+```bash
+sudo pvcreate /dev/sda1
+sudo vgextend rl /dev/sda1
+sudo lvextend /dev/rl/root /dev/sda1
+sudo xfs_growfs /dev/rl/root
 df -h
 ```
 
