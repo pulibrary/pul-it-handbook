@@ -57,11 +57,13 @@ If you are dealing with a database failure of some kind and need to restore a da
      ```
     If the tables are owned by the `postgres` user, you did the restore from the database server. To fix table ownership, run this as the postgres user:
      ```bash
-    for tbl in `psql -qAt -c "select tablename from pg_tables where schemaname = 'public';" <database-name>` ; do  psql -c "alter table \"$tbl\" owner to <database-owner>" app ; done
+     for tbl in `psql -qAt -c "select tablename from pg_tables where schemaname = 'public';" <database_name>`; do psql -c "alter table public.\"$tbl\" owner to <database_owner>" -d <database_name> -U postgres
+     done
      ```
      For example:
      ```bash
-     for tbl in `psql -qAt -c "select tablename from pg_tables where schemaname = 'public';" approvals_staging` ; do  psql -c "alter table \"$tbl\" owner to approvals_staging" app ; done
+     for tbl in `psql -qAt -c "select tablename from pg_tables where schemaname = 'public';" approvals_staging`; do psql -c "alter table public.\"$tbl\" owner to approvals_staging" -d approvals_staging -U postgres
+     done
      ```
 1. Restart the Nginx service on the web servers.
 1. Log into the service and verify the data was loaded successfully.
