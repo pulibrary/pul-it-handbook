@@ -86,12 +86,14 @@ To add a new code repository to the Deploy Rails template, log into ansible towe
   7. Click `Save`
   8. Go to [ansible tower templates](https://ansible-tower.princeton.edu/#/templates)
   ### Template exists
-  1. Select the template you'd like to automate to deploy to staging or production.
+  1. Go to [Continuous Delivery Deployment](https://ansible-tower.princeton.edu/#/templates/job_template/57/details)
   2. Select tab `Schedules`
   3. Click on `Add` to schedule a new job for this template. 
   4. Provide a `Name` and a `Description` and select the `Start date/time`. 
-  5. Click on `Prompt` and select the desired environment. staging, production or qa.
+  5. Click on `Prompt` and select the desired environment staging, production or qa.
+  6. Select `What codebase do you want to deploy?` and select the application.
   6. Click `Next`
+  7. Click `Save`
   7. Select `Repeat frequency`. Example: Select `Day` to run the job daily.
   8. If needed, update section `Frequency Details`.
   9. If needed, update section `Exceptions`. Example: Select `Add exceptions` and select option `Week`. This will display a new section to select the days of the week you don't want the job to run. If you don't want the job to run on the weekend, select `Sun` and `Sat`. 
