@@ -76,6 +76,29 @@ To add a new code repository to the Deploy Rails template, log into ansible towe
   * Entries are case-sensitive and must match the GitHub repository name exactly.
   * Click `Save`
 
+## Automate continuous deployment
+  1. Go to [Continuous Delivery Deployment](https://ansible-tower.princeton.edu/#/templates/job_template/57/details)
+  2. Select `Survey`
+  3. Click on the `Edit Survey` pencil to the right of `What codebase do you want to deploy?`
+  4. Click on the last entry and press `enter` to add a new entry. 
+  5. Add your choice to the list maintain alphabetical order.  You may have to move other choices down.
+  6. Entries are case-sensitive and must match the GitHub repository name exactly.
+  7. Click `Save`
+  8. Go to [ansible tower templates](https://ansible-tower.princeton.edu/#/templates)
+  ### Template exists
+  1. Select the template you'd like to automate to deploy to staging or production.
+  2. Select tab `Schedules`
+  3. Click on `Add` to schedule a new job for this template. 
+  4. Provide a `Name` and a `Description` and select the `Start date/time`. 
+  5. Click on `Prompt` and select the desired environment. staging, production or qa.
+  6. Click `Next`
+  7. Select `Repeat frequency`. Example: Select `Day` to run the job daily.
+  8. If needed, update section `Frequency Details`.
+  9. If needed, update section `Exceptions`. Example: Select `Add exceptions` and select option `Week`. This will display a new section to select the days of the week you don't want the job to run. If you don't want the job to run on the weekend, select `Sun` and `Sat`. 
+  10. Click `Save`
+  ### Template does not exist
+  * Following the steps in `Adding templates to Tower` Create a template for the application and follow the above steps in `Template exists`.
+
 ## Execution environments (EEs) in Tower
 
 Jobs in Tower run inside containers called execution environments, or EEs. In our old Tower environment, we ran everything on the default EE and installed the Ansible collections we needed into the EE at runtime. Now we can build custom EEs, building in the collections and other tools we need for each template ahead of time.
