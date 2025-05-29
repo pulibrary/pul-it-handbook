@@ -41,7 +41,6 @@ been made to this file.
 # Co-authored-by: Francis Kayiwa <kayiwa@users.noreply.github.com>
 # Co-authored-by: G. Philippe Menos <gpmenos@users.noreply.github.com>
 # Co-authored-by: Hector Correa <hectorcorrea@users.noreply.github.com>
-# Co-authored-by: Isha Sinha <ishasinha1@users.noreply.github.com>
 # Co-authored-by: James R. Griffin III <jrgriffiniii@users.noreply.github.com>
 # Co-authored-by: Jane Sandberg <sandbergja@users.noreply.github.com>
 # Co-authored-by: Jaymee Hyppolite <jaymeeh@users.noreply.github.com>
@@ -49,13 +48,13 @@ been made to this file.
 # Co-authored-by: Kate Lynch <kelynch@users.noreply.github.com>
 # Co-authored-by: Kevin Reiss <kevinreiss@users.noreply.github.com>
 # Co-authored-by: Kim Leaman <kelea99@users.noreply.github.com>
-# Co-authored-by: Liz Garcia <lizgarciao@users.noreply.github.com>
 # Co-authored-by: Mark Zelesky <mzelesky@users.noreply.github.com>
 # Co-authored-by: Max Kadel <maxkadel@users.noreply.github.com>
 # Co-authored-by: Michelle Liu <m-ichelleliu@users.noreply.github.com>
 # Co-authored-by: Rebecca Sutton Koeser <rlskoeser@users.noreply.github.com>
 # Co-authored-by: regineheberlein <regineheberlein@users.noreply.github.com>
 # Co-authored-by: Robert-Anthony Lee-Faison <leefaisonr@users.noreply.github.com>
+# Co-authored-by: Ryan Jensen <RyanAJensen@users.noreply.github.com>
 # Co-authored-by: Ryan Laddusaw <rladdusaw@users.noreply.github.com>
 # Co-authored-by: Shaun Ellis <sdellis@users.noreply.github.com>
 # Co-authored-by: Sean Warren <seanwarren77@users.noreply.github.com>
@@ -63,8 +62,6 @@ been made to this file.
 # Co-authored-by: Tom Ventimiglia <tventimi@users.noreply.github.com>
 # Co-authored-by: Trey Pendragon <tpendragon@users.noreply.github.com>
 # Co-authored-by: Vickie Karasic <vickiekarasic@users.noreply.github.com>
-# Co-authored-by: Vivian Ha <vh8154@users.noreply.github.com>
-# Co-authored-by: Winsice Ng <winsice-ng@users.noreply.github.com>
 #
 # Include a link to the ticket, if any.
 ```
