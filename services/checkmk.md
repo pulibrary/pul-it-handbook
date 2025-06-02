@@ -1,5 +1,8 @@
 # CheckMK
 
+checkmk is at https://pulmonitor.princeton.edu
+the staging instance is at https://pulmonitor-staging.princeton.edu
+
 [CheckMK docs](https://docs.checkmk.com/latest/en/). CheckMK is a tool we use for basic monitoring, including uptime, memory/CPU/disk usage, and more. 
 
 The staging VM for CheckMK is `pulcheck-staging1`. The production VM for CheckMK is `pulcheck-prod1`.
