@@ -74,6 +74,7 @@ brew install gpg
 brew install postgres
 brew install --cask lando
 brew install asdf
+brew install libyaml
 ```
 
 
