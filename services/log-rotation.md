@@ -4,7 +4,7 @@ Logs are an important source of information about our services and systems. Howe
 
 ## Log Rotation
 
-We rotate log files on the VMs and other machines that generate them, to prevent the logs from using up all the available disk space. Log rotation happens on a schedule (usually daily, but sometimes more or less frequently) and also by size - if a log grows beyond a set size, it gets rotated sooner than the schedule would suggest. 
+We rotate log files on the VMs and other machines that generate them, to prevent the logs from using up all the available disk space. Log rotation happens on a schedule (usually daily, but sometimes more or less frequently) and also by size - if a log grows beyond a set size, it gets rotated sooner than the schedule would suggest. We monitor log rotation and sudden changes in log size to help manage log rotation and retention.
 
 ## Log Retention
 
@@ -24,4 +24,4 @@ We collect some logs in our consolidated logging and metrics system. We select l
 
 ### Remote storage
 
-We keep compressed copies of all logs for a longer period of time in "cold storage", making them available for forensic examination if needed.
+We keep compressed copies of certain logs for a longer period of time in "cold storage", making them available for forensic examination if needed.
