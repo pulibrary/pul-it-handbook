@@ -14,19 +14,150 @@ There is a [ServiceNow form](https://princeton.service-now.com/service?id=sc_cat
 
 Select the certificate you want to revoke (remember each site on the load balancers has two certs, one for each load balancer), enter a reason, and hit Submit. The process is very quick - refresh the form to confirm that the revoked certificate is no longer listed.
 
+## Verifying certbot certificate renewals
+To verify that a certificate on a server will auto-renew:
+
+sudo certbot --standalone --non-interactive --agree-tos --email simonlee@princeton.edu --server https://acme.sectigo.com/v2/InCommonRSAOV --eab-kid  <certbot-key-eab-kid> --eab-hmac-key <certbot-key-eab-hmac-key> renew --dry-run
+
+This command checks all certs that certbot knows about on that server.
+
+## Viewing certificates in Sectigo
+Our certificate management system is Sectigo. Operations folks can [log into Sectigo](https://cert-manager.com/customer/InCommon) using their alias email accounts and individual passwords. We can view certificate status there, but we cannot revoke or renew certificates there.
+
 ## Managing TLS certificates for sites that do not run on our load balancer
-We have a few sites that we do not serve from the load balancers. The certs for these sites must be renewed and deployed manually. Here is the current list:
+
+We have a few sites that we do not serve from the load balancers.
+These certs are not managed by our usual process. These certs cover:
+- sites we do not serve from the load balancers
+- sites without the '.princeton.edu' extension
+- vendor-hosted sites with the '.princeton.edu' extension
+Many of these certs must be deployed manually. Some must also be renewed manually.
+If a private key is kept in princeton_ansible, it is encrypted as a file in the `/keys/` directory of the repo.
+
+Here is the current list:
 
 cicognara.org
-dataspace-staging.princeton.edu
-lib-illsql.princeton.edu
-oar-staging.princeton.edu
+Purpose: public site for the Cicognara collection (a collaborative project)
+Managed: on gandi.net, private key is in princeton_ansible
+Deployed: on the load balancers
 
+dataspace.princeton.edu
+
+dataspace-dev.princeton.edu
+Purpose: dev/staging site for dspace
+Managed: in ServiceNow, private key is on princeton_ansible
+Deployed: on Google cloud, on dev.pulcloud.io
+
+dataspace-staging.princeton.edu
+
+dss2.princeton.edu
+Purpose: secures dataset downloads from a separate server for DSS via a web browser
+Managed: in ServiceNow - John will move to letsencrypt
+Deployed: on the dss2 CentOS VM
+Notes: cannot be a SAN name for the main DSS cert, because we only want to secure this functionality on one machine - can be tricky to maintain because server access requires signing nondisclosure agreements (for protected data)
+
+ezproxy.princeton.edu
+Purpose: allows access to journals by confirming Princeton affiliation
+Managed: on ezproxy-prod1 by letsencrypt
+Deployed: in /etc/letsencrypt/live/ezproxy on the ezproxy-prod1 server
+
+geotaste.pulcloud.io
+Purpose: experimental application for CDH
+Managed: on staging.pulcloud.io by acme-client contacting letsencrypt CA
+Deployed: in /etc/ssl/geotaste.pulcloud.io.fullchain.pem on the staging.pulcloud.io server
+Maintained using `crontab -l` as root
+
+imagecat2.princeton.edu
+Philippe will shut down the server once he has copied whatever we need from it. Once it's gone, we can revoke the cert.
+
+lib-aeon.princeton.edu
+Purpose: redirects traffic to hosted Aeon service at https://princeton.aeon.atlas-sys.com
+Managed: for new site by the vendor
+Deployed: to new site by the vendor
+Notes: We would like to redirect the old URL on the load balancers and power off the old lib-aeon machine, but it still holds the templates for printing Aeon call slips.
+
+lib-gisportal.princeton.edu
+Purpose: for maps (Wangyal)
+Managed: in ServiceNow
+Deployed: in IIS on a physical machine that runs MS HyperV virtualization - cluster of lib-geoserv1 and lib-geoserv2 (not the Lib-Gisportal2 VM) server
+Notes: windows physical machine, you must be an admin on the Windows box, expires 2024/07/30
+
+lib-illsql.princeton.edu
+Purpose: interlibrary loan
+Managed: in ServiceNow
+Deployed: in IIS, on the lib-illiad-new VM
+Notes: Windows VM; cert has a SAN name of lib-illiad.princeton.edu; we hope to migrate this to a hosted platform in 2024
+
+lib-rbrr.princeton.edu
+Purpose: rare books reading room
+Managed: by letsencrypt on lib-rbrr
+Deployed: to a physical server in the reading room - server has an alias of libserv447
+Notes: will be replaced in 2024 by a laptop that does not use the LAN. In the interim we need both this cert and the libserv447 cert.
+
+libserv447.princeton.edu
+Purpose: rare books reading room
+Managed: in ServiceNow
+Deployed: deployed on the lib-rbrr physical machine, see listing for lib-rbrr above
+
+libserv97.princeton.edu
+Purpose: Philippe's test machine, may disappear in 2024
+Managed: in ServiceNow
+Deployed: directly on the libserv97 VM (dev environment)
+
+oar.princeton.edu
+
+oar-dev.princeton.edu
+Purpose: open access repository
+Managed: in ServiceNow, private key is on princeton_ansible
+Deployed: on Google cloud at dev.pulcloud.io
+
+oar-staging.princeton.edu
+Purpose: open access repository
+Managed: in ServiceNow, private key is on princeton_ansible
+Deployed: on Google cloud at staging.pulcloud.io
+
+pulmirror.princeton.edu
+Purpose: distributing Ubuntu packages
+Managed: in ServiceNow, private key is in princeton_ansible
+Deployed: on Google cloud at pulmirror.princeton.edu
+
+simrisk.pulcloud.io
+Purpose: experimental application for CDH
+Managed: on staging.pulcloud.io by acme-client contacting letsencrypt CA
+Deployed: in /etc/ssl/simrisk.pulcloud.io.fullchain.pem on the staging.pulcloud.io server
+Maintained using `crontab -l` as root
+
+tigris.princeton.edu
+Purpose: hosted service for University Records management
+Managed: in ServiceNow, private key is in princeton_ansible
+Deployed: by vendor; to update, email a .pfx file of the cert to support@gimmal.com
+
+#### Tigris
+
+In July of every year [tigris.princeton.edu](tigris.princeton.edu) will get an automatic renewal. The following steps will be needed to ensure the certificate remains renewed. 
+  * Open a ticket with tigris (aka Gimmal) support at support@gimmal.com and ask who should receive the new chained file.
+  * You will need the [vaulted private key](https://github.com/pulibrary/princeton_ansible/blob/main/keys/tigris_princeton_edu_priv.key) and the certificate and intermediate certificate to generate a pfx file that you will ship to the vendor
+
+  ```bash
+  cat ~/path/to/downloads/tigris_princeton_edu_cert.cer ~/path/to/downloads/tigris_princeton_edu_interm.cer > keys/tigris_princeton_edu_chained.pem
+  ```
+
+This will generate a chained file. You will be prompted for a password in the next step.
+
+```bash
+  openssl pkcs12 -export -out tigris_princeton_edu.pfx -inkey tigris_princeton_edu_priv.key -in tigris_princeton_edu_chained.pem
+```
+
+Send the resulting file to the tigris support folks via [the Secure Send Portal](https://securesend.princeton.edu/#/) along with the password used above
+  
 ### Creating certificates for sites that do not run on our load balancers
 1. Create the CSR (certificate signing request) - can be automated with [playbooks/cert_renewal.yml](https://github.com/pulibrary/princeton_ansible/blob/main/playbooks/incommon_certbot.yml)
 2. Submit it to gandi via [this form](https://shop.gandi.net/en/certificate/create)
 3. Your TLS/SSL cert will be created and returned to you via a email within 3 hours from gandi.net
 4. Verify the files you get back and add them to your server configuration.
+
+### Revoking certificates for sites that do not run on our load balancers
+As long as the site has the `.princeton.edu` extension, you can use the [ServiceNow form](https://princeton.service-now.com/service?id=sc_cat_item&sys_id=2e7ffb64dbad9114e8c283aa13961993) to revoke its certificates. See the instructions in the section about sites on the load balancers for more details.
 
 ### Detailed instructions for sites that do not run on our load balancers
 
@@ -176,6 +307,3 @@ Submit the CSR to gandi.net. Use the following guidance:
       ```
 
 [1] Subject Alternative Names are used when multiple domains share the same certificate as shown ![SAN Example](images/san/san_example.png)
-
-### Revoking certificates for sites that do not run on our load balancers
-As long as the site has the `.princeton.edu` extension, you can use the [ServiceNow form](https://princeton.service-now.com/service?id=sc_cat_item&sys_id=2e7ffb64dbad9114e8c283aa13961993) to revoke its certificates. See the instructions in the section about sites on the load balancers for more details.

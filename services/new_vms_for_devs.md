@@ -44,7 +44,7 @@ ssh -L 1082:localhost:80 pulsys@static-tables-staging1.princeton.edu
     - For an example of a more complex setup, see the library website templates - [roles/nginxplus/files/conf/http/templates/libwww-proxy-pass.conf](https://github.com/pulibrary/princeton_ansible/blob/main/roles/nginxplus/files/conf/http/templates/libwww-proxy-pass.conf)
   - First run the incommon_certbot.yml playbook to add certificates for the site to both load balancers, one at a time, e.g.
   ```
-  ansible-playbook playbooks/incommon_certbot.yml --limit lib-adc1.princeton.edu -e domain_name=daviesproject-staging
+  ansible-playbook playbooks/incommon_certbot.yml --limit adc-prod1.princeton.edu -e domain_name=daviesproject-staging
   ```
   - Next run the nginxplus playbook, following the directions in [services/nginxplus.md](https://github.com/pulibrary/pul-it-handbook/blob/main/services/nginxplus.md)
 - You should now be able to see your app in a browser without tunnelling! 

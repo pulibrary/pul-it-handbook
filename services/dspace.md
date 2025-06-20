@@ -42,3 +42,17 @@ either [@jrgriffiniii](https://github.com/jrgriffiniii),
 [@kayiwa](https://github.com/kayiwa), or 
 [@stephayers](https://github.com/stephayers).
 
+## Common DSpace maintenance tasks
+
+When we update packages, the dspace servers sometimes have trouble coping. Check dataspace.princeton.edu after running maintenance. If you see issues, SSH into gcp_dataspace_prod1 and rebuild the project:
+
+```
+sudo su - dspace
+dsbounce
+```
+
+The production dspace machine connects to PostgreSQL on a GCP box. Local IP for that is ``10.64.16.3``. You can use Cloud Shell access from Google Cloud's platform to restart the database if needed:
+
+```
+sudo service postgresql restart
+```

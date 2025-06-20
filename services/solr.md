@@ -4,6 +4,9 @@ Due to latency and throughput issues between our two data centers, all VMs on ou
 ## Deploying solr configs
 Most solr configs are kept in the [pul_solr](https://github.com/pulibrary/pul_solr) repository. Configs are deployed via capistrano, which has been configured to upload config sets and reload collections, to `/solr/pul_solr/` directories on the "leader" box for the Solr cloud. CDH configs go to `/solr/cdh_solr/`. From there the Solr API copies them to Zookeeper for active use.
 
+## Solr backups
+As described in the [pul_solr README](https://github.com/pulibrary/pul_solr/blob/main/README.md), Solr backups are kicked off by a cron job. This cron job gets installed by `whenever` on only one of the VMs that comprise each Solr cloud. The server is defined as the first line of the relevant `solr<version_#>_<env>.rb` file in the [/config/deploy directory](https://github.com/pulibrary/pul_solr/tree/main/config/deploy). To view the cron job, SSH to the correct server and run `sudo crontab -l -u deploy`. The cron job runs a rake task, which in turn creates backup files on a shared, mounted drive at `/mnt/solr_backup/solr<version_#>/<env>/<date>/<index_name>.bk`. The cron job backs up the collections listed in the relevant section of `collections.yml` file in the [/config directory](https://github.com/pulibrary/pul_solr/tree/main/config).
+
 ## Diagnosing Solr issues
 
 ### Accessing the Solr admin interface
@@ -21,3 +24,12 @@ The solr admin interface shows (among other things):
 
 ### Monitoring Solr health in Datadog
 Datadog also has a [solr health dashboard](https://app.datadoghq.com/dashboard/ce3-krc-gid/solr-health-dashboard).
+
+### Updating replication factor for a collection
+
+1. Open a Solr console in [pul_solr](https://github.com/pulibrary/pul_solr)
+1. Under Collections
+    1. Select the collection you want to adjust the number of replicas for
+    2. Click on the shard on the right side of the UI to show its details
+    3. Add or remove replicas until you have the desired number
+    4. Repeat for all shards in the collection

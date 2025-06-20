@@ -16,7 +16,7 @@ Navigate to the correct folder for the application you are seeking. By default, 
 
 ### How our backups work
 
-The postgres 15 backups (including Figgy and Geoserver) are run using [restic](https://restic.readthedocs.io/en/latest/010_introduction.html), see their docs for more information.
+The postgres 15 backups (including Figgy and Geoserver) are run using [restic](https://restic.readthedocs.io/en/latest/010_introduction.html), see their docs and the [database_backups.md file](database_backups.md) for more information.
 
 The postgres 13 backups are run using postgres tools. These backups run in two stages:
 1. We run the postgresql script (`/var/lib/postgresql/backup/autopgsqlbackup.sh`) first. The script creates backup files in the `/var/lib/postgresql/postgres_backup/13/daily/` directory.
@@ -30,7 +30,7 @@ Both steps are set in the `postgres` user's crontab. To view them:
 
 Our postgres 15 servers (including Figgy and Geoserver) have warm standby capability configured. We maintain two servers for each cluster - a leader and a follower. Add more details on the postgresql cluster and replication here.
 
-## Allowing database access from a new VM
+## Allowing postgresql database access from a new VM
 
 When you create a new application or add a new machine for an existing application, you must configure the postgresql cluster to allow database access from the new VM(s). This task is now automated! If you see the error below you need to update your group vars. The example below assumes postgres version 13 and staging machine. After updating your group vars, rerun your playbook.
 ```
