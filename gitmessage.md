@@ -51,6 +51,7 @@ been made to this file.
 # Co-authored-by: Mark Zelesky <mzelesky@users.noreply.github.com>
 # Co-authored-by: Max Kadel <maxkadel@users.noreply.github.com>
 # Co-authored-by: Michelle Liu <m-ichelleliu@users.noreply.github.com>
+# Co-authored-by: Precilla Prempeh <precillap@users.noreply.github.com>
 # Co-authored-by: Rebecca Sutton Koeser <rlskoeser@users.noreply.github.com>
 # Co-authored-by: regineheberlein <regineheberlein@users.noreply.github.com>
 # Co-authored-by: Robert-Anthony Lee-Faison <leefaisonr@users.noreply.github.com>
