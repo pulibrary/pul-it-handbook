@@ -77,6 +77,7 @@ To add a new code repository to the Deploy Rails template, log into ansible towe
   * Click `Save`
 
 ## Automate continuous deployment
+  1. First add the `Tower Continuous Deployment Token` from lastpass into your circleci project settings as an environment variable.
   1. Go to [Continuous Delivery Deployment](https://ansible-tower.princeton.edu/#/templates/job_template/57/details)
   2. Select `Survey`
   3. Click on the `Edit Survey` pencil to the right of `What codebase do you want to deploy?`
