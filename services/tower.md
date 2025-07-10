@@ -73,19 +73,21 @@ To add a new code repository to the Deploy Rails template, log into ansible towe
   * Click on the `Edit Survey` pencil to the right of `What codebase do you want to deploy?`
   * Click into the last choice and hit `Enter` to add another choice
   * Add your choice to the list maintain alphabetical order.  You may have to move other choices down.
+  * Be careful to avoid adding trailing whitespace as you edit!
   * Entries are case-sensitive and must match the GitHub repository name exactly.
   * Click `Save`
 
 ## Automate continuous deployment
   1. First add the `Tower Continuous Deployment Token` from lastpass into your circleci project settings as an environment variable.
   1. Go to [Continuous Delivery Deployment](https://ansible-tower.princeton.edu/#/templates/job_template/57/details)
-  2. Select `Survey`
-  3. Click on the `Edit Survey` pencil to the right of `What codebase do you want to deploy?`
-  4. Click on the last entry and press `enter` to add a new entry. 
-  5. Add your choice to the list maintain alphabetical order.  You may have to move other choices down.
-  6. Entries are case-sensitive and must match the GitHub repository name exactly.
-  7. Click `Save`
-  8. Go to [ansible tower templates](https://ansible-tower.princeton.edu/#/templates)
+  1. Select `Survey`
+  1. Click on the `Edit Survey` pencil to the right of `What codebase do you want to deploy?`
+  1. Click on the last entry and press `enter` to add a new entry. 
+  1. Add your choice to the list maintain alphabetical order.  You may have to move other choices down.
+  1. Be careful to avoid adding trailing whitespace as you edit!
+  1. Entries are case-sensitive and must match the GitHub repository name exactly.
+  1. Click `Save`
+  1. Go to [ansible tower templates](https://ansible-tower.princeton.edu/#/templates)
   ### Template exists
   1. Go to [Continuous Delivery Deployment](https://ansible-tower.princeton.edu/#/templates/job_template/57/details)
   2. Select tab `Schedules`
