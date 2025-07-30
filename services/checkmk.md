@@ -25,20 +25,22 @@ The six CheckMK sites all run on production-level systems. They are:
   - monitors hardware in the New South data center
   - shows only New South monitoring data
   - grants access to Setup for New South infrastructure
-- [AWS]()
+- [AWS](https://pulmonitor-aws.pulcloud.net/aws/)
   - runs on an [EC2 instance](pulmonitor-aws.pulcloud.net)
   - monitors AWS resources
   - shows only AWS monitoring data
   - grants access to Setup for AWS resources
-- [GCP]()
+- [GCP](https://pulmonitor-gcp.pulcloud.io/gcp/)
   - runs on a [GCP instance](pulmonitor-gcp.pulcloud.io)
   - monitors GCP resources
   - shows only GCP monitoring data
   - grants access to Setup for GCP resources
 
 ## Useful GUI pointers
-* To log into the GUI on any of our six sites, use your NetID and password. You must confirm with 2FA, even though the webpage will not prompt you to look at DUO.
-* 
+* To log into the GUI:
+  - on production and staging, enter your NetID and password, then confirm with 2FA (the webpage will not prompt you to look at DUO)
+  - on AWS and GCP, select `Login with Microsoft Azure`
+   
 
 ## Useful CLI commands
 
