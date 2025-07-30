@@ -40,7 +40,8 @@ The six CheckMK sites all run on production-level systems. They are:
 * To log into the GUI:
   - on production and staging, enter your NetID and password, then confirm with 2FA (the webpage will not prompt you to look at DUO)
   - on AWS and GCP, select `Login with Microsoft Azure`
-   
+* To check the version of CheckMK: in the left nav bar, select `Help` - the version is displayed at the top of the popup
+* If you do not see the left nav bar, open the `Display` menu and toggle `Show page navigation`
 
 ## Useful CLI commands
 
