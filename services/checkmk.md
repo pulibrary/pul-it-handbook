@@ -1,11 +1,17 @@
 # CheckMK
 
-checkmk is at https://pulmonitor.princeton.edu
-the staging instance is at https://pulmonitor-staging.princeton.edu
+Our consolidated CheckMK monitoring platform is at https://pulmonitor.princeton.edu.
 
 [CheckMK docs](https://docs.checkmk.com/latest/en/). CheckMK is a tool we use for basic monitoring, including uptime, memory/CPU/disk usage, and more. 
 
-The staging VM for CheckMK is `pulcheck-staging1`. The production VM for CheckMK is `pulcheck-prod1`.
+The main site consolidates monitoring data from six CheckMK sites, all of which run on production-level systems:
+- production (running on `pulmonitor-prod1`) monitors on-prem production systems and services - this is the default site and shows the consolidated view
+- staging (running on `pulmonitor-prod2`) monitors on-prem staging systems and services
+- Forrestal OOBM monitors hardware in the Forrestal data center
+- New South OOBM monitors hardware in the New South data center
+- AWS monitors our AWS resources
+- GCP monitors our GCP resources
+All CheckMK sites are now considered production. 
 
 ## Useful commands
 On a monitored host: 
@@ -15,13 +21,13 @@ to verify that the agent is running successfully and see its parameters.
 
 
 On the CheckMK server:
-* Switch from the 'pulsys' user to the 'pulmonitor' user (`sudo su - pulmonitor` to run in the new user's environment), then execute `cmk --debug -vvn hostname` to look at the connection to a specific host. 
+* Switch from the 'pulsys' user to the site user (site user names match the site names - `production` for the prod site, `staging` for the staging site, etc., so, for example, `sudo su - production` to run in the production environment), then execute `cmk --debug -vvn hostname` to look at the connection to a specific host. 
 * As the 'pulsys' user, do `sudo nc -vz hostname.princeton.edu 6556` to confirm that the agent port is accessible on that host.
-* As the 'pulmonitor' user, run `cmk -R` to restart the checkmk service.
+* As the correct site user, run `cmk -R` to restart the checkmk service.
 
 ## Checking the CheckMK server status
 
-*  You can check the server status with `sudo omd status pulmonitor`
+*  You can check the server status with `sudo omd status <sitename>`
 
 ## Adding a host to CheckMK
 
@@ -37,10 +43,10 @@ On the CheckMK server:
 Our CheckMK servers are set to record all changes as git commits.
 
 * The setting is in Settings . . . General . . . Global Settings in the CheckMK UI.
-* The git repo is in the `/omd/sites/pulmonitor/etc/check_mk` directory on the server. Note that `/omd/sites/pulmonitor` is the home directory of the `pulmonitor` user.
+* The git repo is in the `/omd/sites/<sitename>/etc/check_mk` directory on the server. Note that `/omd/sites/<sitename>` is the home directory of the site-specific user.
 * To check the git history on the server and see what changes have been made:
-  - `sudo su pulmonitor`
-  - `cd /omd/sites/pulmonitor/etc/check_mk`
+  - `sudo su <site-user>`
+  - `cd /omd/sites/<sitename>/etc/check_mk`
   - `git log`
 
 ## Logs
@@ -48,15 +54,11 @@ On the host:
 * The agent seems to log to `/var/log/syslog`.
 
 On the CheckMK server:
-* The server logs to `/opt/omd/sites/pulmonitor/var/log/` and to `/opt/omd/sites/pulmonitor/var/nagios/`. The `/opt/omd/sites/pulmonitor/var/log/notify.log` includes records of Slack (and presumably other) notifications; `/opt/omd/sites/pulmonitor/var/nagios/nagios.log` logs host and service state messages. All logs are owned by the 'pulmonitor' user, but it's probably easier to view them with `sudo less /path/to/log` as the 'pulsys' user.
+* The server logs to `/opt/omd/sites/<sitename>/var/log/` and to `/opt/omd/sites/<sitename>/var/nagios/`. The `/opt/omd/sites/<sitename>/var/log/notify.log` includes records of Slack (and presumably other) notifications; `/opt/omd/sites/<sitename>/var/nagios/nagios.log` logs host and service state messages. All logs are owned by the site user, but it's probably easier to view them with `sudo less /path/to/log` as the 'pulsys' user.
 
 ## Changing the Timezone for CheckMK
 
-We wanted to be able to update the CheckMK timezone to be 'America/NY' so that the times can better coordinate between Slack and CheckMK.
-
-To set the timezone for CheckMK: 
-* Edit `/opt/omd/sites/pulmonitor/etc/environment`, added `TZ=America/New_York`
-* Restart the service with `sudo omd restart pulmonitor`
+We tried updating the CheckMK timezone to be 'America/NY' to coordinate between Slack and CheckMK. We edited `/opt/omd/sites/<sitename>/etc/environment` and added `TZ=America/New_York`, then restarted the service. However, this caused a lot of problems. For now, we are leaving the CheckMK timezone as UTC. 
 
 ## Setting up SSO AuthN/AuthZ
 
