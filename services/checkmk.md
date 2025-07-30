@@ -26,12 +26,12 @@ The six CheckMK sites all run on production-level systems. They are:
   - shows only New South monitoring data
   - grants access to Setup for New South infrastructure
 - [AWS]()
-  - runs on an EC2 instance
+  - runs on an [EC2 instance](pulmonitor-aws.pulcloud.net)
   - monitors AWS resources
   - shows only AWS monitoring data
   - grants access to Setup for AWS resources
 - [GCP]()
-  - runs on a GCP instance
+  - runs on a [GCP instance](pulmonitor-gcp.pulcloud.io)
   - monitors GCP resources
   - shows only GCP monitoring data
   - grants access to Setup for GCP resources
