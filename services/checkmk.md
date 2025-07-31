@@ -16,12 +16,12 @@ The six CheckMK sites all run on production-level systems. They are:
   - shows only staging monitoring data
   - grants access to Setup for staging systems and services
 - [Forrestal OOBM](https://pulmonitor.princeton.edu/forrestal/)
-  - runs on ???
+  - runs on the `pulmonitor` VM on physical host lib-vmserv001m
   - monitors hardware in the Forrestal data center
   - shows only Forrestal monitoring data
   - grants access to Setup for Forrestal infrastructure
 - [New South OOBM](https://pulmonitor.princeton.edu/new_south/)
-  - runs on ???
+  - runs on the `pulmonitor` VM on physical host lib-vmserv002m
   - monitors hardware in the New South data center
   - shows only New South monitoring data
   - grants access to Setup for New South infrastructure
