@@ -1,33 +1,60 @@
 # CheckMK
 
-Our consolidated CheckMK monitoring platform is at https://pulmonitor.princeton.edu.
-
 [CheckMK docs](https://docs.checkmk.com/latest/en/). CheckMK is a tool we use for basic monitoring, including uptime, memory/CPU/disk usage, and more. 
 
-The main site consolidates monitoring data from six CheckMK sites, all of which run on production-level systems:
-- production (running on `pulmonitor-prod1`) monitors on-prem production systems and services - this is the default site and shows the consolidated view
-- staging (running on `pulmonitor-prod2`) monitors on-prem staging systems and services
-- Forrestal OOBM monitors hardware in the Forrestal data center
-- New South OOBM monitors hardware in the New South data center
-- AWS monitors our AWS resources
-- GCP monitors our GCP resources
-All CheckMK sites are now considered production. 
+Our CheckMK monitoring platform is distributed across six sites (for performance reasons). You can see monitoring data from all six sites, as well as administrative data for production services, on the default site at https://pulmonitor.princeton.edu.
 
-## Useful commands
-On a monitored host: 
+The six CheckMK sites all run on production-level systems. They are:
+- [production](https://pulmonitor.princeton.edu)
+  - runs on `pulmonitor-prod1`
+  - monitors on-prem production systems and services
+  - shows the consolidated view of all monitoring data
+  - grants access to Setup for production systems and services
+- [staging](https://pulmonitor.princeton.edu/staging/)
+  - runs on `pulmonitor-prod2`
+  - monitors on-prem staging systems and services
+  - shows only staging monitoring data
+  - grants access to Setup for staging systems and services
+- [Forrestal OOBM](https://pulmonitor.princeton.edu/forrestal/)
+  - runs on the `pulmonitor` VM on physical host lib-vmserv001m
+  - monitors hardware in the Forrestal data center
+  - shows only Forrestal monitoring data
+  - grants access to Setup for Forrestal infrastructure
+- [New South OOBM](https://pulmonitor.princeton.edu/new_south/)
+  - runs on the `pulmonitor` VM on physical host lib-vmserv002m
+  - monitors hardware in the New South data center
+  - shows only New South monitoring data
+  - grants access to Setup for New South infrastructure
+- [AWS](https://pulmonitor-aws.pulcloud.net/aws/)
+  - runs on an [EC2 instance](pulmonitor-aws.pulcloud.net)
+  - monitors AWS resources
+  - shows only AWS monitoring data
+  - grants access to Setup for AWS resources
+- [GCP](https://pulmonitor-gcp.pulcloud.io/gcp/)
+  - runs on a [GCP instance](pulmonitor-gcp.pulcloud.io)
+  - monitors GCP resources
+  - shows only GCP monitoring data
+  - grants access to Setup for GCP resources
+
+## Useful GUI pointers
+* To log into the GUI:
+  - on production and staging, enter your NetID and password, then confirm with 2FA (the webpage will not prompt you to look at DUO)
+  - on AWS and GCP, select `Login with Microsoft Azure`
+* To check the version of CheckMK: in the left nav bar, select `Help` - the version is displayed at the top of the popup
+* If you do not see the left nav bar, open the `Display` menu and toggle `Show page navigation`
+
+## Useful CLI commands
+
+### On a monitored host: 
 * Run `sudo cmk-agent-ctl status` to check the agent status on the host.
 * Run `sudo cmk-agent-ctl dump > cmk-dump.txt`
 to verify that the agent is running successfully and see its parameters.
 
-
-On the CheckMK server:
-* Switch from the 'pulsys' user to the site user (site user names match the site names - `production` for the prod site, `staging` for the staging site, etc., so, for example, `sudo su - production` to run in the production environment), then execute `cmk --debug -vvn hostname` to look at the connection to a specific host. 
-* As the 'pulsys' user, do `sudo nc -vz hostname.princeton.edu 6556` to confirm that the agent port is accessible on that host.
-* As the correct site user, run `cmk -R` to restart the checkmk service.
-
-## Checking the CheckMK server status
-
-*  You can check the server status with `sudo omd status <sitename>`
+### On the CheckMK server:
+* To check the server status: `sudo omd status <sitename>`.
+* To check the connection to a specific host: switch from the 'pulsys' user to the site user (site user names match the site names - `production` for the prod site, `staging` for the staging site, etc., so, for example, `sudo su - production` to run in the production environment), then execute `cmk --debug -vvn hostname`.
+* To confirm that the agent port is accessible on a host: as the 'pulsys' user, do `sudo nc -vz hostname.princeton.edu 6556`.
+* To restart the CheckMK service: switch from the 'pulsys' user to the site user, then run `cmk -R`.
 
 ## Adding a host to CheckMK
 
