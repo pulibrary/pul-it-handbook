@@ -57,12 +57,6 @@ Purpose: allows access to journals by confirming Princeton affiliation
 Managed: on ezproxy-prod1 by letsencrypt
 Deployed: in /etc/letsencrypt/live/ezproxy on the ezproxy-prod1 server
 
-geotaste.pulcloud.io
-Purpose: experimental application for CDH
-Managed: on staging.pulcloud.io by acme-client contacting letsencrypt CA
-Deployed: in /etc/ssl/geotaste.pulcloud.io.fullchain.pem on the staging.pulcloud.io server
-Maintained using `crontab -l` as root
-
 imagecat2.princeton.edu
 Philippe will shut down the server once he has copied whatever we need from it. Once it's gone, we can revoke the cert.
 
@@ -70,7 +64,7 @@ lib-aeon.princeton.edu
 Purpose: redirects traffic to hosted Aeon service at https://princeton.aeon.atlas-sys.com
 Managed: for new site by the vendor
 Deployed: to new site by the vendor
-Notes: We would like to redirect the old URL on the load balancers and power off the old lib-aeon machine, but it still holds the templates for printing Aeon call slips.
+Notes: We would like to redirect the old URL on the load balancers and power off the old lib-aeon machine. The templates for printing Aeon call slips, which used to live on the lib-aeon machine, have been moved to a fileshare called aeonprint on lib-fileshare.
 
 lib-gisportal.princeton.edu
 Purpose: for maps (Wangyal)
@@ -121,7 +115,7 @@ simrisk.pulcloud.io
 Purpose: experimental application for CDH
 Managed: on staging.pulcloud.io by acme-client contacting letsencrypt CA
 Deployed: in /etc/ssl/simrisk.pulcloud.io.fullchain.pem on the staging.pulcloud.io server
-Maintained using `crontab -l` as root
+Maintained using `/etc/daily.local` as root
 
 tigris.princeton.edu
 Purpose: hosted service for University Records management
