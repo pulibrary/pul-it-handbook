@@ -64,7 +64,7 @@ lib-aeon.princeton.edu
 Purpose: redirects traffic to hosted Aeon service at https://princeton.aeon.atlas-sys.com
 Managed: for new site by the vendor
 Deployed: to new site by the vendor
-Notes: We would like to redirect the old URL on the load balancers and power off the old lib-aeon machine, but it still holds the templates for printing Aeon call slips.
+Notes: We would like to redirect the old URL on the load balancers and power off the old lib-aeon machine. The templates for printing Aeon call slips, which used to live on the lib-aeon machine, have been moved to a fileshare called aeonprint on lib-fileshare.
 
 lib-gisportal.princeton.edu
 Purpose: for maps (Wangyal)
