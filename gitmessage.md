@@ -28,13 +28,10 @@ been made to this file.
 # Co-authored-by: Alicia Cozine <acozine@users.noreply.github.com>
 # Co-authored-by: Angel Ruiz <aruiz1789@users.noreply.github.com>
 # Co-authored-by: Anna Headley <hackartisan@users.noreply.github.com>
-# Co-authored-by: Beck Davis <beck-davis@users.noreply.github.com>
-# Co-authored-by: Brionna Johnson <bj4103@users.noreply.github.com>
 # Co-authored-by: Bess Sadler <bess@users.noreply.github.com>
 # Co-authored-by: Carolyn Cole <carolyncole@users.noreply.github.com>
 # Co-authored-by: Christina Chortaria <christinach@users.noreply.github.com>
 # Co-authored-by: Chun Ly <astrochun@users.noreply.github.com>
-# Co-authored-by: Claudia Lee <claudiawulee@users.noreply.github.com>
 # Co-authored-by: Denzil Phillips <dphillips-39@users.noreply.github.com>
 # Co-authored-by: Eliot Jordan <eliotjordan@users.noreply.github.com>
 # Co-authored-by: Esmé Cowles <escowles@users.noreply.github.com>
@@ -49,8 +46,6 @@ been made to this file.
 # Co-authored-by: Kevin Reiss <kevinreiss@users.noreply.github.com>
 # Co-authored-by: Kim Leaman <kelea99@users.noreply.github.com>
 # Co-authored-by: Mark Zelesky <mzelesky@users.noreply.github.com>
-# Co-authored-by: Max Kadel <maxkadel@users.noreply.github.com>
-# Co-authored-by: Michelle Liu <m-ichelleliu@users.noreply.github.com>
 # Co-authored-by: Precilla Prempeh <precillap@users.noreply.github.com>
 # Co-authored-by: Rebecca Sutton Koeser <rlskoeser@users.noreply.github.com>
 # Co-authored-by: regineheberlein <regineheberlein@users.noreply.github.com>
@@ -58,7 +53,6 @@ been made to this file.
 # Co-authored-by: Ryan Jensen <RyanAJensen@users.noreply.github.com>
 # Co-authored-by: Ryan Laddusaw <rladdusaw@users.noreply.github.com>
 # Co-authored-by: Shaun Ellis <sdellis@users.noreply.github.com>
-# Co-authored-by: Sean Warren <seanwarren77@users.noreply.github.com>
 # Co-authored-by: Stephanie Ayers <stephayers@users.noreply.github.com>
 # Co-authored-by: Tom Ventimiglia <tventimi@users.noreply.github.com>
 # Co-authored-by: Trey Pendragon <tpendragon@users.noreply.github.com>
