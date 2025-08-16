@@ -1,18 +1,18 @@
 # Certificate Management
 
-## Creating TLS Certificates
+## Managing TLS Certificates for sites on our load balancers
+Most of our sites are served from our load balancers - any site that is configured by a file in the `nginxplus` role in princeton_ansible is served from the load balancers.
 
-### For sites on the .princeton.edu domain
-1. You can create auto-renewing certificates and keys directly on the load balancers for sites in the .princeton.edu domain. You can create a single certificate and key with [playbooks/incommon_certbot.yml](https://github.com/pulibrary/princeton_ansible/blob/main/playbooks/incommon_certbot.yml) or create a single certificate with multiple names and keys with [playbooks/incommon_certbot_multi.yml](https://github.com/pulibrary/princeton_ansible/blob/main/playbooks/incommon_certbot_multi.yml)
+### Creating certificates for sites on our load balancers
+1. You can create auto-renewing certificates and keys directly on the load balancers for these sites. You can create a single certificate and key with [playbooks/incommon_certbot.yml](https://github.com/pulibrary/princeton_ansible/blob/main/playbooks/incommon_certbot.yml) or create a single certificate with multiple names and keys with [playbooks/incommon_certbot_multi.yml](https://github.com/pulibrary/princeton_ansible/blob/main/playbooks/incommon_certbot_multi.yml)
 
    1. You will need to run the above playbook on each load balancer sequentially
    1. If the certificate already exists you will need to revoke it before running your chosen playbook
 
-### For sites outside the Princeton domain
-1. Create the CSR (certificate signing request) - can be automated with [playbooks/cert_renewal.yml](https://github.com/pulibrary/princeton_ansible/blob/main/playbooks/incommon_certbot.yml)
-2. Submit it to gandi via [this form](https://shop.gandi.net/en/certificate/create)
-3. Your TLS/SSL cert will be created and returned to you via a email within 3 hours from gandi.net
-4. Verify the files you get back and add them to your server configuration.
+### Revoking certificates for sites on our load balancers
+There is a [ServiceNow form](https://princeton.service-now.com/service?id=sc_cat_item&sys_id=2e7ffb64dbad9114e8c283aa13961993) for revoking certificates. You can search in the dropdown by certificate ID or by site name. Note that the site name search only matches the full name - for example, to match `lib-aeon.princeton.edu` you must type `lib-aeon`; if you type `aeon` it will say there are no matching entries.
+
+Select the certificate you want to revoke (remember each site on the load balancers has two certs, one for each load balancer), enter a reason, and hit Submit. The process is very quick - refresh the form to confirm that the revoked certificate is no longer listed.
 
 ## Verifying certbot certificate renewals
 To verify that a certificate on a server will auto-renew:
@@ -24,13 +24,17 @@ This command checks all certs that certbot knows about on that server.
 ## Viewing certificates in Sectigo
 Our certificate management system is Sectigo. Operations folks can [log into Sectigo](https://cert-manager.com/customer/InCommon) using their alias email accounts and individual passwords. We can view certificate status there, but we cannot revoke or renew certificates there.
 
-## Manually managed certs list
+## Managing TLS certificates for sites that do not run on our load balancer
 
+We have a few sites that we do not serve from the load balancers.
 These certs are not managed by our usual process. These certs cover:
 - sites we do not serve from the load balancers
 - sites without the '.princeton.edu' extension
 - vendor-hosted sites with the '.princeton.edu' extension
-Many of these certs must be deployed manually. Some must also be renewed manually. If a private key is kept in princeton_ansible, it is encrypted as a file in the `/keys/` directory of the repo.
+Many of these certs must be deployed manually. Some must also be renewed manually.
+If a private key is kept in princeton_ansible, it is encrypted as a file in the `/keys/` directory of the repo.
+
+Here is the current list:
 
 cicognara.org
 Purpose: public site for the Cicognara collection (a collaborative project)
@@ -122,7 +126,34 @@ Purpose: hosted service for University Records management
 Managed: in ServiceNow, private key is in princeton_ansible
 Deployed: by vendor; to update, email a .pfx file of the cert to support@gimmal.com
 
-### Detailed instructions for sites outside the Princeton domain
+#### Tigris
+
+In July of every year [tigris.princeton.edu](tigris.princeton.edu) will get an automatic renewal. The following steps will be needed to ensure the certificate remains renewed. 
+  * Open a ticket with tigris (aka Gimmal) support at support@gimmal.com and ask who should receive the new chained file.
+  * You will need the [vaulted private key](https://github.com/pulibrary/princeton_ansible/blob/main/keys/tigris_princeton_edu_priv.key) and the certificate and intermediate certificate to generate a pfx file that you will ship to the vendor
+
+  ```bash
+  cat ~/path/to/downloads/tigris_princeton_edu_cert.cer ~/path/to/downloads/tigris_princeton_edu_interm.cer > keys/tigris_princeton_edu_chained.pem
+  ```
+
+This will generate a chained file. You will be prompted for a password in the next step.
+
+```bash
+  openssl pkcs12 -export -out tigris_princeton_edu.pfx -inkey tigris_princeton_edu_priv.key -in tigris_princeton_edu_chained.pem
+```
+
+Send the resulting file to the tigris support folks via [the Secure Send Portal](https://securesend.princeton.edu/#/) along with the password used above
+  
+### Creating certificates for sites that do not run on our load balancers
+1. Create the CSR (certificate signing request) - can be automated with [playbooks/cert_renewal.yml](https://github.com/pulibrary/princeton_ansible/blob/main/playbooks/incommon_certbot.yml)
+2. Submit it to gandi via [this form](https://shop.gandi.net/en/certificate/create)
+3. Your TLS/SSL cert will be created and returned to you via a email within 3 hours from gandi.net
+4. Verify the files you get back and add them to your server configuration.
+
+### Revoking certificates for sites that do not run on our load balancers
+As long as the site has the `.princeton.edu` extension, you can use the [ServiceNow form](https://princeton.service-now.com/service?id=sc_cat_item&sys_id=2e7ffb64dbad9114e8c283aa13961993) to revoke its certificates. See the instructions in the section about sites on the load balancers for more details.
+
+### Detailed instructions for sites that do not run on our load balancers
 
 #### 1. Create the Certificate Signing Request
 
@@ -268,24 +299,5 @@ Submit the CSR to gandi.net. Use the following guidance:
       ```
       mv ${NEW_HOST_NAME}_chained.pem roles/nginxplus/files/ssl/
       ```
-
-#### Tigris
-
-In July of every year [tigris.princeton.edu](tigris.princeton.edu) will get an automatic renewal. The following steps will be needed to ensure the certificate remains renewed. 
-  * Open a ticket with tigris (aka Gimmal) support at support@gimmal.com and ask who should receive the new chained file.
-  * You will need the [vaulted private key](https://github.com/pulibrary/princeton_ansible/blob/main/keys/tigris_princeton_edu_priv.key) and the certificate and intermediate certificate to generate a pfx file that you will ship to the vendor
-
-  ```bash
-  cat ~/path/to/downloads/tigris_princeton_edu_cert.cer ~/path/to/downloads/tigris_princeton_edu_interm.cer > keys/tigris_princeton_edu_chained.pem
-  ```
-
-This will generate a chained file. You will be prompted for a password in the next step.
-
-```bash
-  openssl pkcs12 -export -out tigris_princeton_edu.pfx -inkey tigris_princeton_edu_priv.key -in tigris_princeton_edu_chained.pem
-```
-
-Send the resulting file to the tigris support folks via [the Secure Send Portal](https://securesend.princeton.edu/#/) along with the password used above
-
 
 [1] Subject Alternative Names are used when multiple domains share the same certificate as shown ![SAN Example](images/san/san_example.png)
