@@ -111,6 +111,11 @@ Purpose: distributing Ubuntu packages
 Managed: in ServiceNow, private key is in princeton_ansible
 Deployed: on Google cloud at pulmirror.princeton.edu
 
+recapgfa.princeton.edu
+Purpose: ReCAP inventory management system
+Managed: by ACME directly on the VM
+Deployed: N/A - it automatically renews
+
 simrisk.pulcloud.io
 Purpose: experimental application for CDH
 Managed: on staging.pulcloud.io by acme-client contacting letsencrypt CA
