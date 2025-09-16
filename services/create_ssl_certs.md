@@ -32,99 +32,88 @@ These certs are not managed by our usual process. These certs cover:
 - vendor-hosted sites with the '.princeton.edu' extension
 Many of these certs must be deployed manually. Some must also be renewed manually. If a private key is kept in princeton_ansible, it is encrypted as a file in the `/keys/` directory of the repo.
 
-cicognara.org
-Purpose: public site for the Cicognara collection (a collaborative project)
-Managed: on gandi.net, private key is in princeton_ansible
-Deployed: on the load balancers
+cicognara.org  
+Purpose: public site for the Cicognara collection (a collaborative project)  
+Managed: on gandi.net, private key is in princeton_ansible  
+Deployed: on the load balancers  
 
 dataspace.princeton.edu
 
-dataspace-dev.princeton.edu
-Purpose: dev/staging site for dspace
-Managed: in ServiceNow, private key is on princeton_ansible
-Deployed: on Google cloud, on dev.pulcloud.io
+dataspace-dev.princeton.edu  
+Purpose: dev/staging site for dspace  
+Managed: in ServiceNow, private key is on princeton_ansible  
+Deployed: on Google cloud, on dev.pulcloud.io  
 
 dataspace-staging.princeton.edu
 
-dss2.princeton.edu
-Purpose: secures dataset downloads from a separate server for DSS via a web browser
-Managed: in ServiceNow - John will move to letsencrypt
-Deployed: on the dss2 CentOS VM
+dss2.princeton.edu  
+Purpose: secures dataset downloads from a separate server for DSS via a web browser  
+Managed: in ServiceNow - John will move to letsencrypt  
+Deployed: on the dss2 CentOS VM  
 Notes: cannot be a SAN name for the main DSS cert, because we only want to secure this functionality on one machine - can be tricky to maintain because server access requires signing nondisclosure agreements (for protected data)
 
-ezproxy.princeton.edu
-Purpose: allows access to journals by confirming Princeton affiliation
-Managed: on ezproxy-prod1 by letsencrypt
-Deployed: in /etc/letsencrypt/live/ezproxy on the ezproxy-prod1 server
+ezproxy.princeton.edu  
+Purpose: allows access to journals by confirming Princeton affiliation  
+Managed: on ezproxy-prod1 by letsencrypt  
+Deployed: in /etc/letsencrypt/live/ezproxy on the ezproxy-prod1 server  
 
-imagecat2.princeton.edu
+imagecat2.princeton.edu  
 Philippe will shut down the server once he has copied whatever we need from it. Once it's gone, we can revoke the cert.
 
-lib-aeon.princeton.edu
-Purpose: redirects traffic to hosted Aeon service at https://princeton.aeon.atlas-sys.com
-Managed: for new site by the vendor
-Deployed: to new site by the vendor
+lib-aeon.princeton.edu  
+Purpose: redirects traffic to hosted Aeon service at https://princeton.aeon.atlas-sys.com  
+Managed: for new site by the vendor  
+Deployed: to new site by the vendor  
 Notes: We would like to redirect the old URL on the load balancers and power off the old lib-aeon machine. The templates for printing Aeon call slips, which used to live on the lib-aeon machine, have been moved to a fileshare called aeonprint on lib-fileshare.
 
-lib-gisportal.princeton.edu
-Purpose: for maps (Wangyal)
-Managed: in ServiceNow
-Deployed: in IIS on a physical machine that runs MS HyperV virtualization - cluster of lib-geoserv1 and lib-geoserv2 (not the Lib-Gisportal2 VM) server
+lib-gisportal.princeton.edu  
+Purpose: for maps (Wangyal)  
+Managed: in ServiceNow  
+Deployed: in IIS on a physical machine that runs MS HyperV virtualization - cluster of lib-geoserv1 and lib-geoserv2 (not the Lib-Gisportal2 VM) server  
 Notes: windows physical machine, you must be an admin on the Windows box, expires 2024/07/30
 
-lib-illsql.princeton.edu
-Purpose: interlibrary loan
-Managed: in ServiceNow
-Deployed: in IIS, on the lib-illiad-new VM
+lib-illsql.princeton.edu  
+Purpose: interlibrary loan  
+Managed: in ServiceNow  
+Deployed: in IIS, on the lib-illiad-new VM  
 Notes: Windows VM; cert has a SAN name of lib-illiad.princeton.edu; we hope to migrate this to a hosted platform in 2024
 
-lib-rbrr.princeton.edu
-Purpose: rare books reading room
-Managed: by letsencrypt on lib-rbrr
-Deployed: to a physical server in the reading room - server has an alias of libserv447
-Notes: will be replaced in 2024 by a laptop that does not use the LAN. In the interim we need both this cert and the libserv447 cert.
-
-libserv447.princeton.edu
-Purpose: rare books reading room
-Managed: in ServiceNow
-Deployed: deployed on the lib-rbrr physical machine, see listing for lib-rbrr above
-
-libserv97.princeton.edu
-Purpose: Philippe's test machine, may disappear in 2024
-Managed: in ServiceNow
+libserv97.princeton.edu  
+Purpose: Philippe's test machine, may disappear in 2024  
+Managed: in ServiceNow  
 Deployed: directly on the libserv97 VM (dev environment)
 
 oar.princeton.edu
 
-oar-dev.princeton.edu
-Purpose: open access repository
-Managed: in ServiceNow, private key is on princeton_ansible
+oar-dev.princeton.edu  
+Purpose: open access repository  
+Managed: in ServiceNow, private key is on princeton_ansible  
 Deployed: on Google cloud at dev.pulcloud.io
 
-oar-staging.princeton.edu
-Purpose: open access repository
-Managed: in ServiceNow, private key is on princeton_ansible
+oar-staging.princeton.edu  
+Purpose: open access repository  
+Managed: in ServiceNow, private key is on princeton_ansible  
 Deployed: on Google cloud at staging.pulcloud.io
 
-pulmirror.princeton.edu
-Purpose: distributing Ubuntu packages
-Managed: in ServiceNow, private key is in princeton_ansible
+pulmirror.princeton.edu  
+Purpose: distributing Ubuntu packages  
+Managed: in ServiceNow, private key is in princeton_ansible  
 Deployed: on Google cloud at pulmirror.princeton.edu
 
-recapgfa.princeton.edu
-Purpose: ReCAP inventory management system
-Managed: by ACME directly on the VM
+recapgfa.princeton.edu  
+Purpose: ReCAP inventory management system  
+Managed: by ACME directly on the VM  
 Deployed: N/A - it automatically renews
 
-simrisk.pulcloud.io
-Purpose: experimental application for CDH
-Managed: on staging.pulcloud.io by acme-client contacting letsencrypt CA
-Deployed: in /etc/ssl/simrisk.pulcloud.io.fullchain.pem on the staging.pulcloud.io server
+simrisk.pulcloud.io  
+Purpose: experimental application for CDH  
+Managed: on staging.pulcloud.io by acme-client contacting letsencrypt CA  
+Deployed: in /etc/ssl/simrisk.pulcloud.io.fullchain.pem on the staging.pulcloud.io server  
 Maintained using `/etc/daily.local` as root
 
-tigris.princeton.edu
-Purpose: hosted service for University Records management
-Managed: in ServiceNow, private key is in princeton_ansible
+tigris.princeton.edu  
+Purpose: hosted service for University Records management  
+Managed: in ServiceNow, private key is in princeton_ansible  
 Deployed: by vendor; to update, email a .pfx file of the cert to support@gimmal.com
 
 ### Detailed instructions for sites outside the Princeton domain
