@@ -54,7 +54,10 @@ to verify that the agent is running successfully and see its parameters.
 * To check the server status: `sudo omd status <sitename>`.
 * To check the connection to a specific host: switch from the 'pulsys' user to the site user (site user names match the site names - `production` for the prod site, `staging` for the staging site, etc., so, for example, `sudo su - production` to run in the production environment), then execute `cmk --debug -vvn hostname`.
 * To confirm that the agent port is accessible on a host: as the 'pulsys' user, do `sudo nc -vz hostname.princeton.edu 6556`.
-* To restart the CheckMK service: switch from the 'pulsys' user to the site user, then run `cmk -R`.
+* To restart CheckMK:
+  * as the site user, run `cmk -R` to restart the CheckMK service.
+  * as the site user, run `omd restart` to restart the Apache webserver.
+  * if the site is still down, reboot the VM (Apache may refuse to shut down, in which case you may need to log into vSphere to yank the power)
 
 ## Adding a host to CheckMK
 
