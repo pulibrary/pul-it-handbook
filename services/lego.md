@@ -34,16 +34,13 @@ location ^~ /.well-known/acme-challenge/ {
 EOF
 ```
 
-Add this include inside the existing port 80 server block (the one that redirects to HTTPS):
+Add this include inside all existing port 80 server block (the one that redirects to HTTPS):
 
 ```sh
-doas awk '
-/server\s*{\s*$/ { inserver=1 }
-inserver && /listen 80;/ { print; print "        include /etc/nginx/conf.d/acme-challenge.conf;"; next }
-{ print }
-' /etc/nginx/nginx.conf | doas tee /etc/nginx/nginx.conf.new >/dev/null && \
-doas mv /etc/nginx/nginx.conf.new /etc/nginx/nginx.conf
+# allow acme path to port 80
+include /etc/nginx/conf.d/acme-challenge.conf;
 ```
+
 
 Test and reload nginx:
 
