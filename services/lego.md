@@ -3,7 +3,7 @@
 OpenBSD includes a lego package. We will focus on dataspace and oar below
 
 ```bash
-doas pkg_add -vi  -y lego
+doas pkg_add -viD'snap'  lego
 lego --version
 # lego version v4.xx.x openbsd/amd64
 ```
@@ -34,7 +34,7 @@ location ^~ /.well-known/acme-challenge/ {
 EOF
 ```
 
-Add this include inside all existing port 80 server block (the one that redirects to HTTPS):
+Add this include inside all existing port 80 server block to your file at `/etc/nginx/nginx.conf` (the one that redirects to HTTPS):
 
 ```sh
 # allow acme path to port 80
