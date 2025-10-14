@@ -2,6 +2,8 @@
 
 We have an smtp server at `lib-ponyexpr-prod.princeton.edu` which can be used to send mail
 
+Note that it can only send mail from a princeton.edu address ([details](https://github.com/pulibrary/princeton_ansible/issues/5204))
+
 Instructions to [Add your VM are in the postfix role](https://github.com/pulibrary/princeton_ansible/tree/main/roles/postfix)
 
 For a ruby app you'll need the following configuration in `config/environments/production.rb`:
