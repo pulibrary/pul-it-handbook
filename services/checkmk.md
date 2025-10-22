@@ -36,6 +36,18 @@ The six CheckMK sites all run on production-level systems. They are:
   - shows only GCP monitoring data
   - grants access to Setup for GCP resources
 
+## CheckMK site performance metrics
+* To see how our six CheckMK sites are performing:
+  - log into the production site (see below for details)
+  - add performance widgets to your sidebar
+    - enable the sidebar by clicking on `Sidebar` at the bottom of the left nav bar
+    - add one of several widgets by clicking on the `+` at the bottom of the sidebar (at right) - widgets include
+      - `Server performance`
+      - `Service Speed-O-Meter`
+      - `Core statistics`
+  - view the `livestatus proxy` services for the monitoring hosts
+    - in the Monitor menu, search for `livestatus`   
+
 ## Useful GUI pointers
 * To log into the GUI:
   - on production and staging, enter your NetID and password, then confirm with 2FA (the webpage will not prompt you to look at DUO)
