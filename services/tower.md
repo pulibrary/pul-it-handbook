@@ -60,7 +60,7 @@ To update the Prancible inventory:
 
 If the playbook you want to run in Tower already exists in the princeton_ansible repository, you can easily create a template for it.
 
-If you are working on a new playbook, and you want to test it in Tower, see the section on `Creating a template for a new playbook`. 
+If you are working on a new playbook, and you want to test it in Tower, skip down to the section on `Creating a template for a new playbook`.
 
 ### Creating a template for an existing playbook
 
