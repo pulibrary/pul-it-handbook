@@ -58,6 +58,73 @@ To update the Prancible inventory:
 
 ## Adding templates to Tower
 
+If the playbook you want to run in Tower already exists in the princeton_ansible repository, you can easily create a template for it.
+
+If you are working on a new playbook, and you want to test it in Tower, skip down to the section on `Creating a template for a new playbook`.
+
+### Creating a template for an existing playbook
+
+If your playbook already exists in the princeton_ansible repo, you can copy an existing template in Tower, then edit it to do what you need. Copying gives you the correct Inventory, Project, Execution Environment, and likely also the credentials you need.
+1. In the Templates view, next to the template you want to copy, select `Copy template` on the far right (a pair of pages). Your copy will show up just below the existing record, with a timestamp to differentiate it from the original template.
+2. Edit your copied template by selecting `Edit Template`.
+3. Change at least these attributes:
+  a. name
+  b. description
+  c. playbook
+4. If you want to allow the user to provide standard Ansible parameters (for example, `Limit` or `Source Control Branch` or `Verbosity`), select the `Prompt on launch` box above those entries.
+5. Click `Save` to save your changes.
+
+#### Adding or changing credentials
+
+All templates must include the Prancible Vault credential, which supports decrypting vaulted variables at runtime. Most templates also need the Tower's Own ed25519 credential, which allows SSH access to our VMs. If you did not copy an existing template, you need to add the basic credentials. Depending on what your playbook does, it may need other credentials as well.
+
+To add or change credentials:
+1. Edit the Template.
+2. In the `Credentials` section, delete any existing credentials you do not want or need.
+3. To add credentials, click on the magnifying glass. By default you will see `Machine` credentials (usually Tower's Own ed25519).
+3. Select the credential TYPE (Vault for the Vault cred, Machine for the SSH cred, etc.),then select the specific credential.
+4. Repeat until you have all the credentials you want or need, then click on `Select` to add them all.
+
+The `Edit Details` screen shows you all the Credentials that are associated with the template. If they are correct, click on `Save` to save your changes to the template.
+
+#### Adding or changing surveys
+
+If you want to pass variable values at runtime (for example, `runtime_env`), add one or more Surveys to your Template. If your new template is a copy of an existing template, it will include the surveys from the original template.
+
+To add or change surveys:
+1. If you have been editing your template, save your changes. Otherwise, click on the name of the template you want to add surveys to.
+2. Switch from the `Details` tab to the `Survey` tab.
+3. If you are changing a survey (for example, in a template you created by copying), click on any survey to edit it.
+4. If you are adding one or more surveys to a new template (or if the template you copied had no surveys), click on `Add`.
+5. Fill in the fields. The `Question` is what the user will see in Tower when running the template. The `Answer variable name` must match a variable in the playbook itself. Choose the type of answer, whether the question is required, whether there is a default value. When everything is ready, click on `Save`.
+6. Repeat for every variable value you want users to provide at runtime.
+7. Once your surveys are all configured, make sure the `Survey Enabled` button is turned on.
+
+### Adding schedules
+
+If you want to run the template on a regular cadence, automatically, add a Schedule to your template. A scheduled job runs the selected template with defined variables at a defined, recurring time. Each template can have multiple Schedules.
+
+Note: Please set scheduled jobs to run in the evening or overnight so they do not interfere with morning maintenance or with urgent activity (for example, deploying a bugfix) on Tower during regular working hours. You can see a list of existing scheduled jobs ordered by start time by selecting `Schedules` from the main left nav.
+
+To add a schedule:
+1. If you have been editing your template, save your changes. Otherwise, click on the name of the template you want to add surveys to.
+2. Switch from the `Details` tab to the `Schedules` tab.
+3. Click `Add` and fill in the parameters.
+  a. Provide a descriptive name - for example "Thursday TigerData production build" or "Daily catalog staging deployment".
+  b. If your template has Surveys or Prompt on Launch options, the Schedule will pick up default values for those. If you want to use non-default values, click on `Prompt` and fill in the values you want for the particular recurring job.
+
+#### Adding notifications
+
+If you want a slack message when the template starts to run, succeeds, or fails, add one or more notifications to your template. Notifications can only be created globally, but each one can be turned on or off for each template in Tower.
+
+To enable an existing notification:
+1. If you have been editing your template, save your changes. Otherwise, click on the name of the template you want to add surveys to.
+2. Switch from the `Details` tab to the `Notifications` tab.
+3. Turn on the conditions you want for your notification.
+4. To create a new notification type, select `Notifications` in the main left nav (in the Administration section). Note that all templates have access to all notification types. 
+
+### Creating a template for a new playbook
+
 You cannot build a template off a playbook until that playbook exists in the main branch. In other words, you cannot test a playbook in a Tower Template while it only exists in a PR or on a branch. If you want to test a playbook from Tower:
 1. Merge a minimal version of the playbook into the main branch.
 2. Update the Prancible project.
@@ -65,8 +132,6 @@ You cannot build a template off a playbook until that playbook exists in the mai
 4. Create a Template based on the minimal playbook and set Source Control Branch to 'Prompt on launch'.
 5. Create a new branch for changes to the playbook.
 6. Launch the template and select the new branch to run with the latest changes to the branch.
-
-All templates must include the Prancible Vault credential. Most templates also need the Tower's Own ed25519 credential. When you add credentials to a template, select the credential TYPE (Vault for the Vault cred, Machine for the SSH cred) first, then the specific credential. You can add more than one credential at once if you want to.
 
 ## Adding repos to the Deploy Rails template
 To add a new code repository to the Deploy Rails template, log into ansible tower and [then update the survey](https://ansible-tower.princeton.edu/#/templates/job_template/13/survey)
