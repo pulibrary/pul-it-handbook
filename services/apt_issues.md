@@ -14,7 +14,7 @@ If you run `apt-get update` on a machine with a useless key, you will see an err
 
 To update the key and upgrade apt packages:
 1. run `playbooks/fix_apt_issues.yml` on the affected machines, passing `-e recv_key=<key-hash>`
-2. run `playbooks/os_updates.yml` (in Tower the Template is called Patch Tuesday) on the affected machines to confirm the fix, update the cache, and upgrade all packages
+2. run `playbooks/os_updates.yml` (in Tower the Template is called OS Updates Patch) on the affected machines to confirm the fix, update the cache, and upgrade all packages
 
 ### Apt repository failures
 
