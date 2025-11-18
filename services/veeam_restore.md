@@ -5,7 +5,7 @@ Virtual machines that have special tags in vSphere (they look like `LIB_<datacen
 We used to keep a spreadsheet of [VMs on the Veeam backup list](https://princetonu.sharepoint.com/:x:/r/sites/library/systems/Shared%20Documents/Server%20Documentation/Backup/Library%20Veeam%20Backup%20Schedules.xlsx?d=wc6e6edba4e224c6bbb8f0a1067b98801&csf=1&web=1&e=0gJi8U) in Sharepoint. Now we have a template in Ansible Tower called View VEEAM Backup List that shows which VMs have which tags. The intention is to balance the load of backups across days of the week and between data centers.
 
 
- * Open a new SN@P Incident 
+ * Open a new Generic Request 
  * Assign to storage
  * Give as much detail as possible as to where the files were located  and when they were deleted 
 
