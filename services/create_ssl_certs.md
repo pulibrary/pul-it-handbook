@@ -1,22 +1,32 @@
 # Certificate Management
 
-## Creating TLS Certificates
+## Managing TLS Certificates for sites on our load balancers
+Most of our sites are served from our load balancers - any site that is configured by a file in the `nginxplus` role in princeton_ansible is served from the load balancers.
 
-### For sites on the .princeton.edu domain
+### Creating certificates for sites on our load balancers with ACME
 
-1. You can create auto-renewing certificates and keys directly on the load balancers for sites in the .princeton.edu domain. You can create a single certificate and key with [playbooks/incommon_certbot.yml](https://github.com/pulibrary/princeton_ansible/blob/main/playbooks/incommon_certbot.yml) or create a single certificate with multiple names and keys with [playbooks/incommon_certbot_multi.yml](https://github.com/pulibrary/princeton_ansible/blob/main/playbooks/incommon_certbot_multi.yml)
+1. You can create certificates and keys directly on the load balancers for sites that are served from them. You can create a single certificate and key with [playbooks/incommon_certbot.yml](https://github.com/pulibrary/princeton_ansible/blob/main/playbooks/incommon_certbot.yml) or create a single certificate with multiple names and keys with [playbooks/incommon_certbot_multi.yml](https://github.com/pulibrary/princeton_ansible/blob/main/playbooks/incommon_certbot_multi.yml). All certificates created with these playbooks will automatically renew using ACME and certbot.
 
    1. You will need to run the above playbook on each load balancer sequentially
    1. If the certificate already exists you will need to revoke it before running your chosen playbook
 
-### For sites outside the Princeton domain
+### Revoking certificates for sites on our load balancers
 
-1. Create a new entry under [sites](https://github.com/pulibrary/princeton_ansible/blob/dac77a6c2e0f1301201c9b2a63b9ebead5f7b7ac/group_vars/nginxplus/production.yml#L16)
-2. Run the [nginxplus playbook](https://github.com/pulibrary/princeton_ansible/blob/main/playbooks/nginxplus.yml)
-3. Your TLS/SSL cert will be on the production loadbalancer
-4. Verify the files you get back and add them to your server configuration.
+When we decommission a site, we need to revoke the certificates for that site.
 
-## Verifying certbot certificate renewals
+#### Revoking ACME Certificates
+
+For auto-renewing ACME certificates, use playbooks/incommon_certbot.yml](https://github.com/pulibrary/princeton_ansible/blob/main/playbooks/incommon_certbot_revoke.yml). As with the playbook that creates certificates, you must run the revoke playbook on each load balancer sequentially.
+
+#### Revoking manual Certificates
+
+For certificates that were created manually, there is a [ServiceNow form](https://princeton.service-now.com/service?id=sc_cat_item&sys_id=2e7ffb64dbad9114e8c283aa13961993) for revoking certificates. You can search in the dropdown by certificate ID or by site name. Note that the site name search only matches the full name - for example, to match `lib-aeon.princeton.edu` you must type `lib-aeon`; if you type `aeon` it will say there are no matching entries.
+
+Select the certificate you want to revoke, enter a reason, and hit Submit. The process is very quick - refresh the form to confirm that the revoked certificate is no longer listed.
+
+If you use the ServiceNow form to revoke an ACME certificate, certbot will renew it the next day. You must use the playbook to revoke ACME certificates.
+
+## Verifying certbot renewals of ACME certificates
 
 To verify that a certificate on a server will auto-renew:
 
@@ -28,14 +38,19 @@ This command checks all certs that certbot knows about on that server.
 
 Our certificate management system is Sectigo. Operations folks can [log into Sectigo](https://cert-manager.com/customer/InCommon) using their alias email accounts and individual passwords. We can view certificate status there, but we cannot revoke or renew certificates there.
 
-## Manually managed certs list
+## Managing TLS certificates for sites that do not run on our load balancers
 
-These certs are not managed by our usual process. These certs cover:
+We have a few sites that need a different approach to certificate management. These sites include:
 
-- sites we do not serve from the load balancers
+- sites we run on individual servers or in the cloud
 - vendor-hosted sites with the '.princeton.edu' extension
+- sites we serve from the load balancers with extensions other than '.princeton.edu'
 
-Many of these certs must be deployed manually. Some must also be renewed manually. If a private key is kept in princeton_ansible, it is encrypted as a file in the `/keys/` directory of the repo.
+Many of these certs must be deployed manually. Some must also be renewed manually.
+
+If a private key is kept in princeton_ansible, it is encrypted as a file in the `/keys/` directory of the repo.
+
+Here is the current list:
 
 cicognara.org
   * Purpose: public site for the Cicognara collection (a collaborative project)
@@ -128,6 +143,7 @@ scsb.recaplib.org
   * Purpose: external hosted service for research collections
   * Managed: on DNSimple and Vendor's AWS Certificate Manager
   * Deployed: by vendor and CNAME validation on DNSimple
+  * If ever there is a change in the application vendor will provide CNAME which can be added to DNSimple configuration
 
 simrisk.pulcloud.io
   * Purpose: experimental application for CDH
@@ -138,18 +154,14 @@ simrisk.pulcloud.io
 tigris.princeton.edu
   * Purpose: hosted service for University Records management
   * Managed: in ServiceNow, private key is in princeton_ansible
-  * Deployed: by vendor; to update, email a .pfx file of the cert to <support@gimmal.com>
+  * Deployed: by vendor; to update, email a .pfx file of the cert to <support@gimmal.com>; see details below
 
-### scsb
-
-If ever there is a change in the application vendor will provide CNAME which can be added to DNSimple configuration
-
-#### Tigris
+#### Tigris renewals
 
 In July of every year [tigris.princeton.edu](tigris.princeton.edu) will get an automatic renewal. The following steps will be needed to ensure the certificate remains renewed.
 
-- Open a ticket with tigris (aka Gimmal) support at <support@gimmal.com> and ask who should receive the new chained file.
-- You will need the [vaulted private key](https://github.com/pulibrary/princeton_ansible/blob/main/keys/tigris_princeton_edu_priv.key) and the certificate and intermediate certificate to generate a pfx file that you will ship to the vendor
+* Open a ticket with tigris (aka Gimmal) support at <support@gimmal.com> and ask who should receive the new chained file.
+* You will need the [vaulted private key](https://github.com/pulibrary/princeton_ansible/blob/main/keys/tigris_princeton_edu_priv.key) and the certificate and intermediate certificate to generate a pfx file that you will ship to the vendor
 
   ```bash
   cat ~/path/to/downloads/tigris_princeton_edu_cert.cer ~/path/to/downloads/tigris_princeton_edu_interm.cer > keys/tigris_princeton_edu_chained.pem
