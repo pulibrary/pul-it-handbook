@@ -1,8 +1,8 @@
 # Rapid7 notes
 
-We are installing Rapid7 InsightVM, a security auditing service, on our virtual servers in accordance with OIT requirements. Here is what we know about the Rapid7 agent.
+We are installing Rapid7 InsightVM, a security auditing service, on our virtual servers in accordance with OIT requirements. Here is what we know about the Rapid7 agent. 
 
-* We install the Rapid7 agent using [the rapid7_install.yml](https://github.com/pulibrary/princeton_ansible/tree/main/playbooks) playbook.
+* We install the Rapid7 agent using [the security](https://github.com/pulibrary/princeton_ansible/blob/main/playbooks/utils/security_theater.yml) playbook.
 * The token for running the install script is dynamically generated. If it stops working, reach out to vulnr_mgmnt@princeton.edu for a new one, then update the `group_vars/all/vault.yml` file with the new token.
 *	The service name is `ir_agent`, as in `sudo service ir_agent status`.
 *	The agent can run many components, we are running only the `insight_agent`, which looks for security vulnerabilities.
