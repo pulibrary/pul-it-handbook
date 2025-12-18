@@ -37,7 +37,7 @@ If you are dealing with a database failure of some kind and need to restore a da
          ```
     1. On the database server, as the postgres user, manually recreate an empty database to restore to:
          ```bash
-         createdb -0 <database-name> <database-owner>
+         createdb -O <database-name> <database-owner>
          ```
 1. On the web server, run the command to restore the tables from the backup file - the command passes the correct database owner:
      ```bash
@@ -268,7 +268,7 @@ To restore a postgreSQL database from the backup you just retrieved, unzip the d
          ```
       1. On the database server, as the postgres user, manually recreate an empty database to restore to:
          ```bash
-         createdb -0 <database-name> <database-owner>
+         createdb -O <database-name> <database-owner>
          ```
 1. On the WEB SERVER, restore the tables from the backup file - this allows you to pass the correct database owner:
      ```bash
@@ -331,7 +331,7 @@ Note: The `.sql` file includes the name of the database that was backed up - so 
     ```bash
     chown postgres:postgres <production_backup>.sql.gz
     ```
-6. As the `postgres` user, move the file from `/tmp` to `/tmp/posgressql`
+6. As the `postgres` user, move the file from `/tmp` to `/tmp/postgresql`
 7. Unzip the backup files.
     ```bash
     gzip -d <backup_name>.sql.gz
