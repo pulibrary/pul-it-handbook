@@ -1,5 +1,13 @@
 # ServiceNow tips and tricks
 
+## Useful links
+
+- [Unassigned tickets for Ops](https://princeton.service-now.com/now/nav/ui/classic/params/target/task_list.do%3Fsysparm_query%3Dassignment_group%253Ddfef0cf74f800b40b1eaf7e18110c7c1%255Eactive%253Dtrue%255Eassigned_to%253D%26sysparm_first_row%3D1%26sysparm_view%3D) - for "grabbing" tickets
+- [Generic Request Form](https://princeton.service-now.com/service?id=sc_cat_item&sys_id=d93521720fcf820033f465ba32050ee5) - for creating new tickets
+- [List of all network objects](https://princeton.service-now.com/now/nav/ui/classic/params/target/u_infoblox_networks_list.do%3Fsysparm_userpref_module%3D62d2d4244ff85f00f56c0ad14210c7c4%26sysparm_query%3Doperational_status%253D1%255EEQ) - for finding IP ranges
+
+## ServiceNow views
+
 ServiceNow offers two ways to access information its database: "canned" views (also known as the Service Portal) and "bare-bones" (also called Classic UI) views. The two views offer different UIs, different options, and different default data sets. You can navigate from "canned" / Service Portal views to the "bare bones" / Classic UI by selecting `Switch to Classic UI` in the `My Account` menu. You cannot navigate the other direction (at least, not easily). Here's a single ticket shown both ways:
 
 - ["canned" view of a ticket](https://princeton.service-now.com/service?id=ticket&sys_id=db679830874149107f147487cebb35f7&table=sc_req_item).
