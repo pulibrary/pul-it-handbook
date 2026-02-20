@@ -39,6 +39,7 @@ To migrate a VM's IP address from a publicly routable IP (usually 128.112.x) to 
 7. In vSphere, edit the VM's settings and switch the 'Network Adapter' to `VM Network - ip4-library-servers`.
 8. Reboot the VM so it picks up the new IP address.
 9. Delete all firewall rules related to the old IP address, since the IP will likely be re-used for another system or service.
+10. Delete the host record from CheckMK, then run the CheckMK agent playbook (in Tower, the Template is called `Utils: Install CheckMK Agent on a VM`) against the VM to start monitoring the VM with its new IP.
 
 ### Migrating VM FQDNs to the .lib domain
 
