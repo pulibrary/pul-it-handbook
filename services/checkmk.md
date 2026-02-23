@@ -6,12 +6,12 @@ Our CheckMK monitoring platform is distributed across six sites (for performance
 
 The six CheckMK sites all run on production-level systems. They are:
 - [production](https://pulmonitor.princeton.edu)
-  - runs on `pulmonitor-prod1`
+  - runs on `pulmonitor-prod1` (48 vCPUs and 96 GB of memory)
   - monitors on-prem production systems and services
   - shows the consolidated view of all monitoring data
   - grants access to Setup for production systems and services
 - [staging](https://pulmonitor.princeton.edu/staging/)
-  - runs on `pulmonitor-prod2`
+  - runs on `pulmonitor-prod2` (32 vCPUs and 96 GB of memory)
   - monitors on-prem staging systems and services
   - shows only staging monitoring data
   - grants access to Setup for staging systems and services
