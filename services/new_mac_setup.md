@@ -34,6 +34,11 @@ When you get a new mac here are some helpful guides to setting it up for PUL sof
 
 1. [The thoughtbot laptop setup script](https://github.com/thoughtbot/laptop) is great and sets up a lot of useful
    things. Consider running this as your first step.
+   - Note: This script contains some outdated command syntax on lines 123-124.  Before running the script, you may need to separately run the following commands:
+     ```
+     brew tap "thoughtbot/formulae"
+     brew tap "heroku/brew"
+     ```
 1. Customize and setup your unix prompt.
     1. Install Xcode CLI tools: `xcode-select —-install`
     2. [Install homebrew](https://brew.sh/) (this is done by the thoughtbot
@@ -84,6 +89,10 @@ brew install libyaml
 * https://github.com/asdf-vm/asdf-nodejs
 * https://github.com/asdf-vm/asdf-ruby
 * https://github.com/twuni/asdf-yarn
+   - Note: This documentation contains outdated command syntax.  The first command under the "Installing" section should not have a hyphen, i.e.
+     ```
+     asdf plugin add yarn
+     ```
 * https://gist.github.com/johnny-aroza/ab1ef0db48118f156bf39ed25b509544
 
 
