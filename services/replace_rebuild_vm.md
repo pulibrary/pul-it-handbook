@@ -67,7 +67,11 @@ ssh into the machine and run the following commands
 * sudo /sbin/reboot
 
 Or run it on ansible-tower:
-Image
+
+<img src="images/Ansible_tower_template.png"
+     alt="Ansible tower preview"
+     width="500px"
+     style="margin-right: 10px;" />
 
 ### Fix the known hosts
 
