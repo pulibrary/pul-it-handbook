@@ -78,10 +78,11 @@ Once you have a tunnel open to the active load balancer, you can open up a web b
 ### Only upload new and changed config files
 1. Let folks know that you're running the playbook in the #infrastructure channel. Link to the branch or PR if you are running it against a branch.
 1. Check which load balancer is active (see above).
-2. Run the nginx playbook against the non-active load balancer. For example, if `adc-prod1` is active, run the `nginxplus.yml` playbook against `adc-prod2`: `ansible-playbook playbooks/nginxplus.yml --limit adc-prod2.princeton.edu -t update_conf`.
+2. Run the nginx playbook against the non-active load balancer. For example, if `adc-prod1` is active, run the `nginxplus.yml` playbook against `adc-prod2`: `ansible-playbook playbooks/nginxplus.yml --limit adc-prod2.princeton.edu -t update_conf`. This runs tasks with `tags: update_conf` and tasks with `tags: always`.
   * Run the nginx playbook against the non-active load balancer. For example, if `adc-dev1.lib` is active, run the `nginxplus_staging.yml` playbook against `adc-dev2.lib`: `ansible-playbook playbooks/nginxplus.yml --limit adc-dev2.lib.princeton.edu -t update_conf`.
 3. If the playbook fails, fix the failures and run it against the non-active load balancer again, until it succeeds.
 4. Run the nginx playbook against the second load balancer, the one that was active when you started which will now become the inactive load balancer.
+NOTE: if you have removed config files in the princeton_ansible repo, running the playbook with `-t update_conf` will not remove those files from the load balancers.
 
 
 ## Updating the load balancers manually
