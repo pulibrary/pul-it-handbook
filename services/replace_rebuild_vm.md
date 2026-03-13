@@ -14,6 +14,8 @@ If you haven't already, be sure to follow the steps for cloning the princeton_an
 * You will need to enter the suffix of the vm of either .lib.princeton.edu or princeton.edu on the "which domain is this on" field
 * Click next then Launch the Playbook
 
+* To ensure that the playbook ran correctly ssh into the vm (ex. run `ssh pulsys@pdc-discovery-staging1.princeton.edu`)
+
 
 ## Update the ssh keys
 
