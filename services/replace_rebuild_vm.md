@@ -68,7 +68,11 @@ You can disable the firewall with `sudo ufw disable` while connected to the VM. 
 
 
 ## Run your playbook
-* On ansible tower search for your application under templates ex. "RDSS - Orcid Playbook" then launch your playbook 
+* On ansible tower search for your application under templates ex. "RDSS - Orcid Playbook" then launch your playbook
+
+* Or by running the command in princeton_ansible
+
+  `ansible-playbook playbooks/pdc_discovery.yml` 
 
 ## Run the patches
 
