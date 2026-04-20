@@ -37,7 +37,6 @@ been made to this file.
 # Co-authored-by: Esmé Cowles <escowles@users.noreply.github.com>
 # Co-authored-by: Francis Kayiwa <kayiwa@users.noreply.github.com>
 # Co-authored-by: G. Philippe Menos <gpmenos@users.noreply.github.com>
-# Co-authored-by: Hector Correa <hectorcorrea@users.noreply.github.com>
 # Co-authored-by: James R. Griffin III <jrgriffiniii@users.noreply.github.com>
 # Co-authored-by: Jane Sandberg <sandbergja@users.noreply.github.com>
 # Co-authored-by: Jaymee Hyppolite <jaymeeh@users.noreply.github.com>
