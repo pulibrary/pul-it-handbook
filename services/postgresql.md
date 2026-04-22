@@ -1,5 +1,12 @@
 # Postgresql databases
 
+## Trouble Shooting
+The detailed postgres logs live in `/var/lib/postgresql/15/main/pg_log` Run the following to see what errors may be occuring
+```
+ssh pulsys@lib-postgres-prod1
+sudo tail -f /var/lib/postgresql/15/main/pg_log/pg.json
+```
+
 ## Backups and resilience
 
 ### Finding a postgres backup file
