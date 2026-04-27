@@ -50,6 +50,8 @@ Many of these certs must be deployed manually. Some must also be renewed manuall
 
 If a private key is kept in princeton_ansible, it is encrypted as a file in the `/keys/` directory of the repo.
 
+DNSimple currently only allows one MFA connection. If you need to log into DNSimple, ping Francis for more information.
+
 Here is the current list:
 
 cicognara.org
@@ -61,11 +63,6 @@ dataspace.princeton.edu
   * Purpose: production site for dspace
   * Managed: Via [Lego](lego.md)
   * Deployed: on Google cloud, on prod.pulcloud.io
-
-dataspace-dev.princeton.edu
-  * Purpose: dev/staging site for dspace
-  * Managed: Via [Lego](lego.md)
-  * Deployed: on Google cloud, on dev.pulcloud.io
 
 dataspace-staging.princeton.edu
   * Purpose: dev/staging site for dspace
@@ -82,9 +79,6 @@ ezproxy.princeton.edu
   * Purpose: allows access to journals by confirming Princeton affiliation
   * Managed: on ezproxy-prod1 by letsencrypt
   * Deployed: in /etc/letsencrypt/live/ezproxy on the ezproxy-prod1 server
-
-imagecat2.princeton.edu
-  * Philippe will shut down the server once he has copied whatever we need from it. Once it's gone, we can revoke the cert.
 
 lib-aeon.princeton.edu
   * Purpose: redirects traffic to hosted Aeon service at <https://princeton.aeon.atlas-sys.com>
@@ -114,15 +108,16 @@ oar.princeton.edu
   * Managed: Via [Lego](lego.md)
   * Deployed: on Google cloud, on prod.pulcloud.io
 
-oar-dev.princeton.edu
-  * Purpose: production site for oar
-  * Managed: Via [Lego](lego.md)
-  * Deployed: on Google cloud, on prod.pulcloud.io
-
 oar-staging.princeton.edu
   * Purpose: production site for oar
   * Managed: Via [Lego](lego.md)
   * Deployed: on Google cloud, on prod.pulcloud.io
+
+openpublishing.princeton.edu
+  * Purpose: external hosted service for open access to scholarly work
+  * Managed: on DNSimple and Vendor's AWS Certificate Manager
+  * Deployed: by vendor (Notch8) and CNAME validation on DNSimple
+  * If ever there is a change in the application vendor will provide CNAME which can be added to DNSimple configuration
 
 pcdm.org
   * Purpose: Portland Common Data Model
