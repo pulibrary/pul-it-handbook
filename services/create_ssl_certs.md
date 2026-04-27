@@ -98,11 +98,6 @@ lib-illsql.princeton.edu
   * Deployed: in IIS, on the lib-illiad-new VM
   * Notes: Windows VM; cert has a SAN name of lib-illiad.princeton.edu; we hope to migrate this to a hosted platform in 2024
 
-libserv97.princeton.edu
-  * Purpose: Philippe's test machine, may disappear in 2024
-  * Managed: in ServiceNow
-  * Deployed: directly on the libserv97 VM (dev environment)
-
 oar.princeton.edu
   * Purpose: production site for oar
   * Managed: Via [Lego](lego.md)
