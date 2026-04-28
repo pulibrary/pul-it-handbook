@@ -50,8 +50,6 @@ Many of these certs must be deployed manually. Some must also be renewed manuall
 
 If a private key is kept in princeton_ansible, it is encrypted as a file in the `/keys/` directory of the repo.
 
-DNSimple currently only allows one MFA connection. If you need to log into DNSimple, ping Francis for more information.
-
 Here is the current list:
 
 cicognara.org
@@ -113,6 +111,7 @@ openpublishing.princeton.edu
   * Managed: on DNSimple and Vendor's AWS Certificate Manager
   * Deployed: by vendor (Notch8) and CNAME validation on DNSimple
   * If ever there is a change in the application vendor will provide CNAME which can be added to DNSimple configuration
+  * NOTE: DNSimple currently only allows one MFA connection. If you need to log into DNSimple, ping Francis for more information.
 
 pcdm.org
   * Purpose: Portland Common Data Model
@@ -134,6 +133,7 @@ scsb.recaplib.org
   * Managed: on DNSimple and Vendor's AWS Certificate Manager
   * Deployed: by vendor and CNAME validation on DNSimple
   * If ever there is a change in the application vendor will provide CNAME which can be added to DNSimple configuration
+  * NOTE: DNSimple currently only allows one MFA connection. If you need to log into DNSimple, ping Francis for more information.
 
 simrisk.pulcloud.io
   * Purpose: experimental application for CDH
