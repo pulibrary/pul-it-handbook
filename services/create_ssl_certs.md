@@ -62,11 +62,6 @@ dataspace.princeton.edu
   * Managed: Via [Lego](lego.md)
   * Deployed: on Google cloud, on prod.pulcloud.io
 
-dataspace-dev.princeton.edu
-  * Purpose: dev/staging site for dspace
-  * Managed: Via [Lego](lego.md)
-  * Deployed: on Google cloud, on dev.pulcloud.io
-
 dataspace-staging.princeton.edu
   * Purpose: dev/staging site for dspace
   * Managed: Via [Lego](lego.md)
@@ -82,9 +77,6 @@ ezproxy.princeton.edu
   * Purpose: allows access to journals by confirming Princeton affiliation
   * Managed: on ezproxy-prod1 by letsencrypt
   * Deployed: in /etc/letsencrypt/live/ezproxy on the ezproxy-prod1 server
-
-imagecat2.princeton.edu
-  * Philippe will shut down the server once he has copied whatever we need from it. Once it's gone, we can revoke the cert.
 
 lib-aeon.princeton.edu
   * Purpose: redirects traffic to hosted Aeon service at <https://princeton.aeon.atlas-sys.com>
@@ -104,17 +96,7 @@ lib-illsql.princeton.edu
   * Deployed: in IIS, on the lib-illiad-new VM
   * Notes: Windows VM; cert has a SAN name of lib-illiad.princeton.edu; we hope to migrate this to a hosted platform in 2024
 
-libserv97.princeton.edu
-  * Purpose: Philippe's test machine, may disappear in 2024
-  * Managed: in ServiceNow
-  * Deployed: directly on the libserv97 VM (dev environment)
-
 oar.princeton.edu
-  * Purpose: production site for oar
-  * Managed: Via [Lego](lego.md)
-  * Deployed: on Google cloud, on prod.pulcloud.io
-
-oar-dev.princeton.edu
   * Purpose: production site for oar
   * Managed: Via [Lego](lego.md)
   * Deployed: on Google cloud, on prod.pulcloud.io
@@ -123,6 +105,13 @@ oar-staging.princeton.edu
   * Purpose: production site for oar
   * Managed: Via [Lego](lego.md)
   * Deployed: on Google cloud, on prod.pulcloud.io
+
+openpublishing.princeton.edu
+  * Purpose: external hosted service for open access to scholarly work
+  * Managed: on DNSimple and Vendor's AWS Certificate Manager
+  * Deployed: by vendor (Notch8) and CNAME validation on DNSimple
+  * If ever there is a change in the application vendor will provide CNAME which can be added to DNSimple configuration
+  * NOTE: DNSimple currently only allows one MFA connection. If you need to log into DNSimple, ping Francis for more information.
 
 pcdm.org
   * Purpose: Portland Common Data Model
@@ -144,6 +133,7 @@ scsb.recaplib.org
   * Managed: on DNSimple and Vendor's AWS Certificate Manager
   * Deployed: by vendor and CNAME validation on DNSimple
   * If ever there is a change in the application vendor will provide CNAME which can be added to DNSimple configuration
+  * NOTE: DNSimple currently only allows one MFA connection. If you need to log into DNSimple, ping Francis for more information.
 
 simrisk.pulcloud.io
   * Purpose: experimental application for CDH
