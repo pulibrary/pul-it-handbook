@@ -42,6 +42,7 @@ been made to this file.
 # Co-authored-by: Jaymee Hyppolite <jaymeeh@users.noreply.github.com>
 # Co-authored-by: John Kazmierski <jkazmier-PUL@users.noreply.github.com>
 # Co-authored-by: Kate Lynch <kelynch@users.noreply.github.com>
+# Co-authored-by: Kayt Ahnberg <Ka-YT@users.noreply.github.com>
 # Co-authored-by: Kevin Reiss <kevinreiss@users.noreply.github.com>
 # Co-authored-by: Kim Leaman <kelea99@users.noreply.github.com>
 # Co-authored-by: Mark Zelesky <mzelesky@users.noreply.github.com>
