@@ -4,35 +4,36 @@ We have 4 load balancer machines running nginxplus, `adc-prod1` and `adc-prod2` 
 
 Only one of the load balancer machines is active at any given time. A special IP address (128.112.203.146 - for production) and (172.20.80.19 - for staging) is always assigned to the active box - it moves between the two boxes depending on which is active.
 
-The active machine has two IPs assigned, including the special IP address ending in `146` (production) and `19` (staging). To check which machine is active, open an SSH connection to one and look at the IP addresses. On the active machine, the two IP addresses show up when you first log in:
+The active machine has two IPs assigned, including the special IP address ending in `146` (production) and `19` (staging). To check which machine is active, open an SSH connection to one and look at the IP addresses. On the active machine, the two IP addresses show up when you first log in.
+
+on production:
 
 ```
 IPv4 address for eno1: 128.112.203.144
 IPv4 address for eno1: 128.112.203.146
 ```
 
-for production or
+on staging:
 
 ```bash
 IPv4 address for ens32: 172.20.80.14
 IPv4 address for ens32: 172.20.80.19
 
 ```
-for staging
 
-Or you can run a command to check:
+Or you can run a command to check.
+
+on production:
 
 ```
 ip a | grep 146
 ```
 
-for production or
+on staging:
 
 ```bash
-ip a | grep 19
+ip a | grep 80.19
 ```
-
-for staging
 
 This command returns an `inet` line if the machine is active, or nothing if it is not active.
 
@@ -40,29 +41,27 @@ This command returns an `inet` line if the machine is active, or nothing if it i
 
 On the Admin UI you can turn traffic on and off or view the status of any of the webservers the load balancer knows about.
 
-To connect to the Admin UI, create an SSH tunnel from your machine:
-```
-ssh -L 8080:localhost:8080 pulsys@adc-prod1
-```
+To connect to the Admin UI, create an SSH tunnel from your machine, then make sure it's the active box.
 
-or
+on production:
 
 ```bash
-ssh -L 8080:localhost:8080 pulsys@adc-dev1.lib.princeton.edu
+ssh -L 8080:localhost:8080 pulsys@adc-prod1.princeton.edu
 ```
-
-Make sure it's the active box.
 ```
 ip a | grep 146
 ```
 
-or
+on staging:
 
 ```bash
-ip a | grep 19
+ssh -L 8080:localhost:8080 pulsys@adc-dev1.lib.princeton.edu
+```
+```
+ip a | grep 80.19
 ```
 
-You will see an `inet` line if `adc-prod1` (on production) or `adc-dev1.lib` is the active box. If it's not exit and tunnel to `adc-prod2` (on production) or `adc-dev2.lib` instead.
+You will see an `inet` line if you are on the active box. If you don't, exit and tunnel to `adc-prod2` (on production) or `adc-dev2.lib` instead.
 
 Once you have a tunnel open to the active load balancer, you can open up a web browser to http://localhost:8080 and access the Admin UI dashboard. From there, click on `HTTP Upstreams` to view sites, VMs, health checks, and more.
 
