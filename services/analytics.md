@@ -2,7 +2,7 @@
 
 ## Google Tag Manager
 
-[Google Tag Manager](https://marketingplatform.google.com/about/tag-manager/) is a front-end code injection tool. We add the google tag manager code snippets to each of our sites and use the google tag manager UI to define the code we want injected. We're using it to inject analytics code. You can access the UI at (TODO: add link).
+[Google Tag Manager](https://marketingplatform.google.com/about/tag-manager/) is a front-end code injection tool. We add the google tag manager code snippets to each of our sites and use the google tag manager UI to define the code we want injected. We're using it to inject analytics code. You can access the UI at [https://tagmanager.google.com/](https://tagmanager.google.com/).
 
 This workflow empowers our AUX team to implement analytics updates to our sites without setting up and submitting pull requests to each code base.
 
