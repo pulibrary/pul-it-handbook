@@ -8,7 +8,7 @@ You can run an Ansible playbook at the command line or in the PUL installation o
 
 ## Inventory
 
-Inventory describes all of the hosts you want to manage, and how they are grouped. Take a look at our [master inventory directory](https://github.com/pulibrary/princeton_ansible/blob/master/inventory) to get a sense of the structure we use.
+Inventory describes all of the hosts you want to manage, and how they are grouped. Take a look at our [main inventory directory](https://github.com/pulibrary/princeton_ansible/blob/main/inventory) to get a sense of the structure we use.
 
 Using inventory, groups, and other patterns, we can manage anything from an individual box to a group of machines related to a single project to all machines in an environment (staging, production).
 

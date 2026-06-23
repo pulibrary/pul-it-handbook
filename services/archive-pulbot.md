@@ -54,13 +54,13 @@ However, when pulbot simply does not respond, one of two issues may be affecting
 
 [heaven](https://github.com/pulibrary/heaven) is a Rails app that we run locally to receive webhooks from
 Github (with an organization-wide webhook). Each app is configured with a Github auto-deployment integration
-that sends a webhook call to heaven when there is a CI success on new commits to master.
+that sends a webhook call to heaven when there is a CI success on new commits to main.
 
 ## pulbot and on-demand deployment
 
 [pulbot](https://github.com/pulibrary/pulbot) is our instance of [hubot](https://hubot.github.com/), a robot
 that listens in slack for deployment commands.  Our deployable apps are configured in pulbot's. Note the [open ticket for fixing the README](https://github.com/pulibrary/pulbot/issues/15)
-[apps.json](https://github.com/pulibrary/pulbot/blob/master/apps.json).  Once an app is configured, you can
+[apps.json](https://github.com/pulibrary/pulbot/blob/main/apps.json).  Once an app is configured, you can
 deploy it in slack with the command:
 
 ```
@@ -89,6 +89,6 @@ $ pulbot deploy pulbot
 
 If deploying to a pre-ansible box, you must add heaven's public key to the deploy user's authorized_keys on the box that will be deployed to.
 
-`curl https://raw.githubusercontent.com/pulibrary/princeton_ansible/master/keys/heaven.pub >> authorized_keys`
+`curl https://raw.githubusercontent.com/pulibrary/princeton_ansible/main/keys/heaven.pub >> authorized_keys`
 
 Ensure that your app's capfile deploys via https, not the git protocol. If switching from the git protocol, you'll need to delete the `./repo` directory or you'll get an error that looks like a problem with a public key.
