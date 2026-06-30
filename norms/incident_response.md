@@ -12,14 +12,26 @@ If, on the other hand, it takes a little longer to fix the issue, but we all lea
 
 ## Process
 
-Fill in the incident details in the text below, post in #incident_reports on Slack, and then follow the notes document.
+In the #incident_reports Workflows tab, find the "start incident" workflow and start it. Fill in the little form it gives you, it will post the zoom and a link to the doc.
 
-@here We have the following incident: [Service] is [down|degraded|insecure].
+## How the "Start Incident" workflow works
 
-[Notes document](https://docs.google.com/document/d/1pvnbdZo9HwCIgfW7MUqrDJm8HBnGq46ZSWAzyFJUFxs/edit)
+1. The workflow itself
 
-Zoom link is the first bookmark on this channel.
+People need to be assigned individually as managers of this workflow. If you need to manage it, ask a team lead; they are all assigned as managers.
 
-Our goal in response is to learn about the causes, fix the issue, reflect on these, and take steps toward never having to respond to this particular issue again.
+Access the workflow in slack by clicking Pulibrary, Tools and Settings, Workflow Builder.
 
-Everyone is encouraged to come, even if this system is not in your area of expertise. 
+The workflow defines the form that's presented, and configures the population of the google sheet
+
+1. The Google Sheet
+
+DO NOT EDIT THIS MANUALLY
+
+The [incident log sheet](https://docs.google.com/spreadsheets/d/1EpYN0qSUIHTTuV12yI0-OudLU50ziJVsRc4-rWydCus/edit) holds the data from slack and the code used to create the notes document and post the message back to slack.
+
+The code was added with Extensions -> Apps Script. There's a trigger when a row gets added that will get today's date, copy the template, update the title/date/summary, and then submit a message to Incident Reports with all that info so people can hop right in.
+
+1. The Incident Notes template
+
+Note that if you make changes to the incident notes template, the script that auto populates some of the notes info may break. You might want to check nothing you change will break the script, or update the script alongside the template.
