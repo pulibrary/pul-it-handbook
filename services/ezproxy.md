@@ -1,5 +1,40 @@
 ## Don't Panic
-### Cert management
+
+### Manual Cert management
+
+The ezproxy application depends on certificates that are manually generated through the [CertiNext](us.certinext.io) certificate management platform. There is no automatic way to add these to the ezproxy application. 
+
+**The certificates will need to be renewed every year and will need to be added into the ezproxy application. The following steps allow one to generate and then add the certificate.**
+
+For ezproxy admins: 
+  * Login into the ezproxy [URL](https://login.ezproxy.princeton.edu/admin)
+  * Select Manage SSL Certificates
+  * Create New SSL Certificate
+  * Fill out the information under **Key size** (Country: US; Organization: Princeton University; Administrator email: lsupport@princeton.edu)
+  * For Certificate name, choose the radio button for `*.ezproxy-test.princeton.edu (fewest to no browser warnings proxying https web sites; more expensive)`
+  * For Subject Alernate Name, check off BOTH boxes: `ezproxy-test.princeton.edu` and `*.ezproxy-test.princeton.edu`
+  * Expiration should be left as 1 year. 
+  * Click the button that says `Certificate Signing Request`. This will generate a cert that you will copy to your clipboard. 
+
+For Operations team:
+  * Go to [CertiNext](us.certinext.io)
+  * Click `New Certificate` in the upper left 
+  * Choose the following options: CA Source=emSign; Certificate Type=SSL/TLS Certificates; Product=InCommon DV SSL Certificate Wildcard. Click Next. 
+  * Paste the Certificate Signing Request that you copied from ezproxy above into the box that says `Paste CSR`. Click Next. 
+  * Proceed through the next screens and Submit the request. You will receive an email to download the certificate zip files. An ezproxy admin will need these files to proceed. 
+
+For ezproxy admins:
+  * Unzip the certificate files from CertiNext (see above step).
+  * `cat` the file called `01_EndEntity_wc.ezproxy-test.princeton.edu.cer` and copy its contents
+  * Paste the contents of the file above into the ezproxy admin UI in the box underneath the Certificate Signing Request you copied into CertiNext earlier. Hit the button to `Save Certificate.` 
+  * `cat` the file that starts with a multi-digit number and ends in `_fullchain.pem` and copy its contents into the same (and now empty) box in the ezproxy admin UI and click `Save Certificate.`
+  * To make the new certificate active type *ACTIVE* in the check box and press `activate`
+  * Then return to the Administation home page and find the *Restart EzProxy* Link to restart the EzProxy application.
+
+### ACME Cert management
+
+**Note: With the migration from Sectigo to CertiNext, we can no longer use ACME certs with ezproxy. Until otherwise noted, follow the steps above for Manual Cert management.**
+
 The ezproxy application depends on ACME certificates. There is no automatic way to add these to the ezproxy application.
 
 **The certificates will automatically renew every year and will need to be added into the ezproxy application. The following steps allow one to add the certificate.**
@@ -25,16 +60,3 @@ The ezproxy application depends on ACME certificates. There is no automatic way 
   * Copy the contents of `privkey.pem` above into the key and Import Certificate
   * To make the new certificate active type *ACTIVE* in the check box and press `activate`
   * Then return to the Administation home page and find the *Restart EzProxy* Link to restart the EzProxy application
-
-### Registering certificates with OIT for Shibboleth integration
- 
-When a new cert is added and made active in the application, there is a manual registration process to ensure that the campus IDP is using the new certificate that has been made active. 
-
-  * Login into ezproxy [URL](https://login.ezproxy.princeton.edu/admin)
-  * Select Manage SSL Certificates
-  * View the active certificate by clicking on the number in the left column
-  * Click the link to "View Shibboleth metadata for this certificate without Single Logout enabled"
-  * Copy the contents of this link into a .xml file
-  * Create a [Single Sign-on Intregration request via the form](https://princeton.service-now.com/nav_to.do?uri=%2Fcom.glideapp.servicecatalog_cat_item_view.do%3Fv%3D1%26sysparm_id%3Dedd831664f2c3340f56c0ad14210c7df%26sysparm_link_parent%3Dee785ce84f5f120022a859dd0210c778%26sysparm_catalog%3De0d08b13c3330100c8b837659bba8fb4%26sysparm_catalog_view%3Dcatalog_default%26sysparm_view%3Dtext_search) with OIT and add a note to update the certificate on the form by pasting in the contents of the .xml file you created. NOTE: In the request, advise OIT that a time should be scheduled for them to make the new certificate active concurrently with us updating the cert value variable in the ezproxy environment (see next step for where that is located).
-  * Once OIT has confirmed that the certificate has been registered, update the {{ cert_value }} number in the group_vars (group_vars/ezproxy/testing.yml and/or 
-  group_vars/ezproxy/production.yml) to match the number that the active certificate has on the application's Manage SSL Certificates page. 
