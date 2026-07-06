@@ -27,9 +27,9 @@ Before updating the Ruby application, create an application registration in [Mic
 
     For the development environment make certain to select `Multiple Entra ID tenants` since we will be using `http://localhost:3000`
 
-3. Prefer separate app registrations for development, staging, and production. Microsoft recommends not exposing unnecessary development redirect URIs in production app registrations.
+1. Prefer separate app registrations for development, staging, and production. Microsoft recommends not exposing unnecessary development redirect URIs in production app registrations.
 
-4. Add redirect URIs for each environment. Microsoft Entra only redirects users and sends tokens to redirect URIs that have been added to the app registration. If the redirect URI in the login request does not match the app registration, Entra returns an error such as AADSTS50011.
+1. Add redirect URIs for each environment. Microsoft Entra only redirects users and sends tokens to redirect URIs that have been added to the app registration. If the redirect URI in the login request does not match the app registration, Entra returns an error such as AADSTS50011.
 
    Example redirect URIs:
 
@@ -40,29 +40,65 @@ Before updating the Ruby application, create an application registration in [Mic
    <https://your-production-app.princeton.edu/users/auth/entra_id/callback>
 
    
-6. Add the redirect URI under the Web platform type for a traditional server-rendered Rails application. Microsoft lists Ruby server-side web applications under the Web redirect URI configuration.
+1. Add the redirect URI under the Web platform type for a traditional server-rendered Rails application. Microsoft lists Ruby server-side web applications under the Web redirect URI configuration.
 
    <img width="1066" height="688" alt="Screenshot 2026-07-02 at 2 18 38 PM" src="https://github.com/user-attachments/assets/cfcf6a91-ea5d-4964-8409-1f1bb0420470" />
    
-7. Create a client secret for the app registration.
+1. Create a client secret for the app registration.
 
-8. Save the following values for the Rails application in last pass:
+1. Save the following values for the Rails application in last pass:
 
    ENTRA_CLIENT_ID=<application-client-id>
    ENTRA_CLIENT_SECRET=<client-secret-value> # created from `client credentials` in Step. 5
    ENTRA_TENANT_ID=2ff60116-7431-425d-b5af-077d7791bda4 # this is the global PUL ID
 
-9. Add the rest of your team to the Owners of the application
+1. Add the rest of your team to the Owners of the application
    <img width="1458" height="909" alt="Screenshot 2026-07-02 at 2 22 58 PM" src="https://github.com/user-attachments/assets/cfc41c32-ad63-4dad-ad92-c4fd1d8810fe" />
+
+1. Add attributes you need to have access to.  (In theory you can add groups, but that does not seem to be working)
+   This is optional, you could also just utilize the information from info.  That said no uid  like acb123 is present in the infor and the email is your alias email. 
+   <img width="1461" height="837" alt="Screenshot 2026-07-06 at 10 15 09 AM" src="https://github.com/user-attachments/assets/dcfd19fe-f5a2-4f50-ab24-ceaf2f3aa311" />
 
 
 ## Rubyapp Integration
 
-Update your Gemfile to include Entra ID:
+1. Update your Gemfile to include Entra ID:
 
+   ```
     # Single sign on
     gem "omniauth-entra-id"
+   ```
 
-Install the gems:
+1. Install the gems:
 
     bundle install
+
+1. Information from entra will be returned in the request
+   
+
+### Hanami
+1. Add a setting to the app/settings.rb
+   ```
+   setting :entra_client_id, default: '', constructor: Types::String
+   setting :entra_client_secret, default: '', constructor: Types::String
+   ```
+1. Add configuration to app/application.rb
+   ```
+   require 'omniauth-entra-id'
+
+   ...
+   # inside class App < Hanami::App
+     config.middleware.use OmniAuth::Builder do
+        provider :entra_id, client_id: Hanami.app.settings.entra_client_id, client_secret: Hanami.app.settings.entra_client_secret
+     end
+   ...
+   ```
+1. Export the secrets to your environment
+   export ENTRA_CLIENT_SECRET=<client-secret-value>
+   export ENTRA_CLIENT_ID=<application-client-id>
+
+1. Restart you hanami server
+### Rails
+   TBD
+1. Configure omniauth
+    # Hanami
