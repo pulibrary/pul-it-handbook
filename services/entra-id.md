@@ -60,7 +60,7 @@ Before updating the Ruby application, create an application registration in [Mic
    <img width="1458" height="909" alt="Screenshot 2026-07-02 at 2 22 58 PM" src="https://github.com/user-attachments/assets/cfc41c32-ad63-4dad-ad92-c4fd1d8810fe" />
 
 1. Add attributes you need to have access to.  (In theory you can add groups, but that does not seem to be working)
-   This is optional, you could also just utilize the information from info.  That said no uid  like acb123 is present in the infor and the email is your alias email. 
+   This is optional, you could also just utilize the information from info.  That said no uid like `abc123` is present in the info, and the email is your alias email. 
    <img width="1461" height="837" alt="Screenshot 2026-07-06 at 10 15 09 AM" src="https://github.com/user-attachments/assets/dcfd19fe-f5a2-4f50-ab24-ceaf2f3aa311" />
 
 
@@ -112,12 +112,12 @@ Before updating the Ruby application, create an application registration in [Mic
    export ENTRA_CLIENT_ID=<application-client-id>
 
 1. Add an additional route for the call back.  Note the URL will be `/auth/entra_id/callback` as specified by the gem
-   In config routes add (the to can change to be any location you wish the entra callback to be)
+   In config routes add (the `to` setting can change to be any location you wish the entra callback to be)
    ```
    get "/auth/entra_id/callback", to: "auth.entra"
    ```
 1. Add an action to handle the callback similar to CAS
-   **Example code below does not handle errors and assumed the method from_entra_id parse the authorization hash appropriately**
+   **Example code below does not handle errors and assumes the method from_entra_id can parse the authorization hash appropriately**
    ```
    module OrcidPrinceton
      module Actions
