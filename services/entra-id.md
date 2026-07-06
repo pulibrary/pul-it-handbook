@@ -23,12 +23,13 @@ When a user clicks this button, the app begins the OmniAuth request phase and re
 Before updating the Ruby application, create an application registration in [Microsoft Entra ID.](https://entra.microsoft.com/#home)
 
 1. In Microsoft Entra admin center, create a new app registration for the Ruby application.
+    <img width="1742" height="1008" alt="Screenshot 2026-07-02 at 2 15 23 PM" src="https://github.com/user-attachments/assets/ee31f002-0935-4cf7-a24d-58185e686ce9" />
 
     For the development environment make certain to select `Multiple Entra ID tenants` since we will be using `http://localhost:3000`
 
-2. Prefer separate app registrations for development, staging, and production. Microsoft recommends not exposing unnecessary development redirect URIs in production app registrations.
+3. Prefer separate app registrations for development, staging, and production. Microsoft recommends not exposing unnecessary development redirect URIs in production app registrations.
 
-3. Add redirect URIs for each environment. Microsoft Entra only redirects users and sends tokens to redirect URIs that have been added to the app registration. If the redirect URI in the login request does not match the app registration, Entra returns an error such as AADSTS50011.
+4. Add redirect URIs for each environment. Microsoft Entra only redirects users and sends tokens to redirect URIs that have been added to the app registration. If the redirect URI in the login request does not match the app registration, Entra returns an error such as AADSTS50011.
 
    Example redirect URIs:
 
@@ -38,16 +39,22 @@ Before updating the Ruby application, create an application registration in [Mic
 
    <https://your-production-app.princeton.edu/users/auth/entra_id/callback>
 
-4. Add the redirect URI under the Web platform type for a traditional server-rendered Rails application. Microsoft lists Ruby server-side web applications under the Web redirect URI configuration.
-5. Create a client secret for the app registration.
+   
+6. Add the redirect URI under the Web platform type for a traditional server-rendered Rails application. Microsoft lists Ruby server-side web applications under the Web redirect URI configuration.
 
-6. Save the following values for the Rails application:
+   <img width="1066" height="688" alt="Screenshot 2026-07-02 at 2 18 38 PM" src="https://github.com/user-attachments/assets/cfcf6a91-ea5d-4964-8409-1f1bb0420470" />
+   
+7. Create a client secret for the app registration.
+
+8. Save the following values for the Rails application in last pass:
 
    ENTRA_CLIENT_ID=<application-client-id>
    ENTRA_CLIENT_SECRET=<client-secret-value> # created from `client credentials` in Step. 5
    ENTRA_TENANT_ID=2ff60116-7431-425d-b5af-077d7791bda4 # this is the global PUL ID
 
-7. Add the rest of your team to the Owners of the application
+9. Add the rest of your team to the Owners of the application
+   <img width="1458" height="909" alt="Screenshot 2026-07-02 at 2 22 58 PM" src="https://github.com/user-attachments/assets/cfc41c32-ad63-4dad-ad92-c4fd1d8810fe" />
+
 
 ## Rubyapp Integration
 
