@@ -81,7 +81,7 @@ Before updating the Ruby application, create an application registration in [Mic
    ```
    access_token.extra.raw_info.<key your configured>
    ```
-1. The UID can be found by pulling the uniue name
+1. The UID can be found by pulling the unique name
    ```
    # full email abc123@princeton.edu
    access_token.extra.raw_info.unique_name
