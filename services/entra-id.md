@@ -56,7 +56,7 @@ Before updating the Ruby application, create an application registration in [Mic
 
    **Note**: for development you should save the information, but as you will be the only user it does not need to be shared
 
-1. Add the rest of your team to the Owners of the application (unless this is a devlopemtn key)
+1. Add the rest of your team to the Owners of the application (unless this is a development key)
    <img width="1458" height="909" alt="Screenshot 2026-07-02 at 2 22 58 PM" src="https://github.com/user-attachments/assets/cfc41c32-ad63-4dad-ad92-c4fd1d8810fe" />
 
 1. Add attributes you need to have access to.  (In theory you can add groups, but that does not seem to be working)
