@@ -22,6 +22,8 @@ When a user clicks this button, the app begins the OmniAuth request phase and re
 
 Before updating the Ruby application, create an application registration in [Microsoft Entra ID.](https://entra.microsoft.com/#home)
 
+**NOTE If you are adding a client secret for development choose the existing application and skip to step 5**
+
 1. In Microsoft Entra admin center, create a new app registration for the Ruby application.
     <img width="1742" height="1008" alt="Screenshot 2026-07-02 at 2 15 23 PM" src="https://github.com/user-attachments/assets/ee31f002-0935-4cf7-a24d-58185e686ce9" />
 
@@ -45,14 +47,21 @@ Before updating the Ruby application, create an application registration in [Mic
    <img width="1066" height="688" alt="Screenshot 2026-07-02 at 2 18 38 PM" src="https://github.com/user-attachments/assets/cfcf6a91-ea5d-4964-8409-1f1bb0420470" />
    
 1. Create a client secret for the app registration.
+   Click on New Client Secret
    <img width="1446" height="705" alt="Screenshot 2026-07-06 at 10 40 15 AM" src="https://github.com/user-attachments/assets/5d4426b8-7e57-4dad-adba-95c9d35e3a72" />
 
 
 1. Save the following values for the Rails application in last pass You will only see the client-secret-value once:
 
+   ```
    ENTRA_CLIENT_ID=<application-client-id>
    ENTRA_CLIENT_SECRET=<client-secret-value> # created from `client credentials` in Step. 5
+   ```
+
+   Optional tennant if needed
+   ```
    ENTRA_TENANT_ID=2ff60116-7431-425d-b5af-077d7791bda4 # this is the global PUL ID
+   ```
 
    **Note**: for development you should save the information, but as you will be the only user it does not need to be shared
 
@@ -108,8 +117,10 @@ Before updating the Ruby application, create an application registration in [Mic
    ...
    ```
 1. Export the secrets to your environment
+   ```
    export ENTRA_CLIENT_SECRET=<client-secret-value>
    export ENTRA_CLIENT_ID=<application-client-id>
+   ```
 
 1. Add an additional route for the call back.  Note the URL will be `/auth/entra_id/callback` as specified by the gem
    In config routes add (the `to` setting can change to be any location you wish the entra callback to be)
