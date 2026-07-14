@@ -1,4 +1,5 @@
 # How to replace and rebuild a VM
+You may also hear this referred to informally as "To [Lazarus](https://en.wikipedia.org/wiki/Lazarus_of_Bethany) a VM"
 
 ## Replace the VM
 
@@ -9,7 +10,7 @@ If you haven't already, be sure to follow the steps for cloning the princeton_an
 * Select "launch" 
 * For `source control branch` we leave the value as `main`
 * Enter the host name in the "VM to replace" field of the main branch w/out .lib.princeton.edu (ex. orcid-staging2)
-* Use `2026-jammy-0213-template` as of January 2026
+* Use `2026-noble-0507-template` as of May 2026
     * This will replace the VM with a new one that has the same name
 * You will need to enter the suffix of the vm of either .lib.princeton.edu or princeton.edu on the "which domain is this on" field
 * Click next then Launch the Playbook
