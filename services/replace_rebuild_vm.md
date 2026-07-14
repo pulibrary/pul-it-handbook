@@ -1,4 +1,5 @@
 # How to replace and rebuild a VM
+You may also hear this referred to informally as "To [Lazarus](https://en.wikipedia.org/wiki/Lazarus_of_Bethany) a VM"
 
 ## Replace the VM
 
@@ -9,7 +10,7 @@ If you haven't already, be sure to follow the steps for cloning the princeton_an
 * Select "launch" 
 * For `source control branch` we leave the value as `main`
 * Enter the host name in the "VM to replace" field of the main branch w/out .lib.princeton.edu (ex. orcid-staging2)
-* Use `2026-jammy-0213-template` as of January 2026
+* Use `2026-noble-0507-template` as of May 2026
     * This will replace the VM with a new one that has the same name
 * You will need to enter the suffix of the vm of either .lib.princeton.edu or princeton.edu on the "which domain is this on" field
 * Click next then Launch the Playbook
@@ -39,7 +40,7 @@ This command can be run on your terminal or in [ansible-tower](https://ansible-t
 
 Or by running the command in princeton_ansible:
 
-    `ansible-playbook playbooks/utils/checkmk_agent.yml --limit=tigerdata_staging -e checkmk_folder=linux/rdss -e checkmk_service=staging`
+    `ansible-playbook playbooks/utils/checkmk_agent.yml --limit=tigerdata_staging -e checkmk_folder=linux/rdss -e checkmk_service=[staging|production] -e runtime_env=[staging|production] `
 
 Confirm by checking that CheckMK was installed and configured by going to [CheckMK URL](https://pulmonitor.princeton.edu/staging/check_mk/login.py?_origtarget=index.py%3Fstart_url%3D%252Fstaging%252Fcheck_mk%252Fview.py%253Fhost%253Dorcid-staging1%2526site%253Dstaging%2526view_name%253Dhost)
 
