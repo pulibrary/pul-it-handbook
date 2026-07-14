@@ -40,7 +40,7 @@ This command can be run on your terminal or in [ansible-tower](https://ansible-t
 
 Or by running the command in princeton_ansible:
 
-    `ansible-playbook playbooks/utils/checkmk_agent.yml --limit=tigerdata_staging -e checkmk_folder=linux/rdss -e checkmk_service=staging`
+    `ansible-playbook playbooks/utils/checkmk_agent.yml --limit=tigerdata_staging -e checkmk_folder=linux/rdss -e checkmk_service=[staging|production] -e runtime_env=[staging|production] `
 
 Confirm by checking that CheckMK was installed and configured by going to [CheckMK URL](https://pulmonitor.princeton.edu/staging/check_mk/login.py?_origtarget=index.py%3Fstart_url%3D%252Fstaging%252Fcheck_mk%252Fview.py%253Fhost%253Dorcid-staging1%2526site%253Dstaging%2526view_name%253Dhost)
 
