@@ -1,10 +1,37 @@
 ## Don't Panic
 
-### Manual Cert management
+### ACME Cert management
 
-The ezproxy application depends on certificates that are manually generated through the [CertiNext](us.certinext.io) certificate management platform. There is no automatic way to add these to the ezproxy application. 
+The ezproxy application depends on certificates that are generated through the [CertiNext](us.certinext.io) certificate management platform. There is no automatic way to add these to the ezproxy application.
 
-**The certificates will need to be renewed every year and will need to be added into the ezproxy application. The following steps allow one to generate and then add the certificate.**
+**The certificates will automatically renew every year and will need to be added into the ezproxy application. The following steps allow one to add the certificate.**
+
+  * Log into the ezproxy VM with `ssh pulsys@ezproxy`
+  * Go to the newly renewed certificate path of
+    ```bash
+    sudo su
+    cd /etc/letsencrypt/live/*.ezproxy/
+    ls -al
+    ...
+    ...
+    lrwxrwxrwx 1 root root   31 Mar 27 18:58 cert.pem -> ../../archive/*.ezproxy/cert2.pem
+    lrwxrwxrwx 1 root root   32 Mar 27 18:58 chain.pem -> ../../archive/*.ezproxy/chain2.pem
+    lrwxrwxrwx 1 root root   36 Mar 27 18:58 fullchain.pem -> ../../archive/*.ezproxy/fullchain2.pem
+    lrwxrwxrwx 1 root root   34 Mar 27 18:58 privkey.pem -> ../../archive/*.ezproxy/privkey2.pem
+    ```
+  * Login into the ezproxy [URL](https://login.ezproxy.princeton.edu/admin)
+  * Select Manage SSL Certificates
+  * Import Existing SSL Certificate
+  * Copy the contents of `cert.pem` above into the certificate
+  * Copy the contents of `privkey.pem` above into the key and Import Certificate
+  * To make the new certificate active type *ACTIVE* in the check box and press `activate`
+  * Browsers will also require the Certificate Authority Chain. Copy the contents of `chain.pem` above into the box and click `Save Certificate Authority Chain`
+  * To make the new certificate active type *ACTIVE* in the check box and press `activate`
+  * Then return to the Administation home page and find the *Restart EzProxy* Link to restart the EzProxy application
+
+  ### Manual Cert management
+
+If for some reason the above ACME steps do not work, the following method can be used to manually generate certificates from CertiNext and import them into the ezproxy application. 
 
 For ezproxy admins: 
   * Login into the ezproxy [URL](https://login.ezproxy.princeton.edu/admin)
@@ -30,33 +57,3 @@ For ezproxy admins:
   * `cat` the file that starts with a multi-digit number and ends in `_fullchain.pem` and copy its contents into the same (and now empty) box in the ezproxy admin UI and click `Save Certificate.`
   * To make the new certificate active type *ACTIVE* in the check box and press `activate`
   * Then return to the Administation home page and find the *Restart EzProxy* Link to restart the EzProxy application.
-
-### ACME Cert management
-
-**Note: With the migration from Sectigo to CertiNext, we can no longer use ACME certs with ezproxy. Until otherwise noted, follow the steps above for Manual Cert management.**
-
-The ezproxy application depends on ACME certificates. There is no automatic way to add these to the ezproxy application.
-
-**The certificates will automatically renew every year and will need to be added into the ezproxy application. The following steps allow one to add the certificate.**
-
-
-  * Log into the ezproxy VM with `ssh pulsys@ezproxy`
-  * Go to the newly renewed certificate path of
-    ```bash
-    sudo su
-    cd /etc/letsencrypt/live/ezproxy/
-    ls -al
-    ...
-    ...
-    lrwxrwxrwx 1 root root   31 Mar 27 18:58 cert.pem -> ../../archive/ezproxy/cert1.pem
-    lrwxrwxrwx 1 root root   32 Mar 27 18:58 chain.pem -> ../../archive/ezproxy/chain1.pem
-    lrwxrwxrwx 1 root root   36 Mar 27 18:58 fullchain.pem -> ../../archive/ezproxy/fullchain1.pem
-    lrwxrwxrwx 1 root root   34 Mar 27 18:58 privkey.pem -> ../../archive/ezproxy/privkey1.pem
-    ```
-  * Login into the ezproxy [URL](https://login.ezproxy.princeton.edu/admin)
-  * Select Manage SSL Certificates
-  * Import Existing SSL Certificate
-  * Copy the contents of `cert.pem` above into the certificate
-  * Copy the contents of `privkey.pem` above into the key and Import Certificate
-  * To make the new certificate active type *ACTIVE* in the check box and press `activate`
-  * Then return to the Administation home page and find the *Restart EzProxy* Link to restart the EzProxy application
