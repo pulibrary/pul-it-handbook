@@ -5,17 +5,24 @@ You may also hear this referred to informally as "To [Lazarus](https://en.wikipe
 
 If you haven't already, be sure to follow the steps for cloning the princeton_ansible repo and "first-time setup" instructions if the repo does not already exist on your machine
 
-* Go to ansible tower
-* Search for a template called "replace a VM (Originally in staging)"
-* Select "launch" 
-* For `source control branch` we leave the value as `main`
-* Enter the host name in the "VM to replace" field of the main branch w/out .lib.princeton.edu (ex. orcid-staging2)
+* Go to [ansible-tower](https://ansible-tower.princeton.edu/#/home)
+* Search for a template called "Replace a VM Workflow"
+   * The "Replace a VM Workflow" handles each of the following steps listed below ("Update the ssh keys", "Run the check mk playbook", "OS Patch Update" )
+* Select "Launch" 
+* For `Limit` we enter the value of the FQDN (The VM including `.lib.princeton.edu` or `.princeton.edu`
+* Enter the host name in the "VM to replace" field of the main branch w/out `.lib.princeton.edu` (ex. orcid-staging2)
 * Use `2026-noble-0507-template` as of May 2026
     * This will replace the VM with a new one that has the same name
-* You will need to enter the suffix of the vm of either .lib.princeton.edu or princeton.edu on the "which domain is this on" field
-* Click next then Launch the Playbook
+* You will need to select the suffix of the VM of either `.lib.princeton.edu` or `princeton.edu` on the "which domain is this on" field
+* Select which checkMK services should monitor the hosts
+* Select which folder in checkMK should the VM be monitored in
+* Click "Next" then "Launch" to launch the Workflow
 
-* To ensure that the playbook ran correctly ssh into the vm (ex. run `ssh pulsys@pdc-discovery-staging1.princeton.edu`)
+* Once the Workflow has run successfully, you should have a brand new, empty VM.
+* To ensure that the Workflow has ran correctly ssh into the VM (ex. run `ssh pulsys@pdc-discovery-staging1.princeton.edu`)
+
+* The next step should be to run your playbook for the application (refer to the "Run your playbook" section of this page)
+* Then, you will run the "1 Cap Deploy" playbook for your VM. 
 
 
 ## Update the ssh keys
