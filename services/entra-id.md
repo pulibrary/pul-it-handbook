@@ -27,7 +27,7 @@ Before updating the Ruby application, create an application registration in [Mic
 1. In Microsoft Entra admin center, create a new app registration for the Ruby application.
     <img width="1742" height="1008" alt="Screenshot 2026-07-02 at 2 15 23 PM" src="https://github.com/user-attachments/assets/ee31f002-0935-4cf7-a24d-58185e686ce9" />
 
-    For the development environment make certain to select `Multiple Entra ID tenants` since we will be using `http://localhost:3000`
+    Make sure to select single tenant.  **You must pass the tenant id if you choose single tenant.**
 
 1. Prefer separate app registrations for development, staging, and production. Microsoft recommends not exposing unnecessary development redirect URIs in production app registrations.
 
@@ -72,6 +72,21 @@ Before updating the Ruby application, create an application registration in [Mic
    This is optional, you could also just utilize the information from info.  That said no uid like `abc123` is present in the info, and the email is your alias email. 
    <img width="1461" height="837" alt="Screenshot 2026-07-06 at 10 15 09 AM" src="https://github.com/user-attachments/assets/dcfd19fe-f5a2-4f50-ab24-ceaf2f3aa311" />
 
+### Groups
+It seems that group information is only available to single tenant applications, which is why we recommend passing the tenant id.
+Add groups as a claim by clicking the "Add groups claim":
+<img width="1201" height="717" alt="Screenshot 2026-07-31 at 11 21 55 AM" src="https://github.com/user-attachments/assets/62702f6e-9160-4b84-9ace-fc034a30c756" />
+
+Under the ID section (which controls the OIDC output) choose Group ID as the property to send
+<img width="594" height="506" alt="Screenshot 2026-07-31 at 11 21 47 AM" src="https://github.com/user-attachments/assets/5e706da3-7b21-4a99-a952-d7743c9daf21" />
+
+Determine your group ids by looking up your group in the Groups. Grouper Groups can be found in the "on-premises groups"
+<img width="1150" height="716" alt="Screenshot 2026-07-31 at 11 22 16 AM" src="https://github.com/user-attachments/assets/75b89efe-db63-4d2d-9c51-5eda4d7c49bb" />
+
+For example, we searched the on premises groups and found our seven tigerdata groups:
+<img width="1141" height="259" alt="Screenshot 2026-07-31 at 11 47 43 AM" src="https://github.com/user-attachments/assets/1e4f11a5-02ea-4a92-b4aa-645fd45c6ef8" />
+ 
+The Object Id will be the number your will see in `extra.raw_info.groups` in the auth token your receive when a user logins in via Entra
 
 ## Rubyapp Integration
 
