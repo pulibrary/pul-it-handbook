@@ -20,23 +20,27 @@ For auto-renewing ACME certificates, use playbooks/incommon_certbot.yml](https:/
 
 #### Revoking manual Certificates
 
-For certificates that were created manually, there is a [ServiceNow form](https://princeton.service-now.com/service?id=sc_cat_item&sys_id=2e7ffb64dbad9114e8c283aa13961993) for revoking certificates. You can search in the dropdown by certificate ID or by site name. Note that the site name search only matches the full name - for example, to match `lib-aeon.princeton.edu` you must type `lib-aeon`; if you type `aeon` it will say there are no matching entries.
+Since the switch from Sectigo to CertiNext, the [ServiceNow form](https://princeton.service-now.com/service?id=sc_cat_item&sys_id=2e7ffb64dbad9114e8c283aa13961993) for revoking certificates is no longer accessible (or no longer exists). 
+
+Notes on the form, in case it returns: Search in the dropdown by certificate ID or by site name. Note that the site name search only matches the full name - for example, to match `lib-aeon.princeton.edu` you must type `lib-aeon`; if you type `aeon` it will say there are no matching entries.
 
 Select the certificate you want to revoke, enter a reason, and hit Submit. The process is very quick - refresh the form to confirm that the revoked certificate is no longer listed.
-
-If you use the ServiceNow form to revoke an ACME certificate, certbot will renew it the next day. You must use the playbook to revoke ACME certificates.
 
 ## Verifying certbot renewals of ACME certificates
 
 To verify that a certificate on a server will auto-renew:
 
+*** this needs updating:
+Simon has retired, so we should use a new email address
+Have the eab-kid and eab-hmac-key changed since we migrated to CertiNext?
+
 sudo certbot --standalone --non-interactive --agree-tos --email <simonlee@princeton.edu> --server <https://acme.sectigo.com/v2/InCommonRSAOV> --eab-kid  <certbot-key-eab-kid> --eab-hmac-key <certbot-key-eab-hmac-key> renew --dry-run
 
 This command checks all certs that certbot knows about on that server.
 
-## Viewing certificates in Sectigo
+## Viewing certificates in CertiNext
 
-Our certificate management system is Sectigo. Operations folks can [log into Sectigo](https://cert-manager.com/customer/InCommon) using their alias email accounts and individual passwords. We can view certificate status there, but we cannot revoke or renew certificates there.
+Our certificate management system is CertiNext. Operations folks can [log into CertiNext](https://us.certinext.io/login) using the `Microsoft` login option. We can view certificate status there, but we cannot revoke or renew certificates there.
 
 ## Managing TLS certificates for sites that do not run on our load balancers
 
@@ -75,7 +79,7 @@ dss2.princeton.edu
 
 ezproxy.princeton.edu
   * Purpose: allows access to journals by confirming Princeton affiliation
-  * Managed: on ezproxy-prod1 by letsencrypt
+  * Managed: by ACME on ezproxy-prod1
   * Deployed: in /etc/letsencrypt/live/ezproxy on the ezproxy-prod1 server
 
 lib-aeon.princeton.edu
@@ -90,11 +94,15 @@ lib-gisportal.princeton.edu
   * Deployed: in IIS on a physical machine that runs MS HyperV virtualization - cluster of lib-geoserv1 and lib-geoserv2 (not the Lib-Gisportal2 VM) server
   * Notes: windows physical machine, you must be an admin on the Windows box, expires 2024/07/30
 
-lib-illsql.princeton.edu
-  * Purpose: interlibrary loan
-  * Managed: in ServiceNow
-  * Deployed: in IIS, on the lib-illiad-new VM
-  * Notes: Windows VM; cert has a SAN name of lib-illiad.princeton.edu; we hope to migrate this to a hosted platform in 2024
+lib-reports.princeton.edu
+  * Purpose: 
+  * Managed: by ACME on the libserv122 VM (aka lib-reports)
+  * Deployed: on the libserv122 VM (aka lib-reports)
+
+lib-storage.princeton.edu
+  * Purpose: shared storage
+  * Managed: by ACME on the libserv171 VM (aka lib-storage)
+  * Deployed: on the libserv171 VM (aka lib-storage)
 
 oar.princeton.edu
   * Purpose: production site for oar
@@ -125,8 +133,8 @@ pulmirror.princeton.edu
 
 recapgfa.princeton.edu
   * Purpose: ReCAP inventory management system
-  * Managed: by ACME directly on the VM
-  * Deployed: N/A - it automatically renews
+  * Managed: by ACME on the recapgfa prod VM
+  * Deployed: on the recapgfa production VM 
 
 scsb.recaplib.org
   * Purpose: external hosted service for research collections
@@ -134,12 +142,6 @@ scsb.recaplib.org
   * Deployed: by vendor and CNAME validation on DNSimple
   * If ever there is a change in the application vendor will provide CNAME which can be added to DNSimple configuration
   * NOTE: DNSimple currently only allows one MFA connection. If you need to log into DNSimple, ping Francis for more information.
-
-simrisk.pulcloud.io
-  * Purpose: experimental application for CDH
-  * Managed: on staging.pulcloud.io by acme-client contacting letsencrypt CA
-  * Deployed: in /etc/ssl/simrisk.pulcloud.io.fullchain.pem on the staging.pulcloud.io server
-  * Maintained using `/etc/daily.local` as root
 
 tigris.princeton.edu
   * Purpose: hosted service for University Records management
