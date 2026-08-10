@@ -1,6 +1,9 @@
 # Certificate Management
 
+Since the switch from Sectigo to CertiNext, our certificates are no longer tracked in ServiceNow.
+
 ## Managing TLS Certificates for sites on our load balancers
+
 Most of our sites are served from our load balancers - any site that is configured by a file in the `nginxplus` role in princeton_ansible is served from the load balancers.
 
 ### Creating certificates for sites on our load balancers with ACME
@@ -18,29 +21,29 @@ When we decommission a site, we need to revoke the certificates for that site.
 
 For auto-renewing ACME certificates, use playbooks/incommon_certbot.yml](https://github.com/pulibrary/princeton_ansible/blob/main/playbooks/incommon_certbot_revoke.yml). As with the playbook that creates certificates, you must run the revoke playbook on each load balancer sequentially.
 
-#### Revoking manual Certificates
-
-Since the switch from Sectigo to CertiNext, the [ServiceNow form](https://princeton.service-now.com/service?id=sc_cat_item&sys_id=2e7ffb64dbad9114e8c283aa13961993) for revoking certificates is no longer accessible (or no longer exists). 
-
-Notes on the form, in case it returns: Search in the dropdown by certificate ID or by site name. Note that the site name search only matches the full name - for example, to match `lib-aeon.princeton.edu` you must type `lib-aeon`; if you type `aeon` it will say there are no matching entries.
-
-Select the certificate you want to revoke, enter a reason, and hit Submit. The process is very quick - refresh the form to confirm that the revoked certificate is no longer listed.
-
 ## Verifying certbot renewals of ACME certificates
 
-To verify that a certificate on a server will auto-renew:
+To verify that a certificate on a server will auto-renew (values for the eab-kid and eab-hmac-key are in group_vars/all/vault.yml):
 
-*** this needs updating:
-Simon has retired, so we should use a new email address
-Have the eab-kid and eab-hmac-key changed since we migrated to CertiNext?
-
-sudo certbot --standalone --non-interactive --agree-tos --email <simonlee@princeton.edu> --server <https://acme.sectigo.com/v2/InCommonRSAOV> --eab-kid  <certbot-key-eab-kid> --eab-hmac-key <certbot-key-eab-hmac-key> renew --dry-run
+sudo certbot --standalone --non-interactive --agree-tos --email lsupport@princeton.edu --server https://acme-us.certinext.io/v1/directory --eab-kid  <vault_certinext_acme_eab_kid> --eab-hmac-key <vault_certinext_acme_eab_hmac_key> renew --dry-run
 
 This command checks all certs that certbot knows about on that server.
 
-## Viewing certificates in CertiNext
+## Managing certificates in CertiNext
 
-Our certificate management system is CertiNext. Operations folks can [log into CertiNext](https://us.certinext.io/login) using the `Microsoft` login option. We can view certificate status there, but we cannot revoke or renew certificates there.
+Our certificate management system is CertiNext. Operations folks can [log into CertiNext](https://us.certinext.io/login) using the `Microsoft` login option. We can view certificate statuses, request new manual certificates, and revoke manual certificates there.
+
+### Creating manual certificates
+
+You can create certificates in CertiNext. To create a manual certificate, log into CertiNext, open the Certificates menu in the left navigation bar, and select Orders. The main panel opens with the Domains tab selected by default - this tab displays all certs. Select the Orders tab - this tab only displays PUL certs. Click on the New request button in the upper right and fill out the requested fields. Operations team members can approve manual certificates in CertiNext for PUL certs.
+
+Be sure to document the purpose, management, and deployment of all manual certs on this page (see below).
+
+#### Revoking manual Certificates
+
+To revoke a manual certificate, log into CertiNext, open the Certificates menu in the left navigation bar, and select Orders. The main panel opens with the Domains tab selected by default - this tab displays all certs. Select the Orders tab - this tab only displays PUL certs. Use the Filter interface to narrow your search (note that the `Domain Name` column n the Filter interface corresponds to the `Identifier` column header in the data view). Once you have found the certificate you want to revoke, click on the `View` button to see details. In the "hamburger" (three dots) menu in the upper right of the details view, select `Revoke certificate` to revoke that cert. 
+
+Don't revoke ACME certs in CertiNext. It's possible, and it looks successful, but Let's Encrypt will renew the certificate within 24 hours. You must use the playbooks to revoke ACME certificates.
 
 ## Managing TLS certificates for sites that do not run on our load balancers
 
@@ -150,7 +153,7 @@ tigris.princeton.edu
 
 #### Tigris renewals
 
-In July of every year [tigris.princeton.edu](tigris.princeton.edu) will get an automatic renewal. The following steps will be needed to ensure the certificate remains renewed.
+At each renewal period, [tigris.princeton.edu](tigris.princeton.edu) will get an automatic renewal. The following steps will be needed to ensure the certificate remains renewed. Then next renewal date is in December of 2026.
 
 * Open a ticket with tigris (aka Gimmal) support at <support@gimmal.com> and ask who should receive the new chained file.
 * You will need the [vaulted private key](https://github.com/pulibrary/princeton_ansible/blob/main/keys/tigris_princeton_edu_priv.key) and the certificate and intermediate certificate to generate a pfx file that you will ship to the vendor
