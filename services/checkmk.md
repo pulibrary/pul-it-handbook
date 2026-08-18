@@ -113,13 +113,17 @@ To set up a recurring alert:
   1. Our current approach is to narrow the scope - we may change this in future. But for now, for service notifications, uncheck `Host events` so the notification only applies to services. Then select the events you want to know about. For example, "State change from Any to WARN" and "State change from Any to CRITICAL". Click on "Next step" to open the next section of the page.
   1. In the "Filter for hosts/services" section, check `Services`. Copy the Service name **from the host monitoring screen, NOT from any of the rule definitons**. Click on "Next step" again.
   1. In the "Notification method" section, select Slack or Mattermost. Click on "Next step" again.
-  1. In the "Recipient" section, leave the default setting of `All contacts of the affected object`. Click on "Next step" again.
+  1. In the "Recipient" section, the default setting is `All contacts of the affected object`. In most cases, you must add at least one individual user here for the alert to work. We're not sure if this is a bug, or if this only happens for hosts where we don't have contacts set up correctly. Click on "Next step" again.
   1. In the "Sending conditions" section, check both "Limit notifications by count to" and "Throttling of 'Periodic notifications'". Get ready to do some simple math.
     1. Set the "Limit by count" feature first. This defines the first and last notification that CheckMK will pay attention to. By default it's set to between 5 and 100, meaning CheckMK will ignore the first 4 checks (with frequency as set in the Periodic service check definition). Configure these numbers to 6 and 9999. If you have the Periodic check set to 1 minute, these settings mean CheckMK will process this rule at 6 minutes into an outage, and continue until 9,999 minutes in. 
     1. Set the "Throttling" feature next. By default this is set to start with notification 10 and send every 5th notification thereafter. Configure the first number to the same number as the start of the "Limit by count" feature. In our example, set "Starting with notification number 6". Configure the second number in multiples of the Periodic service check interval to match your desired frequency of alerts. For example, to get an alert every hour, assuming the Periodic service check interval is set to 1 minute, set "Send every 60" notifications.
   1. Click "Apply and test notification rule".
 1. Test your notification rule.
-  1. 
+  1. You will see the list of Event Notifications at the bottom of the screen with a test section at the top. Select the "Services" button and create a scenario that matches the conditions that should trigger an alert.
+    1. In the dropdown select a host that your service notification applies to, and then select the service. For example, select 'lib-solr-staging2' and 'JVM Solr Memory'.
+    1. In the "Simulate" section, pick the action you want to simulate. This should match your rule parameters. For example, select "Status change from OK to CRITICAL".
+    1. Under "Advanced condition simulation" try a few different Notification number settings to see how often the notification would be sent. For example, with the settings we listed above, testing with Notification number 6 should result in a rule match and one Predicted Notification, while testing with Notification number 8 should not.
+    1. Refine the notification as needed. If your testing matches a rule but does not result in a Predicted Notification, try adding a person to the Recipients section of your notification rule and test again. If your testing does not match a rule, check that the service name in your notification event matches the service name in the host monitoring view.
 
 ## Source control for CheckMK with git
 
