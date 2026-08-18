@@ -26,48 +26,52 @@ The DevOps Organization contains all permissions for other Tower objects. Tower 
 
 ### Projects in PUL Tower
 
-We only have one project in Tower. It's called Prancible and it is linked to the princeton_ansible repo on GitHub.
+We have several projects in Tower:
+* `CDH` is linked to the cdh-ansible repo on GitHub
+* `Firewall repo` is linked to the firewall-test repo
+* `Prancible` is linked to the princeton_ansible repo on GitHub
+* `Tigerdata-conf` is linked to the tigerdata-config repo on GitHub
 
-#### Updating the Prancible Project
+#### Updating a Project
 
-The Prancible project automatically updates daily in the early morning hours, deleting the entire repository and cloning a fresh copy from GitHub. This automatic update is configured in Schedules.
+Most projects update daily in the early morning hours, deleting the entire repository and cloning a fresh copy from GitHub. This automatic update is configured in Schedules.
 
 If you are running a Template from a branch, Tower automatically pulls the latest commits on that branch before it executes. You can also update the project manually.
 
 **You must sync the project manually to pull in any branch that has had a force-push to it.**
 
-To update the Prancible project manually:
+To update a project manually:
 
-1. Select the Projects page
+1. Select the Project you want to update on the Projects page.
 2. Click the 'Sync Project' button (a circular pair of arrows) on the right under 'Actions'. This starts a Source Control Update job.
 3. Select Jobs from the left navigation and make sure the job succeeds.
 
 ### Inventories in PUL Tower
 
-We only have one inventory in Tower. It's called Prancible Inventory and it is linked to the 'inventory' directory of the princeton_ansible repo on GitHub.
+Each project has at least one inventory in Tower. Each inventory is linked to the inventory source for the associated repository. For example, the Prancible inventory reflects the 'inventory' directory of the princeton_ansible repo.
 
-#### Updating the Prancible inventory
+#### Updating an inventory
 
-The Prancible inventory automatically updates daily in the early morning hours, after the Project update. When you add new machines or groups to the inventory directory on GitHub, you must first update the Prancible project, then separately update the Prancible inventory.
+Most inventories update daily in the early morning hours, after the Project updates. When you add new machines or groups to an inventory, you must first update the project, then separately update the inventory.
 
-To update the Prancible inventory:
+To update an inventory:
 
-1. Make sure the Prancible project has already been updated.
+1. Make sure the associated project has already been updated. You can compare the `Revision` to the latest commit hash on GitHub.
 2. Select Inventories from the left navigation.
-3. Select the Prancible Inventory.
+3. Select the Inventory you want to update.
 4. Select the Sources tab.
 5. Click on the 'Start Sync Process' button (a circular pair of arrows) on the right under 'Actions'. This kicks off an Inventory Sync job.
 6. Select Jobs from the left navigation and make sure the job succeeds.
 
 ## Adding templates to Tower
 
-If the playbook you want to run in Tower already exists in the princeton_ansible repository, you can easily create a template for it.
+If the playbook you want to run in Tower already exists in the associated repository, you can easily create a template for it.
 
 If you are working on a new playbook, and you want to test it in Tower, skip down to the section on `Creating a template for a new playbook`.
 
 ### Creating a template for an existing playbook
 
-If your playbook already exists in the princeton_ansible repo, you can copy an existing template in Tower, then edit it to do what you need. Copying gives you the correct Inventory, Project, Execution Environment, and likely also the credentials you need.
+If your playbook already exists in your code repo, you can copy an existing template in Tower, then edit it to do what you need. Copying gives you the correct Inventory, Project, Execution Environment, and likely also the credentials you need.
 
 1. In the Templates view, next to the template you want to copy, select `Copy template` on the far right (a pair of pages). Your copy will show up just below the existing record, with a timestamp to differentiate it from the original template.
 2. Edit your copied template by selecting `Edit Template`.
@@ -82,7 +86,7 @@ If your playbook already exists in the princeton_ansible repo, you can copy an e
 
 #### Adding or changing credentials
 
-All templates must include the Prancible Vault credential, which supports decrypting vaulted variables at runtime. Most templates also need the Tower's Own ed25519 credential, which allows SSH access to our VMs. If you did not copy an existing template, you need to add the basic credentials. Depending on what your playbook does, it may need other credentials as well.
+All templates must include a Vault credential, which supports decrypting vaulted variables at runtime. Most templates also need the Tower's Own ed25519 credential, which allows SSH access to our VMs. If you did not copy an existing template, you need to add the basic credentials. Depending on what your playbook does, it may need other credentials as well.
 
 To add or change credentials:
 
@@ -139,11 +143,11 @@ To enable an existing notification:
 You cannot build a template off a playbook until that playbook exists in the main branch. In other words, you cannot test a playbook in a Tower Template while it only exists in a PR or on a branch. If you want to test a playbook from Tower:
 
 1. Merge a minimal version of the playbook into the main branch.
-2. Update the Prancible project.
-3. Update the Prancible inventory.
+2. Update the Project.
+3. Update the Inventory.
 4. Create a Template based on the minimal playbook and set Source Control Branch to 'Prompt on launch'.
 5. Create a new branch for changes to the playbook.
-6. Launch the template and select the new branch to run with the latest changes to the branch.
+6. Launch the Template and select the new branch to run with the latest changes to the branch.
 
 ## Adding repos to the Deploy Rails template
 
