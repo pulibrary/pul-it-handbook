@@ -100,6 +100,7 @@ To set up a recurring alert:
     1. Click on `Monitor` and search for the host(s) (for example, type `solr` and hit enter for a view of all the Solr boxes).
     1. Select a single host to see all its services.
       1. Find the service you're working with - for example, JVM Solr Memory. You can click on the service name to see the current status.
+  1. Customize the levels if needed.   
     1. Click on `Setup` and search for the service. It may not match exactly - for example, the JVM Solr Memory service is governed by the JVM memory levels rule. If the rule is using default settings, you will see the message "There are no rules defined in this set." 
     1. Click on "Add rule", enter a Description and Comment, set the Values, use the Conditions to apply the rule to the correct hosts. Save the rule.
 1. Check the rule for periodic notification of problems.
