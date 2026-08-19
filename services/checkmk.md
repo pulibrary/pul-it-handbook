@@ -47,13 +47,11 @@ The six CheckMK sites all run on production-level systems. They are:
   - view the `livestatus proxy` services for a monitoring host (for all sites if you are logged into production; otherwise for the site you are logged into)
     - in the Monitor menu, search for `livestatus`
   - view the Analyze configuration page (for the site you are logged into)
-    - log into the site you want information about
+    - log into the site you want information about with the `Login with Microsoft Azure` button
     - in the Setup menu, under Maintenance select Analyze configuration
     
 ## Useful GUI pointers
-* To log into the GUI:
-  - on production and staging, enter your NetID and password, then confirm with 2FA (the webpage will not prompt you to look at DUO)
-  - on AWS and GCP, select `Login with Microsoft Azure`
+* To log into the GUI, select `Login with Microsoft Azure`
 * To check the version of CheckMK: in the left nav bar, select `Help` - the version is displayed at the top of the popup
 * If you do not see the left nav bar, open the `Display` menu and toggle `Show page navigation`
 
@@ -79,8 +77,54 @@ to verify that the agent is running successfully and see its parameters.
    1. Change the host or host group to your host or group (for example `orcid_production`)
    1. Change the team name, choose one: `cdh`, `dacs`, `dls`, or `rdss` (note the lowercase)
 1. Add CheckMK local rules `ansible-playbook playbooks/utils/checkmk_add_local_checks.yml --ask-vault-pass --limit <host or host group> -e checkmk_folder=linux/<team name>`
-   1. Rule group by defailt is `rails` if this is not a rails project `-e rule_group=group_name`
+   1. Rule group by default is `rails` if this is not a rails project `-e rule_group=group_name`
       1. At the moment no other local check besides rails have been written 
+
+## Configuring recurring notifications
+
+CheckMK is optimized for checking status in the GUI. However, it can also notify us of problems and recoveries. Our current approach uses Periodic Notifications to enable alerts when a host or service goes down and recurring alerts if it stays down.
+
+There are three parts to a successful recurring alert:
+
+1. the host or service check defines what a problem looks like
+1. the rule for periodic notification of problems (host or service problems) defines how often CheckMK looks at the current status
+1. the notification event defines where alerts are sent and how often
+
+To set up a recurring alert:
+
+1. Decide what you want to know and how often.
+  1. For example, we want a warning if Solr's JVM memory usage rises above 90%. We want a critical alert if it rises above 95%. And we want those alerts to keep coming if the usage remains above those levels.
+1. Configure the service check with the correct thresholds.
+  1. Many of our checks use CheckMK's reasonable defaults. To check the applicable settings:
+    1. Make sure you are logged into the correct site (see above for links). You can see all monitoring data in the production site, but you can only edit hosts and rules in the source site - staging for staging VMs, etc.
+    1. Click on `Monitor` and search for the host(s) (for example, type `solr` and hit enter for a view of all the Solr boxes).
+    1. Select a single host to see all its services.
+      1. Find the service you're working with - for example, JVM Solr Memory. You can click on the service name to see the current status.
+  1. Customize the levels if needed.   
+    1. Click on `Setup` and search for the service. It may not match exactly - for example, the JVM Solr Memory service is governed by the JVM memory levels rule. If the rule is using default settings, you will see the message "There are no rules defined in this set." 
+    1. Click on "Add rule", enter a Description and Comment, set the Values, use the Conditions to apply the rule to the correct hosts. Save the rule.
+1. Check the rule for periodic notification of problems.
+  1. Go to `Setup` and type "periodic" in the search bar. Select 'Periodic notifications during service problems'. 
+  1. In staging today we have a single rule that applies to everything (by setting the condition to `Main` folder). This rule is called "When a thing stays down, notify us once per minute that it's still down". Don't panic! We're not going to send an alert every minute.
+  1. In production today we do not have a default setting. You can create specific rules for your specific use case, with conditions that apply only to your folder, host, or service. Check the box for "Enable periodic notifications" and set your preferred Interval in minutes.
+1. Create a notification event.
+  1. Click on `Setup` and select `Notifications` under `Events`. If you don't see an `Events` heading, type "notification" in the search bar. If you search this way, the result you want shows up as `Notifications` under `Setup`.
+  1. Check the existing notifications for one that already does what you need.
+  1. Assuming one doesn't already exist, click on "Add notification rule".
+  1. Our current approach is to narrow the scope - we may change this in future. But for now, for service notifications, uncheck `Host events` so the notification only applies to services. Then select the events you want to know about. For example, "State change from Any to WARN" and "State change from Any to CRITICAL". Click on "Next step" to open the next section of the page.
+  1. In the "Filter for hosts/services" section, check `Services`. Copy the Service name **from the host monitoring screen, NOT from any of the rule definitons**. Click on "Next step" again.
+  1. In the "Notification method" section, select Slack or Mattermost. Click on "Next step" again.
+  1. In the "Recipient" section, the default setting is `All contacts of the affected object`. In most cases, you must add at least one individual user here for the alert to work. We're not sure if this is a bug, or if this only happens for hosts where we don't have contacts set up correctly. Click on "Next step" again.
+  1. In the "Sending conditions" section, check both "Limit notifications by count to" and "Throttling of 'Periodic notifications'". Get ready to do some simple math.
+      1. Set the "Limit by count" feature first. This defines the first and last notification that CheckMK will pay attention to. By default it's set to between 5 and 100, meaning CheckMK will ignore the first 4 checks (with frequency as set in the Periodic service check definition). Configure these numbers to 6 and 9999. If you have the Periodic check set to 1 minute, these settings mean CheckMK will process this rule at 6 minutes into an outage, and continue until 9,999 minutes in. 
+      1. Set the "Throttling" feature next. By default this is set to start with notification 10 and send every 5th notification thereafter. Configure the first number to the same number as the start of the "Limit by count" feature. In our example, set "Starting with notification number 6". Configure the second number in multiples of the Periodic service check interval to match your desired frequency of alerts. For example, to get an alert every hour, assuming the Periodic service check interval is set to 1 minute, set "Send every 60" notifications.
+  1. Click "Apply and test notification rule".
+1. Test your notification rule.
+  1. You will see the list of Event Notifications at the bottom of the screen with a test section at the top. Select the "Services" button and create a scenario that matches the conditions that should trigger an alert.
+    1. In the dropdown select a host that your service notification applies to, and then select the service. For example, select 'lib-solr-staging2' and 'JVM Solr Memory'.
+    1. In the "Simulate" section, pick the action you want to simulate. This should match your rule parameters. For example, select "Status change from OK to CRITICAL".
+    1. Under "Advanced condition simulation" try a few different Notification number settings to see how often the notification would be sent. For example, with the settings we listed above, testing with Notification number 6 should result in a rule match and one Predicted Notification, while testing with Notification number 8 should not.
+    1. Refine the notification as needed. If your testing matches a rule but does not result in a Predicted Notification, try adding a person to the Recipients section of your notification rule and test again. If your testing does not match a rule, check that the service name in your notification event matches the service name in the host monitoring view.
 
 ## Source control for CheckMK with git
 
@@ -102,7 +146,7 @@ On the CheckMK server:
 
 ## Changing the Timezone for CheckMK
 
-We tried updating the CheckMK timezone to be 'America/NY' to coordinate between Slack and CheckMK. We edited `/opt/omd/sites/<sitename>/etc/environment` and added `TZ=America/New_York`, then restarted the service. However, this caused a lot of problems. For now, we are leaving the CheckMK timezone as UTC. 
+We set the CheckMK timezone to be 'America/NY' to coordinate between Slack and CheckMK. Specifically, we changed the Timezone on the VMs that run CheckMK. A few online posts recommend editing `/opt/omd/sites/<sitename>/etc/environment` to change the Timezone - don't do this. We tried it this way and it caused a lot of problems.
 
 ## Setting up SSO AuthN/AuthZ
 
