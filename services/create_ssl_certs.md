@@ -2,7 +2,7 @@
 
 Since the switch from Sectigo to CertiNext, our certificates are no longer tracked in ServiceNow.
 
-## Managing TLS Certificates for sites on our load balancers
+## Managing ACME TLS Certificates on our load balancers
 
 Most of our sites are served from our load balancers - any site that is configured by a file in the `nginxplus` role in princeton_ansible is served from the load balancers.
 
@@ -13,49 +13,15 @@ Most of our sites are served from our load balancers - any site that is configur
    1. You will need to run the above playbook on each load balancer sequentially
    1. If the certificate already exists you will need to revoke it before running your chosen playbook
 
-### Revoking certificates for sites on our load balancers
+### Revoking ACME certificates for sites on our load balancers
 
 When we decommission a site, we need to revoke the certificates for that site.
 
-#### Revoking ACME Certificates
-
 For auto-renewing ACME certificates, use playbooks/incommon_certbot.yml](https://github.com/pulibrary/princeton_ansible/blob/main/playbooks/incommon_certbot_revoke.yml). As with the playbook that creates certificates, you must run the revoke playbook on each load balancer sequentially.
 
-## Verifying certbot renewals of ACME certificates
+## Managing ACME TLS Certificates on other machines
 
-To verify that a certificate on a server will auto-renew (values for the eab-kid and eab-hmac-key are in group_vars/all/vault.yml):
-
-sudo certbot --standalone --non-interactive --agree-tos --email <lsupport@princeton.edu> --server <https://acme-us.certinext.io/v1/directory> --eab-kid <vault_certinext_acme_eab_kid> --eab-hmac-key <vault_certinext_acme_eab_hmac_key> renew --dry-run
-
-This command checks all certs that certbot knows about on that server.
-
-## Managing certificates in CertiNext
-
-Our certificate management system is CertiNext. Operations folks can [log into CertiNext](https://us.certinext.io/login) using the `Microsoft` login option. We can view certificate statuses, request new manual certificates, and revoke manual certificates there.
-
-### Creating manual certificates
-
-You can create certificates in CertiNext. To create a manual certificate, log into CertiNext, open the Certificates menu in the left navigation bar, and select Orders. The main panel opens with the Domains tab selected by default - this tab displays all certs. Select the Orders tab - this tab only displays PUL certs. Click on the New request button in the upper right and fill out the requested fields. Operations team members can approve manual certificates in CertiNext for PUL certs.
-
-Be sure to document the purpose, management, and deployment of all manual certs on this page (see below).
-
-#### Revoking manual Certificates
-
-To revoke a manual certificate, log into CertiNext, open the Certificates menu in the left navigation bar, and select Orders. The main panel opens with the Domains tab selected by default - this tab displays all certs. Select the Orders tab - this tab only displays PUL certs. Use the Filter interface to narrow your search (note that the `Domain Name` column n the Filter interface corresponds to the `Identifier` column header in the data view). Once you have found the certificate you want to revoke, click on the `View` button to see details. In the "hamburger" (three dots) menu in the upper right of the details view, select `Revoke certificate` to revoke that cert.
-
-Don't revoke ACME certs in CertiNext. It's possible, and it looks successful, but Let's Encrypt will renew the certificate within 24 hours. You must use the playbooks to revoke ACME certificates.
-
-## Managing TLS certificates for sites that do not run on our load balancers
-
-We have a few sites that need a different approach to certificate management. These sites include:
-
-* sites we run on individual servers or in the cloud
-* vendor-hosted sites with the '.princeton.edu' extension
-* sites we serve from the load balancers with extensions other than '.princeton.edu'
-
-Many of these certs must be deployed manually. Some must also be renewed manually.
-
-If a private key is kept in princeton_ansible, it is encrypted as a file in the `/keys/` directory of the repo.
+A few sites run as standalone services on individual machines - some Linux and some Windows. Where possible, we also use ACME on those machines to generate and automatically renew TLS certificates for those sites.
 
 ### Managing Windows IIS certificates with ACME
 
@@ -95,7 +61,9 @@ Windows IIS servers should use ACME for certificate issuance and renewal so that
 
    At the time of this writing, we were unable to successfully create a certificate using Subject Alternative Names (SANs), so IIS hostnames are managed as separate certificates.
 
-#### Complete certificate verification
+   We also think we failed to document a step that would go here - somehow we verified the domain ownership in CertiNext - this involved enabling the wellknown ACME challenge on IIS.
+
+#### Complete certificate verification in IIS
 
 1. After creating the certificate, you should receive an email to verify it.
 1. Choose the option to add a TXT file to the web server root.
@@ -126,6 +94,50 @@ Windows IIS servers should use ACME for certificate issuance and renewal so that
 
 Win-ACME creates a scheduled task when `--setuptaskscheduler` is used so the certificate can renew automatically.
 
+## Verifying certbot renewals of ACME certificates
+
+You can verify that a certificate or certificates will automatically renew. 
+
+### Veryifing renewals on *nix machines
+
+On *nix operating systems, run this command (values for the eab-kid and eab-hmac-key are in group_vars/all/vault.yml for the load balancer or in the group vars for the machine that runs a standalone site - if all else fails, look in CertiNext for credentials):
+
+`sudo certbot --standalone --non-interactive --agree-tos --email <lsupport@princeton.edu> --server <https://acme-us.certinext.io/v1/directory> --eab-kid <vault_certinext_acme_eab_kid> --eab-hmac-key <vault_certinext_acme_eab_hmac_key> renew --dry-run`
+
+The command checks all certs that certbot knows about on that server.
+
+### Verifying renewals on Windows machines
+
+On Windows, look at the system scheduled tasks. A renewal check should run once per day.
+
+## Managing certificates in CertiNext
+
+Our certificate management system is CertiNext. Operations folks can [log into CertiNext](https://us.certinext.io/login) using the `Microsoft` login option. We can view certificate statuses, request new manual certificates, and revoke manual certificates there.
+
+### Creating manual certificates
+
+You can create certificates in CertiNext. To create a manual certificate, log into CertiNext, open the Certificates menu in the left navigation bar, and select Orders. The main panel opens with the Domains tab selected by default - this tab displays all certs. Select the Orders tab - this tab only displays PUL certs. Click on the New request button in the upper right and fill out the requested fields. Operations team members can approve manual certificates in CertiNext for PUL certs.
+
+Be sure to document the purpose, management, and deployment of all manual certs on this page (see below).
+
+#### Revoking manual Certificates
+
+To revoke a manual certificate, log into CertiNext, open the Certificates menu in the left navigation bar, and select Orders. The main panel opens with the Domains tab selected by default - this tab displays all certs. Select the Orders tab - this tab only displays PUL certs. Use the Filter interface to narrow your search (note that the `Domain Name` column n the Filter interface corresponds to the `Identifier` column header in the data view). Once you have found the certificate you want to revoke, click on the `View` button to see details. In the "hamburger" (three dots) menu in the upper right of the details view, select `Revoke certificate` to revoke that cert.
+
+Don't revoke ACME certs in CertiNext. It's possible, and it looks successful, but Let's Encrypt will renew the certificate within 24 hours. You must use the playbooks to revoke ACME certificates.
+
+## Managing TLS certificates for sites that do not run on our load balancers
+
+We have a few sites that need a different approach to certificate management. These sites include:
+
+* sites we run on individual servers or in the cloud
+* vendor-hosted sites with the '.princeton.edu' extension
+* sites we serve from the load balancers with extensions other than '.princeton.edu'
+
+Many of these certs must be deployed manually. Some must also be renewed manually.
+
+If a private key is kept in princeton_ansible, it is encrypted as a file in the `/keys/` directory of the repo.
+
 Here is the current list:
 
 cicognara.org
@@ -147,6 +159,8 @@ dataspace-staging.princeton.edu
 * Deployed: on Google cloud, on dev.pulcloud.io
 
 dss2.princeton.edu
+
+**Expires Jan 2, 2027**
 
 * Purpose: secures dataset downloads from a separate server for DSS via a web browser
 * Managed: in ServiceNow - John will move to letsencrypt
@@ -170,7 +184,7 @@ lib-gisportal.princeton.edu
 
 * Purpose: for maps (Wangyal)
 * Managed: by ACME using Win-ACME; see [Managing Windows IIS certificates with ACME](#managing-windows-iis-certificates-with-acme)
-* Deployed: in IIS on a physical machine that runs MS HyperV virtualization - cluster of lib-geoserv1 and lib-geoserv2 (not the Lib-Gisportal2 VM) server
+* Deployed: in IIS on a physical machine (not the Lib-Gisportal2 VM) server
 * Notes: Windows physical machine; you must be an admin on the Windows box
 
 lib-reports.princeton.edu
@@ -195,7 +209,7 @@ oar-staging.princeton.edu
 
 * Purpose: production site for oar
 * Managed: Via [Lego](lego.md)
-* Deployed: on Google cloud, on prod.pulcloud.io
+* Deployed: on Google cloud, on staging.pulcloud.io
 
 openpublishing.princeton.edu
 
