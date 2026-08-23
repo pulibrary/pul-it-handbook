@@ -173,6 +173,24 @@ ezproxy.princeton.edu
 * Managed: by ACME on ezproxy-prod1
 * Deployed: in /etc/letsencrypt/live/ezproxy on the ezproxy-prod1 server
 
+ezproxy-test.princeton.edu
+
+* Purpose: allows access to journals by confirming Princeton affiliation
+* Managed: by ACME on ezproxy-test
+* Deployed: in /etc/letsencrypt/live/*.ezproxy-test on the ezproxy-test server
+
+gitlab-prod-vm.lib.princeton.edu
+
+* Purpose: allows access to journals by confirming Princeton affiliation
+* Managed: by ACME on gitlab-prod-vm.lib.princeton.edu
+* Deployed: in /etc/letsencrypt/live/gitlab-prod-vm.lib.princeton.edu on the gitlab-prod-vm.lib.princeton.edu server
+
+gitlab-staging.vm.lib.princeton.edu
+
+* Purpose: allows access to journals by confirming Princeton affiliation
+* Managed: by ACME on gitlab-staging-vm.lib.princeton.edu
+* Deployed: in /etc/letsencrypt/live/gitlab-staging-vm.lib.princeton.edu on the gitlab-staging-vm.lib.princeton.edu server
+
 lib-aeon.princeton.edu
 
 * Purpose: redirects traffic to hosted Aeon service at <https://princeton.aeon.atlas-sys.com>
