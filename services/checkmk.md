@@ -70,6 +70,8 @@ to verify that the agent is running successfully and see its parameters.
   * as the site user, run `cmk -R` to restart the CheckMK service.
   * as the site user, run `omd restart` to restart the Apache webserver.
   * if the site is still down, reboot the VM (Apache may refuse to shut down, in which case you may need to log into vSphere to yank the power)
+* To clear space in the `/opt/omd` directory, run `sudo omd cleanup`
+  * this is where previous versions of CheckMK are stored and the `cleanup` command will clear all but the current version after an upgade
 
 ## Adding a host to CheckMK
 
