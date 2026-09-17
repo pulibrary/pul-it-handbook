@@ -12,7 +12,7 @@ As described in the [pul_solr README](https://github.com/pulibrary/pul_solr/blob
 ### Accessing the Solr admin interface
 To view the Solr admin UI, open an SSH tunnel to any VM in the Solr cloud (for example, `ssh -L 9000:localhost:8983 lib-solr-prod7`) then point a browser at the localhost port you defined for the tunnel: [localhost:9000](localhost:9000).
 
-If you have the `pul_solr` code and gems available, you can also use the shortcut cap task in pul_solr to open the solr admin console: `bundle exec cap solr-production solr:console` or `bundle exec cap solr8-production solr:console`.
+If you have the `pul_solr` code and gems available, you can also use the shortcut cap task in pul_solr to open the solr admin console: `bundle exec cap production solr:console`.
 
 ### Using the Solr admin interface
 The solr admin interface shows (among other things):
@@ -22,8 +22,22 @@ The solr admin interface shows (among other things):
 * details on the configuration of each collection at `Collections > this-collection`
 * performance on all Zookeeper boxes at `Cloud > ZK status`
 
-### Monitoring Solr health in Datadog
-Datadog also has a [solr health dashboard](https://app.datadoghq.com/dashboard/ce3-krc-gid/solr-health-dashboard).
+### Monitoring Solr health in Signoz and Checkmk
+
+The [Signoz dashboard](https://signoz.lib.princeton.edu/dashboard/019ed6d6-2914-753a-8896-85ad11287ef2?relativeTime=6d) has graphs of solr-related application errors, garbage collection data, and response rates.
+
+The [Solr Health graph collection](https://pulmonitor.princeton.edu/production/check_mk/index.py?start_url=%2Fproduction%2Fcheck_mk%2Fgraph_collection.py%3Fname%3Dgraph_collection_1) in CheckMK has some memory and heap-specific graphs. 
+
+## Administration tasks
+
+### Restarting solr with ansible
+
+Using ansible ad-hoc commands makes it faster to restart machines.
+
+Example:
+```
+ansible lib-solr-staging1.princeton.edu --become -a "systemctl restart solr"
+```
 
 ### Updating replication factor for a collection
 
