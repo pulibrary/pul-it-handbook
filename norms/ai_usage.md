@@ -25,18 +25,22 @@ Any contributions made via the use of AI should include the following in the pul
 
 ```
 Assisted-by: AGENT_NAME:MODEL_VERSION
-Assistance Level: [Minimal, Investigative, Substantive, Complete]
+Assistance Level: [Investigative, Substantive, Complete, Other]
 ```
 
 where the levels can be defined as:
-
-**Minimal**: Searches through tools like google, autocomplete, grammar fixes.
 
 **Investigative**: AI supported finding the root cause or helpful APIs, which were then independently understood, verified, and implemented.
 
 **Substantive**: AI generated non-trivial portions of code, tests, or documentation.
 
 **Complete**: From start to finish, an AI tool generated this solution, code, and documentation. Human intervention was largely in the form of prompts, if anything at all.
+
+**Other**: Include some text describing the usage, if the above doesn't fit.
+
+If multiple AI models were used simply repeat the Assisted-by line. If there was no agent, or you don't know the model, just do your best.
+
+The goal is to see how our usage evolves over time and give reviewers a hint about where the code came from so they can adjust how they might do review and what assumptions they can make.
 
 ## Size of Code Contribution
 
