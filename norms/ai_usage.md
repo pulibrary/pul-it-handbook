@@ -30,7 +30,7 @@ Assistance Level: [Investigative, Substantive, Complete, Other]
 
 where the levels can be defined as:
 
-**Investigative**: AI supported finding the root cause or helpful APIs, which were then independently understood, verified, and implemented.
+**Investigative**: AI supported finding the root cause or helpful APIs through interaction and/or scanning of the codebase, which were then independently understood, verified, and implemented.
 
 **Substantive**: AI generated non-trivial portions of code, tests, or documentation.
 
