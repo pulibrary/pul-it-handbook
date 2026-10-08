@@ -27,3 +27,13 @@ If you run `apt-get update` on a machine with a outdated repository in the sourc
 To remove an apt repository from the sources list:
 1. run `playbooks/utils/fix_apt_issues.yml` on the affected machines, passing `-e useless_apt_repo='<repo-details>'` (include the full repository definition, for example 'deb https://oss-binaries.phusionpassenger.com/apt/passenger bionic main')
 2. run `playbooks/utils/os_updates.yml` (in Tower the Template is called Patch Tuesday) on the affected machines to confirm the fix, update the cache, and upgrade all packages
+
+## Unattended Upgrades
+
+Machines that use `apt` are often configured to update packages that contain security fixes automatically, sometimes in the middle of the night. These upgrades can cause outages or other unexpected issues.
+
+To avoid these issues, we do not use unattended upgrades. Instead, we manage package maintenance in Ansible Tower.
+
+### How to confirm the status of `unattended-upgrades`
+
+Although our base VM builds have the `unattended-upgrades` utility installed and configured, we do not run the service. If you view the configuration with `sudo cat /etc/apt/apt.conf.d/20auto-upgrades`, you will see both `Unattended-Upgrade` and `Update-Package-Lists` set to `1`. However, if you view the status of the service with `sudo systemctl is-active unattended-upgrades.service` you should see `inactive`; and if you check whether the service is enabled with `sudo systemctl is-enabled unattended-upgrades.service` you should see `masked`, which is a stronger form of `disabled`. The service will not start on reboot; it also cannot be started manually without changing this setting. 
