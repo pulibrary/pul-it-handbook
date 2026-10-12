@@ -215,3 +215,14 @@ To set up AuthN and AuthZ on a new CheckMK server:
 1. Under conditions, select the appropriate criteria:
    * "Match folder": this should be the folder of VMs that you want alerts for (for example Linux > DACS)
    * "Match only during time period": this should be Active-Monitoring-2, so you don't get overwhelmed during patch tuesday
+
+## Troubleshooting
+### Agent is out of synch
+Remove the agent from the box(s)
+```
+ ansible [host group] -a 'apt -y purge check-mk-agent' -b -u pulsys
+```
+Install the agent on the box(s)
+```
+ansible playbook -v playbooks/utils/checkmk_agent.yml --limit=[same host group] -e checkmk_folder=linux/rdss -e checkmk_service=[staging | production]
+```
