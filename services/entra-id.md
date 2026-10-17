@@ -24,6 +24,8 @@ Before updating the Ruby application, create an application registration in [Mic
 
 **NOTE If you are adding a client secret for development choose the existing application and skip to step 5**
 
+**NOTE To avoid creating and rotating a client secret, see [PKCE without a client secret](#pkce-without-a-client-secret) for the steps that differ.**
+
 1. In Microsoft Entra admin center, create a new app registration for the Ruby application.
     <img width="1742" height="1008" alt="Screenshot 2026-07-02 at 2 15 23 PM" src="https://github.com/user-attachments/assets/ee31f002-0935-4cf7-a24d-58185e686ce9" />
 
@@ -87,6 +89,54 @@ For example, we searched the on premises groups and found our seven tigerdata gr
 <img width="1141" height="259" alt="Screenshot 2026-07-31 at 11 47 43 AM" src="https://github.com/user-attachments/assets/1e4f11a5-02ea-4a92-b4aa-645fd45c6ef8" />
  
 The Object Id will be the number your will see in `extra.raw_info.groups` in the auth token your receive when a user logins in via Entra
+
+## PKCE without a client secret
+
+Instead of a client secret, the application can register as a public client and use PKCE (Proof Key for Code Exchange). There is then no secret to store in LastPass or rotate before it expires.
+
+PKCE ties each authorization code to the login that requested it, so a stolen code can't be redeemed anywhere else, and Entra only sends codes to the registered redirect URIs. What you give up is that Entra can't tell your application apart from another client using the same client ID, which is not secret. That is acceptable when the app only signs users in. Microsoft's main concern with public clients is [refresh tokens](https://learn.microsoft.com/en-us/entra/identity-platform/scopes-oidc#the-offline_access-scope), which are not bound to a secret. The default `openid profile email` scope doesn't request `offline_access`, so no refresh token is issued. **Use a client secret instead if the app requests `offline_access` or calls an API such as Microsoft Graph on the user's behalf.**
+
+### App registration
+
+Follow the steps above, with these changes:
+
+1. Add the redirect URIs under the **Mobile and desktop applications** platform, not **Web**. Entra requires a client secret or certificate for Web redirect URIs.
+1. Skip creating a client secret. If the app registration has one from an earlier setup, delete it. Entra rejects a public client's token request that includes a secret.
+1. **To confirm:** whether **Authentication → Allow public client flows** must be set to **Yes**. Set it if logins fail with `AADSTS7000218` (the request must contain `client_assertion` or `client_secret`).
+1. Save only these values:
+
+   ```
+   ENTRA_CLIENT_ID=<application-client-id>
+   ENTRA_TENANT_ID=2ff60116-7431-425d-b5af-077d7791bda4 # this is the global PUL ID
+   ```
+
+### Hanami configuration
+
+`omniauth-entra-id` raises an error unless it is given a `client_secret` or a `certificate_path`, so pass a placeholder secret. `auth_scheme: :tls_client_auth` makes the token request send only the `client_id` and the PKCE `code_verifier`, so the placeholder is never sent to Entra. `pkce: true` comes from `omniauth-oauth2`, which the gem is built on.
+
+```
+require 'omniauth-entra-id'
+
+...
+# inside class App < Hanami::App
+  config.middleware.use OmniAuth::Builder do
+     provider :entra_id,
+              client_id: Hanami.app.settings.entra_client_id,
+              tenant_id: Hanami.app.settings.entra_tenant_id,
+              client_secret: 'unused', # required by the gem, never sent
+              pkce: true,
+              client_options: { auth_scheme: :tls_client_auth }
+  end
+...
+```
+
+In `app/settings.rb` replace `entra_client_secret` with:
+
+```
+setting :entra_tenant_id, default: '', constructor: Types::String
+```
+
+Checked with `omniauth-entra-id` 3.1.1, `omniauth-oauth2` 1.9.0 and `oauth2` 2.0.25.
 
 ## Rubyapp Integration
 
