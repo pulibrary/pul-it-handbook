@@ -222,6 +222,10 @@ Remove the agent from the box(s)
 ```
  ansible [host group] -a 'apt -y purge check-mk-agent' -b -u pulsys
 ```
+on Rocky or RHEL servers
+```sh
+ansible [host group] -a 'yum -y remove check-mk-agent' -b -u pulsys
+```
 Install the agent on the box(s)
 ```
 ansible playbook -v playbooks/utils/checkmk_agent.yml --limit=[same host group] -e checkmk_folder=linux/rdss -e checkmk_service=[staging | production]
