@@ -154,6 +154,7 @@ Find the service you'd like to wipe, and get its storage IDs. Then, in `princeto
 
 1. `export NOMAD_ADDR=https://nomad.lib.princeton.edu`
 1. `nomad login -method=entra`
+1. `export NOMAD_TOKEN=<id from Secret ID output above>`
 1. `nomad volume delete -type host <id>`
 1. Rerun the ansible-playbook for that service to recreate the volume.
 
