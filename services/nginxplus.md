@@ -1,47 +1,19 @@
+# NginxPlus Load Balancer
+
 We have 4 load balancer machines running nginxplus, `adc-prod1` and `adc-prod2` for our production environment, and `adc-dev1.lib` and `adc-dev2.lib` for our staging environment. At all times, one is active and one is a hot backup.
 
-## Finding the active load balancer
+## Tunneling to the active load balancer
 
-Only one of the load balancer machines is active at any given time. A special IP address (128.112.203.146 - for production) and (172.20.80.19 - for staging) is always assigned to the active box - it moves between the two boxes depending on which is active.
+The most common use case for connecting to the load balancer is to interact with the Admin
+UI to easily turn traffic on and off or view the status of any of the webservers the load balancer knows about.
 
-The active machine has two IPs assigned, including the special IP address ending in `146` (production) and `19` (staging). To check which machine is active, open an SSH connection to one and look at the IP addresses. On the active machine, the two IP addresses show up when you first log in.
+Only one of the load balancer machines is active at any given time. The active VM has 2 IP addresses: its permanent IP address and a special IP address that moves between the two boxes depending on which is active.
 
-on production:
+The special IPs on the active boxes are:
+- 128.112.203.146 (production)
+- 172.20.80.19 (staging)
 
-```
-IPv4 address for eno1: 128.112.203.144
-IPv4 address for eno1: 128.112.203.146
-```
-
-on staging:
-
-```bash
-IPv4 address for ens32: 172.20.80.14
-IPv4 address for ens32: 172.20.80.19
-
-```
-
-Or you can run a command to check.
-
-on production:
-
-```
-ip a | grep 146
-```
-
-on staging:
-
-```bash
-ip a | grep 80.19
-```
-
-This command returns an `inet` line if the machine is active, or nothing if it is not active.
-
-## Using the Admin UI
-
-On the Admin UI you can turn traffic on and off or view the status of any of the webservers the load balancer knows about.
-
-To connect to the Admin UI, create an SSH tunnel from your machine, then make sure it's the active box.
+To check which machine is active, open an SSH connection (usually a tunnel) to one and look at the IP addresses. On the active machine, the two IP addresses show up when you first log in. Or you can run the `ip` command to check.
 
 on production:
 
@@ -63,7 +35,7 @@ ip a | grep 80.19
 
 You will see an `inet` line if you are on the active box. If you don't, exit and tunnel to `adc-prod2` (on production) or `adc-dev2.lib` instead.
 
-Once you have a tunnel open to the active load balancer, you can open up a web browser to http://localhost:8080 and access the Admin UI dashboard. From there, click on `HTTP Upstreams` to view sites, VMs, health checks, and more.
+Once you have a tunnel open to the active load balancer, you can open up a web browser to [http://localhost:8080](http://localhost:8080) and access the Admin UI dashboard. From there, click on `HTTP Upstreams` to view sites, VMs, health checks, and more.
 
 ## Running the nginx playbook
 
