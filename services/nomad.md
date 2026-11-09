@@ -165,3 +165,27 @@ All of the data is in `/container_data/<idhere>` on the client the dynamic host 
 root@dpul-collections-staging2:/container_data# ls
 1dd8b4ab-53db-3a44-e81b-b7313e26d606  ef2a23c8-ee4a-1d1b-857e-a8a967e3c1a9
 ```
+
+## FAQ
+
+1. Why are there staging servers on the production cluster?
+
+Staging clients are on the production cluster to prevent the way we handle staging from deviating too far from how we handle production. Staging clients are in a "staging" node pool, run in the VMWare "dev" environment, and only communicate with the production cluster to determine what to deploy and how.
+
+It technically also allows us to do things like quickly deploy production to staging infrastructure or vice versa in the event of an emergency downtime.
+
+We may revert this decision in the near future, as it's proven quite confusing to our IT unit.
+
+2. How do I test an upgrade or configuration change of Nomad itself?
+
+There's a sandbox environment for this, at https://nomad-sandbox.lib.princeton.edu.
+
+3. I'm scared I'm going to break Nomad by deploying something, should I be?
+
+This is very unlikely. A deploy has never brought down all of Nomad. Docker containers are separated, node pools are separate, resource limits are enforced, etc. A bad deployment configuration simply doesn't validate, or doesn't deploy. If a deploy fails, most of our HCL files are configured to recognize that it's not healthy and auto-rollback. If it turned out to be possible, that'd be a great learning experience for us.
+
+4. What's Consul?
+
+Nomad can assign a random port to services (so we can run a bunch of web servers on one large box), but then our load balancers need to know what port it ended up on so it can reverse proxy traffic to it. Consul is just a service that Nomad can register that port into, and then our load balancer can check Consul.
+
+It can do a lot more, but that's mostly what we use it for.
