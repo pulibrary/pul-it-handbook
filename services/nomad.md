@@ -167,6 +167,27 @@ root@dpul-collections-staging2:/container_data# ls
 1dd8b4ab-53db-3a44-e81b-b7313e26d606  ef2a23c8-ee4a-1d1b-857e-a8a967e3c1a9
 ```
 
+## Draining a Client
+
+If you want to decommission or simply safely ensure that jobs are off of a client for some reason, you can "drain" it. This will remove all allocations off that client, and when possible move those allocations to a different client.
+
+1. Go to Clients
+
+![Nomad interface showing clients circled](images/nomad/clients.png)
+
+2. Choose the client you wish to drain
+3. Click Drain, then Drain
+
+![Nomad interface showing Drain button circled](images/nomad/drain.png)
+
+4. Wait for the interface to say "Drain Complete"
+
+When you go to "jobs", the allocations should have moved to other clients if possible. If that client had data in it (# Volumes > 0 in the Clients list), then some of the services that depended on that data will likely say "Degraded".
+
+When you're ready to bring that node back after your work with it, click the "Eligible" toggle. If you delete that VM or rebuild it, you may have to do the steps in [Rebuilding Service Storage](#rebuilding-service-storage) for dynamic host volumes that were on that node before, so that a new deploy of that service will create a new one.
+
+![Nomad interface showing the eligible toggle circled](images/nomad/eligible.png)
+
 ## FAQ
 
 ### 1. Why are there staging servers on the production cluster?
