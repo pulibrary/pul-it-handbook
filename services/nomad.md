@@ -43,14 +43,14 @@ In a sentence: If I want 3 web servers for Pulmap, then I want to adjust the HCL
 
 ![Tabs in job view](images/nomad/tabs.png)
 
-**Overview**: Displays all the allocations, task groups, tasks, and deployments 
-**Definition**: View currently deployed HCL, and allow editing it.
-**Versions**: View all previous deployments, the changes in definition that were part of that deployment, and allow rolling back to any version.
-**Deployments**: List recent deployments
-**Allocations**: List currently running and recent allocations.
-**Evaluations**: List of events the Nomad system saw, with timestamps.
-**Services**: List of services that get registered with Consul.
-**Variables**: List of variables that the job has access to. These get deployed with `princeton_ansible` and often contains the per-job secrets.
+* **Overview**: Displays all the allocations, task groups, tasks, and deployments 
+* **Definition**: View currently deployed HCL, and allow editing it.
+* **Versions**: View all previous deployments, the changes in definition that were part of that deployment, and allow rolling back to any version.
+* **Deployments**: List recent deployments
+* **Allocations**: List currently running and recent allocations.
+* **Evaluations**: List of events the Nomad system saw, with timestamps.
+* **Services**: List of services that get registered with Consul.
+* **Variables**: List of variables that the job has access to. These get deployed with `princeton_ansible` and often contains the per-job secrets.
 
 ## Restart a Service
 
@@ -80,7 +80,7 @@ If it's not, you can still view the logs in the Nomad interface by going to "Rec
 
 ## Deployment
 
-If you're in `princeton_ansible` and deploying a service, not an application we've developed, then read [Ansible Nomad Deployment](#ansible-nomad).
+If you're in `princeton_ansible` and deploying a service, not an application we've developed, then read [Ansible Nomad Deployment](#ansible-nomad-deployment).
 
 If you're in a code base that builds an image and we write the software for, then read [Application Nomad Deployment](#application-nomad-deployment).
 
@@ -114,15 +114,15 @@ Applications generally have provisioning handled in `princeton_ansible` (databas
 
 In `princeton_ansible`:
 
-**Staging**: `ansible-playbook playbooks/pulmap.yml`
-**Production**: `ansible-playbook playbooks/pulmap.yml -e runtime_env=production`
+* **Staging**: `ansible-playbook playbooks/pulmap.yml`
+* **Production**: `ansible-playbook playbooks/pulmap.yml -e runtime_env=production`
 
 #### Deploy
 
 In `pulmap`
 
-**Staging**: `bin/deploy staging`
-**Production**: `bin/deploy production`
+* **Staging**: `bin/deploy staging`
+* **Production**: `bin/deploy production`
 
 ![Image of a terminal showing a deployment to Nomad](images/nomad/deploy.png)
 
@@ -142,7 +142,7 @@ When possible, use highly available stateful services that store in a cluster an
 
 Right now we use what Nomad calls "Dynamic Host Volumes," which means we can use `princeton_ansible` to tell Nomad "make a folder on one of the clients under `/container_data`, and let a client claim it". Given the complexity, the fewer of these we have the better.
 
-### Wiping a service
+### Rebuilding Service Storage
 
 First, stop the job you'd like to wipe.
 
@@ -160,7 +160,7 @@ Find the service you'd like to wipe, and get its storage IDs. Then, in `princeto
 
 ### Finding the Data
 
-All of the data is in `/container_data/<idhere>` on the client the dynamic host volume is on.
+All of the data for dynamic host volumes are in `/container_data/<idhere>` on the client the dynamic host volume is on. Usually they're owned by a specific high-number UID, so you'll have to be root to explore it from the client machine. It's unlikely you would need (or want) to, but if for some reason you want to clear out a directory without rebuilding it appropriately, or edit a file without using the container, you can find the files there.
 
 ```bash
 root@dpul-collections-staging2:/container_data# ls
