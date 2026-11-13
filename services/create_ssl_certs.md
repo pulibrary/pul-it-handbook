@@ -275,9 +275,23 @@ At each renewal period, [tigris.princeton.edu](tigris.princeton.edu) will get an
 
 * Open a ticket with tigris (aka Gimmal) support at <support@gimmal.com> and ask who should receive the new chained file.
 * You will need the [vaulted private key](https://github.com/pulibrary/princeton_ansible/blob/main/keys/tigris_princeton_edu_priv.key) and the certificate and intermediate certificate to generate a pfx file that you will ship to the vendor
+* Create a new CSR with
+  ```sh
+  openssl req -new -newkey rsa:3072 -noenc -keyout keys/tigris_princeton_edu_priv.key -out tigris_solr.csr -subj "/C=US/ST=New Jersey/L=Princeton/O=Princeton University/OU=Library/CN=tigris.princeton.edu"
+  ```
+* Renew by Creating a New Certificate at Certinext.
+* You will get a zipped file containing the following files
+  ```sh
+  ❯ ls -al ~/Downloads/tigris_certs                                              drwx------ kayiwa staff 192 B  Fri Nov 13 10:15:55 2026  .
+  drwx------ kayiwa staff  10 KB Fri Nov 13 10:15:55 2026  ..
+  .rw-rw-r-- kayiwa staff 2.4 KB Fri Nov 13 10:15:10 2026  01_EndEntity_tigris.princeton.edu.cer
+  .rw-rw-r-- kayiwa staff 2.1 KB Fri Nov 13 10:15:10 2026  '02_SubCA_SSL.com TLS Issuing RSA CA R1.cer'
+  .rw-rw-r-- kayiwa staff 1.9 KB Fri Nov 13 10:15:10 2026  '03_RootCA_SSL.com TLS RSA Root CA 2022.cer'
+  .rw-rw-r-- kayiwa staff 6.5 KB Fri Nov 13 10:15:10 2026 󰌆 1173338439_fullchain.pem
+  ```
 
   ```bash
-  cat ~/path/to/downloads/tigris_princeton_edu_cert.cer ~/path/to/downloads/tigris_princeton_edu_interm.cer > keys/tigris_princeton_edu_chained.pem
+  cat ~/path/to/downloads/01_EndEntity_tigris.princeton.edu.cer ~/path/to/downloads/'02_SubCA_SSL.com TLS Issuing RSA CA R1.cer' > keys/tigris_princeton_edu_chained.pem
   ```
 
 This will generate a chained file. You will be prompted for a password in the next step.
